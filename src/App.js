@@ -25,22 +25,20 @@ function App() {
   const hideComponent =
     location.pathname === "/login" ||
     location.pathname === "/register" ||
-    location.pathname === "/admin" ||
-    location.pathname === "/productlist" ||
-    location.pathname === "/addproduct";
+    location.pathname.startsWith("/admin");
 
   const hideHeaderDash =
-    location.pathname === "/login" || location.pathname === "/register";
+    location.pathname === "/login" || location.pathname === "/register" 
   return (
     <ProductProvider>
       <div className={hideComponent ? "" : "container mx-auto"}>
-        {!hideComponent && <Navbar />}
+
         {!hideHeaderDash && hideComponent && <HeaderDash />}
+        {!hideComponent && <Navbar />}
         <div className="main">
           <Routes>
-
             {/* User Routes */}
-            
+
             <Route path="/" element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
@@ -51,9 +49,9 @@ function App() {
               </Route>
             </Route>
             <Route path="all" element={<AllItems />} />
-            <Route path="men/:productId" element={<ProductDetails />} />
+            {/* <Route path="men/:productId" element={<ProductDetails />} />
             <Route path="women/:productId" element={<ProductDetails />} />
-            <Route path="kids/:productId" element={<ProductDetails />} />
+            <Route path="kids/:productId" element={<ProductDetails />} /> */}
             <Route path="cart" element={<Cart />} />
             <Route path="checkout" element={<Checkout />} />
             <Route path="profile" element={<Profile />} />
@@ -63,8 +61,11 @@ function App() {
             {/* Admin Routes */}
 
             <Route path="admin" element={<DashboardHome />} />
-            <Route path="productlist" element={<AllProductsDash />} />
-            <Route path="addproduct" element={<AddProduct />} />
+            <Route
+              path="admin/productlist/:productCategory"
+              element={<AllProductsDash />}
+            />
+            <Route path="admin/addproduct" element={<AddProduct />} />
           </Routes>
         </div>
         {!hideComponent && <Footer />}

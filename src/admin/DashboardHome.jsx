@@ -2,7 +2,7 @@ import Dash_Header from "./components/HeaderDash"
 
 function DashboardHome() {
   return (
-    <div>
+    <div className="ms-64">
        
        <h1>Dashboard</h1>
     </div>
