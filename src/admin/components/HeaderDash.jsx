@@ -3,7 +3,7 @@ import logo from "../../assets/logo/Logo.png";
 import dashlog from "../../assets/icons/dashboard.png";
 import { useNavigate } from "react-router-dom";
 
-const Dash_Header = () => {
+const HeaderDash = () => {
   const navigate = useNavigate();
   const handleAllProduct = () => {
     navigate("/productlist");
@@ -33,4 +33,4 @@ const Dash_Header = () => {
   );
 };
 
-export default Dash_Header;
+export default HeaderDash;

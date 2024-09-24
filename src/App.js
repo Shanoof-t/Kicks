@@ -15,10 +15,11 @@ import Categorie from "./pages/Categorie";
 import AllItems from "./pages/AllItems";
 import CategorieDetails from "./pages/CategorieDetails";
 import ItemDisplay from "./components/ItemDisplay";
-import Dashboard_Home from "./admin/Dashboard_Home";
-import AllProducts_Dash from "./admin/AllProducts_Dash";
-import Dash_Header from "./admin/components/Dash_Header";
 import AddProduct from "./admin/AddProduct";
+import DashboardHome from "./admin/DashboardHome";
+
+import AllProductsDash from "./admin/AllProductsDash";
+import HeaderDash from "./admin/components/HeaderDash";
 function App() {
   const location = useLocation();
   const hideComponent =
@@ -26,11 +27,14 @@ function App() {
     location.pathname === "/register" ||
     location.pathname === "/admin" ||
     location.pathname === "/productlist" ||
-    location.pathname === "/addproduct"
+    location.pathname === "/addproduct";
+
+  const hideHeaderDash =
+    location.pathname === "/login" || location.pathname === "/register";
   return (
     <div className={hideComponent ? "" : "container mx-auto"}>
       {!hideComponent && <Navbar />}
-      {hideComponent && <Dash_Header />}
+      {!hideHeaderDash && hideComponent && <HeaderDash />}
       <div className="main">
         <Routes>
           {/* User Routes */}
@@ -55,8 +59,8 @@ function App() {
 
           {/* Admin Routes */}
 
-          <Route path="admin" element={<Dashboard_Home />} />
-          <Route path="productlist" element={<AllProducts_Dash />} />
+          <Route path="admin" element={<DashboardHome />} />
+          <Route path="productlist" element={<AllProductsDash />} />
           <Route path="addproduct" element={<AddProduct />} />
         </Routes>
       </div>

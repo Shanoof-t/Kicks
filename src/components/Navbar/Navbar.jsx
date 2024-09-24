@@ -25,7 +25,6 @@ function Navbar() {
   const [cartItems, setCartItems] = useState([]);
   const [user, setUser] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
-
   useEffect(() => {
     setUser(localStorage.getItem("userId"));
   }, []);
@@ -44,7 +43,7 @@ function Navbar() {
     } else {
       setCartItems([]);
     }
-  }, [user, cartItems]);
+  }, [user]);
 
   useEffect(() => {
     axios

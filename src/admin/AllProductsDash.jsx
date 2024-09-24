@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function AllProducts_Dash() {
+function AllProductsDash() {
   const [items, setItems] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
@@ -13,8 +13,6 @@ function AllProducts_Dash() {
       })
       .catch((err) => console.log(err.message));
   }, []);
-
-  console.log(items);
 
   return (
     <div className="ms-64 p-4">
@@ -29,9 +27,9 @@ function AllProducts_Dash() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {items.map((item) => (
+        {items.map((item, index) => (
           <div
-            key={item.id}
+            key={`${item.id}${index}`}
             className="bg-white shadow-md rounded-lg overflow-hidden"
           >
             <img
@@ -58,4 +56,4 @@ function AllProducts_Dash() {
   );
 }
 
-export default AllProducts_Dash;
+export default AllProductsDash;
