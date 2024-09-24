@@ -1,19 +1,9 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { ProductContext } from "../context/ProductProvider";
 function AllProductsDash() {
-  const [items, setItems] = useState([]);
   const navigate = useNavigate();
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/items")
-      .then((res) => {
-        setItems(res.data);
-      })
-      .catch((err) => console.log(err.message));
-  }, []);
-
+  const {allitems}=useContext(ProductContext)
   return (
     <div className="ms-64 p-4">
       <div className="flex justify-between items-center mb-6">
@@ -27,7 +17,7 @@ function AllProductsDash() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {items.map((item, index) => (
+        {allitems.map((item, index) => (
           <div
             key={`${item.id}${index}`}
             className="bg-white shadow-md rounded-lg overflow-hidden"

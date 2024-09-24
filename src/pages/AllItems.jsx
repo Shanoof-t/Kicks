@@ -1,20 +1,10 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import ItemDisplay from "../components/ItemDisplay";
-
+import { ProductContext } from "../context/ProductProvider";
 function AllItems() {
-  const [items, setItems] = useState([]);
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/items")
-      .then((res) => {
-        setItems(res.data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  });
-  return <ItemDisplay value={items} />;
+  const {allitems}=useContext(ProductContext)
+  return <ItemDisplay value={allitems} />;
 }
 
 export default AllItems;
