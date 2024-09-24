@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Field, Form, Formik } from "formik";
 import { addProductValidation } from "./components/AddProductValidation";
 import axios from "axios";
 import { itemsURL } from "../API/API_URL";
 import { toast, ToastContainer } from "react-toastify";
-import { useParams } from "react-router-dom";
-function EditProduct() {
+import { useNavigate, useParams } from "react-router-dom";
+function UpdateProduct() {
+  const navigate =useNavigate()
   const { itemId } = useParams();
-
-  const initialInformation = {
+  const initialDatas = {
     name: "",
     description: "",
     category: "",
@@ -20,34 +20,36 @@ function EditProduct() {
     offer_price: "",
     imageURL: "",
   };
+  const [initialInformation, setInitialInformation] = useState(initialDatas);
+  useEffect(() => {
+    axios.get(`${itemsURL}/${itemId}`).then((res) => {
+      
+      setInitialInformation(res.data);
+      console.log(res.data.available_sizes);
+      const sizes = res.data.available_sizes.join(",")
+      setInitialInformation(prev=>({
+        ...prev,
+       available_sizes:sizes
+      }))
+    });
+  }, []);
+  // console.log(initialInformation);
 
   const [imageUrl, setImageUrl] = useState(null);
   const handleSubmit = async (values) => {
+    console.log(values);
     const imageUrlToUse = imageUrl ? imageUrl : values.imageURL;
-    const sizes = values.available_sizes
-      ? values.available_sizes.split(",")
-      : values.available_sizes;
-    const categoryType = values.category
-      ? values.category.toUpperCase()
-      : values.category;
     const itemData = {
       ...values,
-      available_sizes: sizes,
-      category: categoryType,
+      available_sizes: values.available_sizes.split(","),
+      category: values.category.toUpperCase(),
       imageURL: imageUrlToUse,
     };
-    let finalData = {}
-    for(let x in itemData){
-      if(itemData[x] !== ""){
-        finalData[x] =itemData[x]
-      }
-    }
-    
     try {
-      await axios.patch(`${itemsURL}/${itemId}`, finalData);
-      console.log(finalData);
-      toast.success("Item Edited");
+      await axios.put(`${itemsURL}/${itemId}`, itemData);
+      toast.success("Item uploaded");
       setImageUrl(null);
+      navigate(-1)
     } catch (error) {
       toast.error(error.message);
     }
@@ -61,21 +63,16 @@ function EditProduct() {
     };
     reader.readAsDataURL(file);
   };
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   const [val] = value;
-  //   initialInformation.name = val;
-  //   // setIntialInformation({ ...initialInformation, [name]: value });
-  // };
   return (
     <div className="ms-64 p-8">
       <ToastContainer />
       <Formik
+        enableReinitialize={true}
         initialValues={initialInformation}
-        // validationSchema={addProductValidation(imageUrl)}
+        validationSchema={addProductValidation(imageUrl)}
         onSubmit={handleSubmit}
       >
-        {({ errors, touched, values, handleChange }) => (
+        {({ errors, handleChange, touched, values }) => (
           <Form>
             <div className="mb-6">
               <h1 className="text-3xl font-bold">Product Details</h1>
@@ -286,7 +283,7 @@ function EditProduct() {
                 className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200"
                 type="submit"
               >
-                Submit
+                Update Product
               </button>
             </div>
           </Form>
@@ -296,4 +293,4 @@ function EditProduct() {
   );
 }
 
-export default EditProduct;
+export default UpdateProduct;

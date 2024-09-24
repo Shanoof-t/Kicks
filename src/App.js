@@ -20,7 +20,7 @@ import DashboardHome from "./admin/DashboardHome";
 import HeaderDash from "./admin/components/HeaderDash";
 import ProductProvider from "./context/ProductProvider";
 import ProductsDash from "./admin/ProductsDash";
-import EditProduct from "./admin/EditProduct";
+import UpdateProduct from "./admin/UpdateProduct";
 function App() {
   const location = useLocation();
   const hideComponent =
@@ -66,7 +66,7 @@ function App() {
               element={<ProductsDash />}
             />
             <Route path="admin/addproduct" element={<AddProduct />} />
-            <Route path="admin/editproduct/:itemId" element={<EditProduct />} />
+            <Route path="admin/updateproduct/:itemId" element={<UpdateProduct />} />
           </Routes>
         </div>
         {!hideComponent && <Footer />}

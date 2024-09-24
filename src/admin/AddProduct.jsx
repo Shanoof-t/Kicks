@@ -29,7 +29,7 @@ function AddProduct() {
     };
     try {
       await axios.post(itemsURL, itemData);
-      toast.success("Item uploaded");
+      toast.success("Item Updated");
      
       setImageUrl(null)
     } catch (error) {
@@ -265,7 +265,7 @@ function AddProduct() {
                 className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200"
                 type="submit"
               >
-                Add Product
+                Update Product
               </button>
             </div>
           </Form>

@@ -62,7 +62,7 @@ function ProductsDash() {
 
             {menuToggle === item.id && (
               <div className="absolute top-10 right-2 w-32 bg-white border border-gray-200 shadow-md z-10">
-                <div className="p-2 hover:bg-gray-100 cursor-pointer" onClick={()=>navigate(`/admin/editproduct/${item.id}`)}>Edit</div>
+                <div className="p-2 hover:bg-gray-100 cursor-pointer" onClick={()=>navigate(`/admin/updateproduct/${item.id}`)}>Edit</div>
                 <div className="p-2 hover:bg-gray-100 cursor-pointer">Delete</div>
               </div>
             )}
