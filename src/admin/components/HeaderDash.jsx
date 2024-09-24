@@ -44,8 +44,21 @@ const HeaderDash = () => {
           className="w-full px-4 py-3 bg-thirdColor text-white rounded-md shadow hover:bg-thirdColor-dark transition duration-200"
           onClick={() => handleCategory("allitems")}
         >
-          <h1 className="text-sm font-semibold uppercase">All Products</h1>
+          <h1 className="text-sm font-semibold uppercase">ALL PRODUCTS</h1>
         </button>
+        <button
+          className="w-full px-4 py-3 bg-thirdColor text-white rounded-md shadow hover:bg-thirdColor-dark transition duration-200"
+          onClick={() => navigate("/admin/orderlist")}
+        >
+          <h1 className="text-sm font-semibold uppercase">ORDER LIST</h1>
+        </button>
+        <button
+          className="w-full px-4 py-3 bg-thirdColor text-white rounded-md shadow hover:bg-thirdColor-dark transition duration-200"
+          onClick={() => navigate('/admin/users')}
+        >
+          <h1 className="text-sm font-semibold uppercase">USERS</h1>
+        </button>
+
       </div>
 
       {/* Category Section */}

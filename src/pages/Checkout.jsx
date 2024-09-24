@@ -3,25 +3,24 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {v4 as uuidv4} from 'uuid'
+import { v4 as uuidv4 } from "uuid";
 function Checkout() {
   const navigate = useNavigate();
-  const [cartItems, setCartItems] = useState([]);  
+  const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [user, setUser] = useState("");
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     setUser(userId);
-  },[]);
+  }, []);
   useEffect(() => {
     axios
       .get(`http://localhost:4000/user/${user}`)
       .then((res) => {
-        const existingCart = res.data.cart || []
+        const existingCart = res.data.cart || [];
         setCartItems(existingCart);
         console.log(cartItems);
-        
       })
       .catch((err) => {
         toast.error(err.message);
@@ -34,15 +33,19 @@ function Checkout() {
     }, 0);
     setTotalPrice(total);
   }, [cartItems]);
-
+  const moment = require("moment");
+  const currentDate = moment().format("YYYY-MM-DD");
   const initialInformation = {
-    orderId:uuidv4(),
+    orderId: uuidv4(),
     email: "",
     firstName: "",
     lastName: "",
     address: "",
     phone: "",
     paymentMethod: "",
+    status: "pending",
+    date: currentDate,
+    amount: 0,
   };
   const [contactDetails, setContactDetails] = useState(initialInformation);
   const [contactDetailsErrors, setContactDetailsErrors] = useState({});
@@ -50,7 +53,7 @@ function Checkout() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setContactDetails({ ...contactDetails, [name]: value });
+    setContactDetails({ ...contactDetails, [name]: value, amount: totalPrice });
   };
 
   const handlePlaceOrder = (e) => {
@@ -112,10 +115,7 @@ function Checkout() {
   }, [cartItems]);
 
   const addOrderTojson = (value) => {
-    if (
-      Object.keys(contactDetailsErrors).length === 0 &&
-      isSubmit && user
-    ) {
+    if (Object.keys(contactDetailsErrors).length === 0 && isSubmit && user) {
       axios
         .get(`http://localhost:4000/user/${user}`)
         .then((res) => {
@@ -123,11 +123,11 @@ function Checkout() {
           const updatedOrder = [...existingOrders, contactDetails];
           axios.patch(`http://localhost:4000/user/${user}`, {
             order: updatedOrder,
-            cart:[]
+            cart: [],
           });
         })
         .then(() => {
-          toast.success("Your Order is Placed",{className:"mt-12"});
+          toast.success("Your Order is Placed", { className: "mt-12" });
         })
 
         .then(() => {
@@ -136,10 +136,10 @@ function Checkout() {
           }, 6000);
         })
         .catch((err) => {
-          toast.error(err.message,{className:"mt-12"});
+          toast.error(err.message, { className: "mt-12" });
         });
-    }else if(!user){
-      navigate("/login")
+    } else if (!user) {
+      navigate("/login");
     }
   };
 

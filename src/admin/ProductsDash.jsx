@@ -3,6 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ProductContext } from "../context/ProductProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import { itemsURL } from "../API/API_URL";
+import { toast, ToastContainer } from "react-toastify";
 
 function ProductsDash() {
   const [menuToggle, setMenuToggle] = useState(null); // Track toggle per product
@@ -32,8 +35,20 @@ function ProductsDash() {
     }
   }, [productCategory, allitems]);
 
+  const handleDeleteProduct = (id) => {
+    axios
+      .delete(`${itemsURL}/${id}`)
+      .then(() => {
+        toast.success("Item deleted")
+        setProducts(products.filter((item)=>item.id !== id))
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
   return (
     <div className="ms-64 p-4">
+      <ToastContainer />
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">
           {productCategory === "allitems" ? "ALL" : productCategory} PRODUCTS
@@ -50,7 +65,7 @@ function ProductsDash() {
         {products.map((item, index) => (
           <div
             key={`${item.id}${index}`}
-            className="bg-white shadow-md rounded-lg overflow-hidden relative" // Added relative to the parent
+            className="bg-white shadow-md rounded-lg overflow-hidden relative" 
           >
             <FontAwesomeIcon
               icon={faEllipsis}
@@ -62,8 +77,18 @@ function ProductsDash() {
 
             {menuToggle === item.id && (
               <div className="absolute top-10 right-2 w-32 bg-white border border-gray-200 shadow-md z-10">
-                <div className="p-2 hover:bg-gray-100 cursor-pointer" onClick={()=>navigate(`/admin/updateproduct/${item.id}`)}>Edit</div>
-                <div className="p-2 hover:bg-gray-100 cursor-pointer">Delete</div>
+                <div
+                  className="p-2 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => navigate(`/admin/updateproduct/${item.id}`)}
+                >
+                  Edit
+                </div>
+                <div
+                  className="p-2 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => handleDeleteProduct(item.id)}
+                >
+                  Delete
+                </div>
               </div>
             )}
 

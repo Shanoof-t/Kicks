@@ -21,6 +21,9 @@ import HeaderDash from "./admin/components/HeaderDash";
 import ProductProvider from "./context/ProductProvider";
 import ProductsDash from "./admin/ProductsDash";
 import UpdateProduct from "./admin/UpdateProduct";
+import Users from "./admin/Users";
+import OrderList from "./admin/OrderList";
+import Order from "./admin/Order";
 function App() {
   const location = useLocation();
   const hideComponent =
@@ -66,7 +69,13 @@ function App() {
               element={<ProductsDash />}
             />
             <Route path="admin/addproduct" element={<AddProduct />} />
-            <Route path="admin/updateproduct/:itemId" element={<UpdateProduct />} />
+            <Route
+              path="admin/updateproduct/:itemId"
+              element={<UpdateProduct />}
+            />
+            <Route path="admin/orderlist" element={<OrderList />} />
+            <Route path="admin/order" element={<Order />}/>
+            <Route path="admin/users" element={<Users />} />
           </Routes>
         </div>
         {!hideComponent && <Footer />}
