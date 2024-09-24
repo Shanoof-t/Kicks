@@ -17,9 +17,10 @@ import CategorieDetails from "./pages/CategorieDetails";
 import ItemDisplay from "./components/ItemDisplay";
 import AddProduct from "./admin/AddProduct";
 import DashboardHome from "./admin/DashboardHome";
-import AllProductsDash from "./admin/AllProductsDash";
 import HeaderDash from "./admin/components/HeaderDash";
 import ProductProvider from "./context/ProductProvider";
+import ProductsDash from "./admin/ProductsDash";
+import EditProduct from "./admin/EditProduct";
 function App() {
   const location = useLocation();
   const hideComponent =
@@ -28,11 +29,10 @@ function App() {
     location.pathname.startsWith("/admin");
 
   const hideHeaderDash =
-    location.pathname === "/login" || location.pathname === "/register" 
+    location.pathname === "/login" || location.pathname === "/register";
   return (
     <ProductProvider>
       <div className={hideComponent ? "" : "container mx-auto"}>
-
         {!hideHeaderDash && hideComponent && <HeaderDash />}
         {!hideComponent && <Navbar />}
         <div className="main">
@@ -49,9 +49,9 @@ function App() {
               </Route>
             </Route>
             <Route path="all" element={<AllItems />} />
-            {/* <Route path="men/:productId" element={<ProductDetails />} />
+            <Route path="men/:productId" element={<ProductDetails />} />
             <Route path="women/:productId" element={<ProductDetails />} />
-            <Route path="kids/:productId" element={<ProductDetails />} /> */}
+            <Route path="kids/:productId" element={<ProductDetails />} />
             <Route path="cart" element={<Cart />} />
             <Route path="checkout" element={<Checkout />} />
             <Route path="profile" element={<Profile />} />
@@ -63,9 +63,10 @@ function App() {
             <Route path="admin" element={<DashboardHome />} />
             <Route
               path="admin/productlist/:productCategory"
-              element={<AllProductsDash />}
+              element={<ProductsDash />}
             />
             <Route path="admin/addproduct" element={<AddProduct />} />
+            <Route path="admin/editproduct/:itemId" element={<EditProduct />} />
           </Routes>
         </div>
         {!hideComponent && <Footer />}
