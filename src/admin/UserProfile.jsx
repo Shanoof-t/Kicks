@@ -6,7 +6,7 @@ import { userURL } from "../API/API_URL";
 
 function UserProfile() {
   const { userID } = useParams();
-  const { users,setUsers } = useContext(UserContext);
+  const { users, setUsers } = useContext(UserContext);
   const [user, setUser] = useState(null);
   useEffect(() => {
     const userData = users.find((value) => value.id === userID);
@@ -29,18 +29,16 @@ function UserProfile() {
       .patch(`${userURL}/${id}`, { isAllowed: !user.isAllowed })
       .then(() => {
         setUser((prev) => ({ ...prev, isAllowed: !user.isAllowed }));
-      })
-      .then(()=>{
-        axios.get(userURL).then((res)=>{
-          const allUsers = res.data.filter((value) => !value.isAdmin)
-          setUsers(allUsers)
-        })
+        setUsers((prev) => {
+          return prev.map((value) =>
+            value.id === id ? { ...value, isAllowed: !value.isAllowed } : value
+          );
+        });
       })
       .catch((err) => {
         console.log(err.message);
       });
   };
-
 
   if (!user) {
     return (
