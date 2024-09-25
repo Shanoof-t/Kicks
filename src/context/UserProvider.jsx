@@ -21,12 +21,12 @@ function UserProvider({ children }) {
 
   useEffect(() => {
     axios.get(userURL).then((res) => {
-      const allUsers = res.data.filter(value=>!value.isAdmin)
+      const allUsers = res.data.filter((value) => !value.isAdmin)
       setUsers(allUsers);
     });
   }, []);
   return (
-    <UserContext.Provider value={{ orders, users }}>
+    <UserContext.Provider value={{ orders, users, setUsers }}>
       {children}
     </UserContext.Provider>
   );

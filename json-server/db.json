@@ -78,7 +78,7 @@
       "lastName": "faris",
       "email": "salman@gmail.com",
       "password": "123456",
-      "isAllowed": true,
+      "isAllowed": false,
       "cart": [
         {
           "id": "10",
