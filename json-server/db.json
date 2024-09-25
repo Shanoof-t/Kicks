@@ -15,8 +15,104 @@
       "email": "shanoof.001@gmail.com",
       "password": "123456",
       "isAllowed": true,
-      "cart": [],
-      "order": []
+      "cart": [
+        {
+          "id": "11",
+          "name": "Nike Air Max 90",
+          "imageURL": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/8439f823-86cf-4086-81d2-4f9ff9a66866/air-max-90-big-kids-shoe-1wzwJM.jpg",
+          "price": 100,
+          "quantity": 1,
+          "size": "4"
+        }
+      ],
+      "order": [
+        {
+          "orderId": "98b8cbac-17a1-4c81-8a30-d5b4a03a6199",
+          "email": "shanoof.001@gmail.com",
+          "firstName": "shanoof",
+          "lastName": "faris",
+          "address": "Rua Inexistente, 2000",
+          "phone": "1234567898",
+          "paymentMethod": "UPI",
+          "status": "pending",
+          "date": "2024-09-25",
+          "amount": 137,
+          "product": [
+            {
+              "name": "Nike Mercurial Superfly 7 Pro MDS FG",
+              "productId": "9",
+              "size": "9",
+              "quantity": 1,
+              "imageURL": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/i1-a52a8aec-22dc-4982-961b-75c5f4c72805/mercurial-superfly-7-pro-mds-fg-firm-ground-soccer-cleat-mhcpdN.jpg",
+              "price": 137
+            }
+          ]
+        },
+        {
+          "orderId": "5dd824a4-1645-4c63-9a03-1c8b4ab5c0b6",
+          "email": "shanoof.001@gmail.com",
+          "firstName": "salman",
+          "lastName": "faris",
+          "address": "Rua Inexistente, 2000",
+          "phone": "1234567898",
+          "paymentMethod": "cash",
+          "status": "pending",
+          "date": "2024-09-25",
+          "amount": 110,
+          "product": [
+            {
+              "name": "Liberty Kids Running Shoes",
+              "productId": "15",
+              "size": "4",
+              "quantity": 1,
+              "imageURL": "https://imgs.search.brave.com/0j1Ebz5b4v8Slnbx_WI-FqGGVJk5lPi6Tc5YXipeYGQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NjFkVHBPamo3Q0wu/anBn",
+              "price": 110
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "28a7",
+      "firstName": "salman",
+      "lastName": "faris",
+      "email": "salman@gmail.com",
+      "password": "123456",
+      "isAllowed": true,
+      "cart": [
+        {
+          "id": "10",
+          "name": "Nike Air Force 1",
+          "imageURL": "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/178b2a46-3ee4-492b-882e-f71efdd53a36/air-force-1-big-kids-shoe-2zqp8D.jpg",
+          "price": 90,
+          "quantity": 1,
+          "size": "4"
+        }
+      ],
+      "order": [
+        {
+          "orderId": "8bc7edd7-578b-4ae0-aa1b-4a5025030c06",
+          "email": "shanoof.001@gmail.com",
+          "firstName": "salman",
+          "lastName": "t",
+          "address": "Rua Inexistente, 2000",
+          "phone": "4543243522",
+          "paymentMethod": "cash",
+          "status": "pending",
+          "date": "2024-09-25",
+          "amount": 130,
+          "product": [
+            {
+              "name": "Nike React Miler",
+              "productId": "2",
+              "size": "8",
+              "quantity": 1,
+              "imageURL": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/i1-5cc7de3b-2afc-49c2-a1e4-0508997d09e6/react-miler-mens-running-shoe-DgF6nr.jpg",
+              "price": 130
+            }
+          ]
+        }
+      ]
     }
   ],
   "items": [
