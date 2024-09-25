@@ -24,6 +24,8 @@ import UpdateProduct from "./admin/UpdateProduct";
 import Users from "./admin/Users";
 import OrderList from "./admin/OrderList";
 import Order from "./admin/Order";
+import UserProvider from "./context/UserProvider";
+import UserProfile from "./admin/UserProfile";
 function App() {
   const location = useLocation();
   const hideComponent =
@@ -34,53 +36,56 @@ function App() {
   const hideHeaderDash =
     location.pathname === "/login" || location.pathname === "/register";
   return (
-    <ProductProvider>
-      <div className={hideComponent ? "" : "container mx-auto"}>
-        {!hideHeaderDash && hideComponent && <HeaderDash />}
-        {!hideComponent && <Navbar />}
-        <div className="main">
-          <Routes>
-            {/* User Routes */}
+    <UserProvider>
+      <ProductProvider>
+        <div className={hideComponent ? "" : "container mx-auto"}>
+          {!hideHeaderDash && hideComponent && <HeaderDash />}
+          {!hideComponent && <Navbar />}
+          <div className="main">
+            <Routes>
+              {/* User Routes */}
 
-            <Route path="/" element={<Home />} />
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-            <Route path="home" element={<Home />} />
-            <Route path="categorie/:categorieGender" element={<Categorie />}>
-              <Route path=":categrieType" element={<CategorieDetails />}>
-                <Route index element={<ItemDisplay />} />
+              <Route path="/" element={<Home />} />
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+              <Route path="home" element={<Home />} />
+              <Route path="categorie/:categorieGender" element={<Categorie />}>
+                <Route path=":categrieType" element={<CategorieDetails />}>
+                  <Route index element={<ItemDisplay />} />
+                </Route>
               </Route>
-            </Route>
-            <Route path="all" element={<AllItems />} />
-            <Route path="men/:productId" element={<ProductDetails />} />
-            <Route path="women/:productId" element={<ProductDetails />} />
-            <Route path="kids/:productId" element={<ProductDetails />} />
-            <Route path="cart" element={<Cart />} />
-            <Route path="checkout" element={<Checkout />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="orderdetails" element={<OrderDetails />} />
-            <Route path="*" element={<NotFound />} />
+              <Route path="all" element={<AllItems />} />
+              <Route path="men/:productId" element={<ProductDetails />} />
+              <Route path="women/:productId" element={<ProductDetails />} />
+              <Route path="kids/:productId" element={<ProductDetails />} />
+              <Route path="cart" element={<Cart />} />
+              <Route path="checkout" element={<Checkout />} />
+              <Route path="profile" element={<Profile />} />
+              <Route path="orderdetails" element={<OrderDetails />} />
+              <Route path="*" element={<NotFound />} />
 
-            {/* Admin Routes */}
+              {/* Admin Routes */}
 
-            <Route path="admin" element={<DashboardHome />} />
-            <Route
-              path="admin/productlist/:productCategory"
-              element={<ProductsDash />}
-            />
-            <Route path="admin/addproduct" element={<AddProduct />} />
-            <Route
-              path="admin/updateproduct/:itemId"
-              element={<UpdateProduct />}
-            />
-            <Route path="admin/orderlist" element={<OrderList />} />
-            <Route path="admin/order" element={<Order />}/>
-            <Route path="admin/users" element={<Users />} />
-          </Routes>
+              <Route path="admin" element={<DashboardHome />} />
+              <Route
+                path="admin/productlist/:productCategory"
+                element={<ProductsDash />}
+              />
+              <Route path="admin/addproduct" element={<AddProduct />} />
+              <Route
+                path="admin/updateproduct/:itemId"
+                element={<UpdateProduct />}
+              />
+              <Route path="admin/orderlist" element={<OrderList />} />
+              <Route path="admin/order/:orderID" element={<Order />} />
+              <Route path="admin/users" element={<Users />} />
+              <Route path="admin/userprofile/:userID" element={<UserProfile />} />
+            </Routes>
+          </div>
+          {!hideComponent && <Footer />}
         </div>
-        {!hideComponent && <Footer />}
-      </div>
-    </ProductProvider>
+      </ProductProvider>
+    </UserProvider>
   );
 }
 

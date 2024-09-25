@@ -70,6 +70,7 @@ function Register() {
           lastName: registerValues.lastName,
           email: registerValues.email,
           password: registerValues.password,
+          isAllowed:true,
           cart:[],
           order:[]
         })

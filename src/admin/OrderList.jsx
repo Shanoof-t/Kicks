@@ -1,21 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { userURL } from "../API/API_URL";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { UserContext } from "../context/UserProvider";
 function OrderList() {
   const navigate = useNavigate();
-  const [orders, setOrders] = useState([]);
-
-  useEffect(() => {
-    axios.get(`${userURL}`).then((res) => {
-      const allOrders = res.data
-        .filter((value) => !value.isAdmin && value.order)
-        .flatMap((value) => value.order);
-
-      setOrders(allOrders);
-    });
-  }, []);
+  const { orders } = useContext(UserContext);
+  
 
   return (
     <div className="min-h-screen p-6 bg-gray-100 ms-64">
@@ -50,8 +41,9 @@ function OrderList() {
             {orders.map((order) => (
               <tr
                 key={order.orderId}
-                onClick={() => navigate("/admin/order")}
+                onClick={() => navigate(`/admin/order/${order.orderId}`)}
                 className="cursor-pointer hover:bg-gray-100 transition duration-200"
+
               >
                 <td className="border-b border-gray-200 py-3 px-4">
                   {`${order.firstName} ${order.lastName}`}

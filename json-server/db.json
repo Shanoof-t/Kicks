@@ -9,66 +9,14 @@
       "isAllowed": true
     },
     {
-      "id": "f35d",
-      "firstName": "Jon",
-      "lastName": "Doe",
-      "email": "test@example.us",
+      "id": "7a5e",
+      "firstName": "shanoof",
+      "lastName": "t",
+      "email": "shanoof.001@gmail.com",
       "password": "123456",
+      "isAllowed": true,
       "cart": [],
-      "order": [
-        {
-          "orderId": "a605a593-66d8-4a01-b61c-7f7f66897d49",
-          "email": "test@example.us",
-          "firstName": "Jon",
-          "lastName": "Doe",
-          "address": "1600 Fake Street",
-          "phone": "6019521325",
-          "paymentMethod": "cash",
-          "status": "pending",
-          "date": "2024-09-24",
-          "amount": 390,
-          "product": [
-            {
-              "name": "Nike React Infinity Run Flyknit",
-              "productId": "1",
-              "size": "9",
-              "quantity": 1,
-              "imageURL": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/i1-665455a5-45de-40fb-945f-c1852b82400d/react-infinity-run-flyknit-mens-running-shoe-zX42Nc.jpg",
-              "price": 160
-            },
-            {
-              "name": "Nike Air Force 1 LV8 2",
-              "productId": "16",
-              "size": "5",
-              "quantity": 1,
-              "imageURL": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/294b25e0-fc5d-436b-b09f-d2e30ac760e1/AIR+FORCE+1+LV8+2+%28GS%29.png",
-              "price": 230
-            }
-          ]
-        },
-        {
-          "orderId": "19e34158-c0db-418c-8c41-ab9e92ef0e3d",
-          "email": "teste@exemplo.us",
-          "firstName": "João",
-          "lastName": "Souza Silva",
-          "address": "Rua Inexistente, 2000",
-          "phone": "3121286800",
-          "paymentMethod": "UPI",
-          "status": "pending",
-          "date": "2024-09-24",
-          "amount": 110,
-          "product": [
-            {
-              "name": "Liberty Kids Running Shoes",
-              "productId": "15",
-              "size": "6",
-              "quantity": 1,
-              "imageURL": "https://imgs.search.brave.com/0j1Ebz5b4v8Slnbx_WI-FqGGVJk5lPi6Tc5YXipeYGQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NjFkVHBPamo3Q0wu/anBn",
-              "price": 110
-            }
-          ]
-        }
-      ]
+      "order": []
     }
   ],
   "items": [
