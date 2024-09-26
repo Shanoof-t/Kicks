@@ -154,6 +154,29 @@
               "price": 110
             }
           ]
+        },
+        {
+          "userId": "04fa",
+          "orderId": "e467a9fc-a98f-4bca-94fb-db3fc2e689d3",
+          "email": "shanoof.001@gmail.com",
+          "firstName": "shanoof",
+          "lastName": "t",
+          "address": "Rua Inexistente, 2000",
+          "phone": "9961628080",
+          "paymentMethod": "cash",
+          "status": true,
+          "date": "2024-09-26",
+          "amount": 150,
+          "product": [
+            {
+              "name": "Nike Phantom Vision Elite Dynamic Fit FG",
+              "productId": "6",
+              "size": "6",
+              "quantity": 1,
+              "imageURL": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/s1amp7uosrn0nqpsxeue/phantom-vision-elite-dynamic-fit-fg-firm-ground-soccer-cleat-19Kv1V.jpg",
+              "price": 150
+            }
+          ]
         }
       ]
     }

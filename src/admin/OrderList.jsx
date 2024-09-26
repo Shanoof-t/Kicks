@@ -5,25 +5,26 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserProvider";
 function OrderList() {
   const navigate = useNavigate();
-  const { users } = useContext(UserContext);
-  const [allOrders, setAllOrders] = useState(null);
-  const [orders, setOrders] = useState(allOrders);
- 
+  const { orders, users } = useContext(UserContext);
+
+  const [orderList, setOrderList] = useState(orders);
 
   useEffect(() => {
-    
+    if (orders) {
+      setOrderList(orders);
+    }
   }, [users]);
 
   const handleStatusSelector = (e) => {
     const { value } = e.target;
     if (value === "allorder") {
-      setOrders(allOrders);
+      setOrderList(orders);
     } else if (value === "delivered") {
-      const deliveredOrders = allOrders.filter((value) => !value.status);
-      setOrders(deliveredOrders);
+      const deliveredOrders = orders.filter((value) => !value.status);
+      setOrderList(deliveredOrders);
     } else if (value === "pending") {
-      const pendingOrders = allOrders.filter((value) => value.status);
-      setOrders(pendingOrders);
+      const pendingOrders = orders.filter((value) => value.status);
+      setOrderList(pendingOrders);
     }
   };
   return (
@@ -58,32 +59,32 @@ function OrderList() {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
-                  <tr
-                    key={order.orderId}
-                    onClick={() => navigate(`/admin/order/${order.orderId}`)}
-                    className="cursor-pointer hover:bg-gray-100 transition duration-200"
-                  >
-                    <td className="border-b border-gray-200 py-3 px-4">
-                      {`${order.firstName} ${order.lastName}`}
-                    </td>
-                    <td className="border-b border-gray-200 py-3 px-4">
-                      {order.orderId.slice(0, 5)}
-                    </td>
-                    <td className="border-b border-gray-200 py-3 px-4">
-                      {order.date}
-                    </td>
-                    <td className="border-b border-gray-200 py-3 px-4">
-                      {order.paymentMethod}
-                    </td>
-                    <td className="border-b border-gray-200 py-3 px-4">
-                      {order.status ? "Pending" : "Delivered"}
-                    </td>
-                    <td className="border-b border-gray-200 py-3 px-4">
-                      ${order.amount}
-                    </td>
-                  </tr>
-                ))}
+            {orderList.map((order) => (
+              <tr
+                key={order.orderId}
+                onClick={() => navigate(`/admin/order/${order.orderId}`)}
+                className="cursor-pointer hover:bg-gray-100 transition duration-200"
+              >
+                <td className="border-b border-gray-200 py-3 px-4">
+                  {`${order.firstName} ${order.lastName}`}
+                </td>
+                <td className="border-b border-gray-200 py-3 px-4">
+                  {order.orderId.slice(0, 5)}
+                </td>
+                <td className="border-b border-gray-200 py-3 px-4">
+                  {order.date}
+                </td>
+                <td className="border-b border-gray-200 py-3 px-4">
+                  {order.paymentMethod}
+                </td>
+                <td className="border-b border-gray-200 py-3 px-4">
+                  {order.status ? "Pending" : "Delivered"}
+                </td>
+                <td className="border-b border-gray-200 py-3 px-4">
+                  ${order.amount}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
