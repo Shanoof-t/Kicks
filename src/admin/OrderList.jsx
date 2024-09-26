@@ -11,10 +11,7 @@ function OrderList() {
  
 
   useEffect(() => {
-    const allOrders = users
-      .filter((value) => !value.isAdmin && value.order)
-      .flatMap((value) => value.order);
-    setAllOrders(allOrders);
+    
   }, [users]);
 
   const handleStatusSelector = (e) => {

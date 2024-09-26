@@ -3,19 +3,21 @@ import { userURL } from "../API/API_URL";
 import axios from "axios";
 export const UserContext = createContext();
 function UserProvider({ children }) {
-  // const [allOrders, setAllOrders] = useState([]);
+  const [allOrders, setAllOrders] = useState([]);
   const [users, setUsers] = useState([]);
-  // useEffect(() => {
-  //   axios
-  //     .get(userURL)
-  //     .then((res) => {
-  //       const allOrders = res.data
-  //       setAllOrders(allOrders);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.message);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get(userURL)
+      .then((res) => {
+        const allOrders = users
+      .filter((value) => !value.isAdmin && value.order)
+      .flatMap((value) => value.order);
+    setAllOrders(allOrders);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
 
   useEffect(() => {
     axios.get(userURL).then((res) => {
