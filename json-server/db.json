@@ -9,39 +9,54 @@
       "isAllowed": true
     },
     {
-      "id": "7a5e",
+      "id": "04fa",
       "firstName": "shanoof",
       "lastName": "t",
       "email": "shanoof.001@gmail.com",
       "password": "123456",
       "isAllowed": true,
-      "cart": [
-        {
-          "id": "11",
-          "name": "Nike Air Max 90",
-          "imageURL": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/8439f823-86cf-4086-81d2-4f9ff9a66866/air-max-90-big-kids-shoe-1wzwJM.jpg",
-          "price": 100,
-          "quantity": 1,
-          "size": "4"
-        }
-      ],
+      "cart": [],
       "order": [
         {
-          "orderId": "98b8cbac-17a1-4c81-8a30-d5b4a03a6199",
+          "userId": "04fa",
+          "orderId": "128665d8-16fc-4892-af54-f5a46c70bb68",
           "email": "shanoof.001@gmail.com",
           "firstName": "shanoof",
+          "lastName": "t",
+          "address": "Rua Inexistente, 2000",
+          "phone": "9961628083",
+          "paymentMethod": "cash",
+          "status": false,
+          "date": "2024-09-26",
+          "amount": 130,
+          "product": [
+            {
+              "name": "Nike React Miler",
+              "productId": "2",
+              "size": "9",
+              "quantity": 1,
+              "imageURL": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/i1-5cc7de3b-2afc-49c2-a1e4-0508997d09e6/react-miler-mens-running-shoe-DgF6nr.jpg",
+              "price": 130
+            }
+          ]
+        },
+        {
+          "userId": "04fa",
+          "orderId": "73cb3092-7e7d-4937-97ca-a59b1dc1d07d",
+          "email": "shanoof.001@gmail.com",
+          "firstName": "salman",
           "lastName": "faris",
           "address": "Rua Inexistente, 2000",
-          "phone": "1234567898",
-          "paymentMethod": "UPI",
-          "status": "pending",
-          "date": "2024-09-25",
+          "phone": "9876543211",
+          "paymentMethod": "cash",
+          "status": false,
+          "date": "2024-09-26",
           "amount": 137,
           "product": [
             {
               "name": "Nike Mercurial Superfly 7 Pro MDS FG",
               "productId": "9",
-              "size": "9",
+              "size": "11",
               "quantity": 1,
               "imageURL": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/i1-a52a8aec-22dc-4982-961b-75c5f4c72805/mercurial-superfly-7-pro-mds-fg-firm-ground-soccer-cleat-mhcpdN.jpg",
               "price": 137
@@ -49,66 +64,71 @@
           ]
         },
         {
-          "orderId": "5dd824a4-1645-4c63-9a03-1c8b4ab5c0b6",
+          "userId": "04fa",
+          "orderId": "e70f9224-db55-4864-9195-e7bb861c3679",
           "email": "shanoof.001@gmail.com",
-          "firstName": "salman",
-          "lastName": "faris",
-          "address": "Rua Inexistente, 2000",
-          "phone": "1234567898",
+          "firstName": "João",
+          "lastName": "np",
+          "address": "kozhikode",
+          "phone": "9961628083",
           "paymentMethod": "cash",
-          "status": "pending",
-          "date": "2024-09-25",
+          "status": false,
+          "date": "2024-09-26",
           "amount": 110,
           "product": [
             {
-              "name": "Liberty Kids Running Shoes",
-              "productId": "15",
+              "name": "Nike Air Max 90 LTR",
+              "productId": "13",
               "size": "4",
               "quantity": 1,
-              "imageURL": "https://imgs.search.brave.com/0j1Ebz5b4v8Slnbx_WI-FqGGVJk5lPi6Tc5YXipeYGQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NjFkVHBPamo3Q0wu/anBn",
+              "imageURL": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco,u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/c3c11af6-1a5f-44e0-aa98-783656b35bf5/AIR+JORDAN+1+LOW+FLYEASE.png",
               "price": 110
             }
           ]
-        }
-      ]
-    },
-    {
-      "id": "28a7",
-      "firstName": "salman",
-      "lastName": "faris",
-      "email": "salman@gmail.com",
-      "password": "123456",
-      "isAllowed": true,
-      "cart": [
+        },
         {
-          "id": "10",
-          "name": "Nike Air Force 1",
-          "imageURL": "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/178b2a46-3ee4-492b-882e-f71efdd53a36/air-force-1-big-kids-shoe-2zqp8D.jpg",
-          "price": 90,
-          "quantity": 1,
-          "size": "4"
-        }
-      ],
-      "order": [
-        {
-          "orderId": "8bc7edd7-578b-4ae0-aa1b-4a5025030c06",
+          "userId": "04fa",
+          "orderId": "f1e293e4-73b6-4981-a103-6e6abaf8007c",
           "email": "shanoof.001@gmail.com",
-          "firstName": "salman",
-          "lastName": "t",
-          "address": "Rua Inexistente, 2000",
-          "phone": "4543243522",
+          "firstName": "sreeshanth",
+          "lastName": "np",
+          "address": "kozhikode",
+          "phone": "9961628076",
           "paymentMethod": "cash",
-          "status": "pending",
-          "date": "2024-09-25",
-          "amount": 130,
+          "status": false,
+          "date": "2024-09-26",
+          "amount": 230,
           "product": [
             {
-              "name": "Nike React Miler",
-              "productId": "2",
-              "size": "8",
+              "name": "Nike Air Force 1 LV8 2",
+              "productId": "16",
+              "size": "4",
               "quantity": 1,
-              "imageURL": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/i1-5cc7de3b-2afc-49c2-a1e4-0508997d09e6/react-miler-mens-running-shoe-DgF6nr.jpg",
-              "price": 130
+              "imageURL": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/294b25e0-fc5d-436b-b09f-d2e30ac760e1/AIR+FORCE+1+LV8+2+%28GS%29.png",
+              "price": 230
+            }
+          ]
+        },
+        {
+          "userId": "04fa",
+          "orderId": "4a087702-2d9b-484c-8938-f217efeaaf24",
+          "email": "test@example.us",
+          "firstName": "Jon",
+          "lastName": "Doe",
+          "address": "1600 Fake Street",
+          "phone": "9961628079",
+          "paymentMethod": "cash",
+          "status": false,
+          "date": "2024-09-26",
+          "amount": 350,
+          "product": [
+            {
+              "name": "Air Jordan 4 RM",
+              "productId": "20",
+              "size": "10",
+              "quantity": 1,
+              "imageURL": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco,u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/4a77744a-a08a-4a22-986c-c6cbefef1f77/AIR+JORDAN+4+RM.png",
+              "price": 350
             }
           ]
         }

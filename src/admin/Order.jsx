@@ -5,14 +5,46 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { UserContext } from "../context/UserProvider";
+import axios from "axios";
+import { userURL } from "../API/API_URL";
 function Order() {
   const { orderID } = useParams();
-  const { orders } = useContext(UserContext);
+  const { orders, setOrders } = useContext(UserContext);
   const order = orders.find((value) => value.orderId === orderID);
+  console.log(orders);
 
-  if (!order) return <div className="text-center text-gray-700">Order not found.</div>;
+  const handleDelivered = (orderId, userId) => {
+    // const deliveredOrder = { ...order, status: "delivered" };
+
+    axios
+      .get(`${userURL}/${userId}`)
+      .then((res) => {
+        const currData = res.data;
+
+        const updatedData = currData.order.map((value) =>
+          value.orderId === orderId ? { ...value, status: false } : value
+        );
+        axios
+          .patch(`${userURL}/${userId}`, { order: updatedData })
+          .then(() => {
+            setOrders((prev) => {
+              return prev.map((value) =>
+                value.orderId === orderId ? { ...value, status: false } : value
+              );
+            });
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+  if (!order)
+    return <div className="text-center text-gray-700">Order not found.</div>;
 
   return (
     <div className="ms-64 p-8 bg-gray-50 min-h-screen">
@@ -22,13 +54,25 @@ function Order() {
 
       <div className="bg-white p-6 shadow-md rounded-lg mb-8">
         <div className="grid grid-cols-2 gap-5 mb-6">
-          <div>
+          <div className="flex">
             <h2 className="font-semibold text-gray-700">
-              Order ID: <span className="font-normal">{order.orderId}</span>
+              Order ID:{" "}
+              <span className="font-normal">{order.orderId.slice(0, 5)}</span>
             </h2>
+            <div className="bg-secondaryColor text-white p-2 rounded-md text-center">
+              <span className="font-medium">
+                {order.status ? "Pending" : "Delivered"}
+              </span>
+            </div>
           </div>
-          <div className="bg-blue-500 text-white p-2 rounded-md text-center">
-            <span className="font-medium">{order.status}</span>
+
+          <div>
+            <button
+              className="bg-blue-500 text-white p-2 rounded-md text-center"
+              onClick={() => handleDelivered(order.orderId, order.userId)}
+            >
+              Mask as Delivered
+            </button>
           </div>
         </div>
 
@@ -45,13 +89,22 @@ function Order() {
               <h2 className="font-bold text-gray-700">Customer</h2>
             </div>
             <div>
-              <p><strong>Full Name:</strong> {`${order.firstName} ${order.lastName}`}</p>
-              <p><strong>Email:</strong> {order.email}</p>
-              <p><strong>Phone:</strong> {order.phone}</p>
+              <p>
+                <strong>Full Name:</strong>{" "}
+                {`${order.firstName} ${order.lastName}`}
+              </p>
+              <p>
+                <strong>Email:</strong> {order.email}
+              </p>
+              <p>
+                <strong>Phone:</strong> {order.phone}
+              </p>
             </div>
-            <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md shadow">
-              View Profile
-            </button>
+            <Link to={`/admin/userprofile/${order.userId}`}>
+              <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md shadow">
+                View Profile
+              </button>
+            </Link>
           </div>
 
           {/* Order Info */}
@@ -61,12 +114,19 @@ function Order() {
               <h2 className="font-bold text-gray-700">Order Info</h2>
             </div>
             <div>
-              <p><strong>Payment Method:</strong> {order.paymentMethod}</p>
-              <p><strong>Status:</strong> {order.status}</p>
+              <p>
+                <strong>Payment Method:</strong> {order.paymentMethod}
+              </p>
+              <p>
+                <strong>Status:</strong>{" "}
+                {order.status ? "Pending" : "Delivered"}
+              </p>
             </div>
-            <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md shadow">
-              View Order
-            </button>
+            <Link to={`/admin/userprofile/${order.userId}`}>
+              <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md shadow">
+                View Profile
+              </button>
+            </Link>
           </div>
 
           {/* Delivery Info */}
@@ -76,11 +136,15 @@ function Order() {
               <h2 className="font-bold text-gray-700">Deliver to</h2>
             </div>
             <div>
-              <p><strong>Address:</strong> {order.address}</p>
+              <p>
+                <strong>Address:</strong> {order.address}
+              </p>
             </div>
-            <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md shadow">
-              View Address
-            </button>
+            <Link to={`/admin/userprofile/${order.userId}`}>
+              <button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md shadow">
+                View Profile
+              </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -91,10 +155,18 @@ function Order() {
         <table className="min-w-full bg-white border border-gray-200">
           <thead>
             <tr className="bg-gray-200">
-              <th className="py-3 px-4 font-semibold text-gray-600 border-b">Product Name</th>
-              <th className="py-3 px-4 font-semibold text-gray-600 border-b">Product ID</th>
-              <th className="py-3 px-4 font-semibold text-gray-600 border-b">Quantity</th>
-              <th className="py-3 px-4 font-semibold text-gray-600 border-b">Total</th>
+              <th className="py-3 px-4 font-semibold text-gray-600 border-b">
+                Product Name
+              </th>
+              <th className="py-3 px-4 font-semibold text-gray-600 border-b">
+                Product ID
+              </th>
+              <th className="py-3 px-4 font-semibold text-gray-600 border-b">
+                Quantity
+              </th>
+              <th className="py-3 px-4 font-semibold text-gray-600 border-b">
+                Total
+              </th>
             </tr>
           </thead>
           <tbody>

@@ -36,6 +36,7 @@ function Checkout() {
   const moment = require("moment");
   const currentDate = moment().format("YYYY-MM-DD");
   const initialInformation = {
+    userId: "",
     orderId: uuidv4(),
     email: "",
     firstName: "",
@@ -43,7 +44,7 @@ function Checkout() {
     address: "",
     phone: "",
     paymentMethod: "",
-    status: "pending",
+    status: true,
     date: currentDate,
     amount: 0,
   };
@@ -53,7 +54,12 @@ function Checkout() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setContactDetails({ ...contactDetails, [name]: value, amount: totalPrice });
+    setContactDetails({
+      ...contactDetails,
+      [name]: value,
+      amount: totalPrice,
+      userId: user,
+    });
   };
 
   const handlePlaceOrder = (e) => {

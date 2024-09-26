@@ -58,7 +58,7 @@ function OrderList() {
                   {order.paymentMethod}
                 </td>
                 <td className="border-b border-gray-200 py-3 px-4">
-                  {order.status}
+                  {order.status ? "Pending" : "Delivered"}
                 </td>
                 <td className="border-b border-gray-200 py-3 px-4">
                   ${order.amount}
