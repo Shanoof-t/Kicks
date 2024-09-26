@@ -131,6 +131,29 @@
               "price": 350
             }
           ]
+        },
+        {
+          "userId": "04fa",
+          "orderId": "630a60ff-fdf5-4303-8c1a-efe1cccf044d",
+          "email": "salman@gmail.com",
+          "firstName": "sa",
+          "lastName": "t",
+          "address": "C. Falsa 445",
+          "phone": "9961628083",
+          "paymentMethod": "UPI",
+          "status": true,
+          "date": "2024-09-26",
+          "amount": 110,
+          "product": [
+            {
+              "name": "Nike Air Max 90 LTR",
+              "productId": "13",
+              "size": "5",
+              "quantity": 1,
+              "imageURL": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco,u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/c3c11af6-1a5f-44e0-aa98-783656b35bf5/AIR+JORDAN+1+LOW+FLYEASE.png",
+              "price": 110
+            }
+          ]
         }
       ]
     }
