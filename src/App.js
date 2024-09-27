@@ -26,6 +26,7 @@ import OrderList from "./admin/OrderList";
 import Order from "./admin/Order";
 import UserProvider from "./context/UserProvider";
 import UserProfile from "./admin/UserProfile";
+import AdminNavbar from "./admin/components/AdminNavbar";
 function App() {
   const location = useLocation();
   const hideComponent =
@@ -40,6 +41,7 @@ function App() {
       <ProductProvider>
         <div className={hideComponent ? "" : "container mx-auto"}>
           {!hideHeaderDash && hideComponent && <HeaderDash />}
+          {/* {!hideHeaderDash && hideComponent && <AdminNavbar />} */}
           {!hideComponent && <Navbar />}
           <div className="main">
             <Routes>
@@ -65,7 +67,7 @@ function App() {
               <Route path="*" element={<NotFound />} />
 
               {/* Admin Routes */}
-
+              
               <Route path="admin" element={<DashboardHome />} />
               <Route
                 path="admin/productlist/:productCategory"
@@ -79,7 +81,10 @@ function App() {
               <Route path="admin/orderlist" element={<OrderList />} />
               <Route path="admin/order/:orderID" element={<Order />} />
               <Route path="admin/users" element={<Users />} />
-              <Route path="admin/userprofile/:userID" element={<UserProfile />} />
+              <Route
+                path="admin/userprofile/:userID"
+                element={<UserProfile />}
+              />
             </Routes>
           </div>
           {!hideComponent && <Footer />}

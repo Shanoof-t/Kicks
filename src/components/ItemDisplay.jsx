@@ -6,7 +6,7 @@ function ItemDisplay({ value, type, gender }) {
     type = "ALL";
   }
   return (
-    <div className="min-h-screen px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen px-4 sm:px-6 lg:px-8 py-8 pt-16">
       <h1 className="text-3xl font-bold mb-4">
         {gender} {type} PRODUCTS
       </h1>

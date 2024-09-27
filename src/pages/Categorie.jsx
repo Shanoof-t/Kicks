@@ -27,7 +27,7 @@ function Categorie() {
   },[load,categorieGender])
  
   return (
-    <div className="min-h-screen px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen px-4 sm:px-6 lg:px-8 py-8 ">
       <div className="flex items-center justify-center mb-8">
         <ul className="flex flex-wrap gap-6">
           <li

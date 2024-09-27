@@ -77,7 +77,7 @@ function Home() {
   ];
 
   return (
-    <div className="min-h-screen px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen px-4 sm:px-6 lg:px-8 ">
       <div className="text-center mb-8">
         <h1 className="text-4xl mt-10 sm:text-6xl md:text-8xl lg:text-9xl font-bold text-thirdColor">
           DO IT <span className="text-blueColor">RIGHT</span>
