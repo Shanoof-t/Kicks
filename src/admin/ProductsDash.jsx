@@ -2,13 +2,17 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ProductContext } from "../context/ProductProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCirclePlus,
+  faEllipsis,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { itemsURL } from "../API/API_URL";
 import { toast, ToastContainer } from "react-toastify";
 
 function ProductsDash() {
-  const [menuToggle, setMenuToggle] = useState(null); 
+  const [menuToggle, setMenuToggle] = useState(null);
   const { productCategory } = useParams();
   const navigate = useNavigate();
   const { allitems } = useContext(ProductContext);
@@ -39,8 +43,8 @@ function ProductsDash() {
     axios
       .delete(`${itemsURL}/${id}`)
       .then(() => {
-        toast.success("Item deleted")
-        setProducts(products.filter((item)=>item.id !== id))
+        toast.success("Item deleted");
+        setProducts(products.filter((item) => item.id !== id));
       })
       .catch((err) => {
         toast.error(err.message);
@@ -54,9 +58,10 @@ function ProductsDash() {
           {productCategory === "allitems" ? "ALL" : productCategory} PRODUCTS
         </h1>
         <button
-          className="bg-thirdColor text-white py-2 px-4 rounded-lg hover:bg-thirdColor-dark transition-colors"
+          className="flex items-center bg-thirdColor text-white py-2 px-4 rounded-lg shadow-lg hover:bg-thirdColor-dark transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-thirdColor-light"
           onClick={() => navigate("/admin/addproduct")}
         >
+          <FontAwesomeIcon icon={faPlus} className="mr-2" />
           Add Product
         </button>
       </div>
@@ -65,7 +70,7 @@ function ProductsDash() {
         {products.map((item, index) => (
           <div
             key={`${item.id}${index}`}
-            className="bg-white shadow-md rounded-lg overflow-hidden relative" 
+            className="bg-white shadow-md rounded-lg overflow-hidden relative"
           >
             <FontAwesomeIcon
               icon={faEllipsis}

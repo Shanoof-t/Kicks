@@ -92,15 +92,15 @@ function DashboardHome() {
   }, [orders, users]);
 
   return (
-    <div className="px-6 py-8 lg:px-16 lg:py-12 min-h-screen bg-gray-50">
+    <div className="px-6 py-8 lg:px-8 lg:py-6 min-h-screen ">
       <h1 className="text-4xl font-bold mb-10 text-gray-900">Dashboard</h1>
 
       {/* Stats Overview */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-        <div className="bg-white p-6 rounded-lg shadow-lg flex items-center justify-between hover:shadow-xl transition duration-300">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 ">
+        <div className="bg-white p-6 rounded-3xl shadow-lg  flex items-center justify-between hover:shadow-xl  transition duration-300">
           <div>
-            <h1 className="text-lg font-semibold text-gray-600">Total Orders</h1>
-            <div className="flex items-center gap-4 mt-2">
+            <h1 className="text-lg font-semibold text-center text-black">Total Orders</h1>
+            <div className="flex items-center gap-4 mt-2 ">
               <FontAwesomeIcon icon={faBagShopping} className="text-4xl text-blue-500" />
               <h2 className="text-3xl font-bold text-gray-800">{orderDetails.totalOrders}</h2>
             </div>

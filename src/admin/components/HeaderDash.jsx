@@ -106,9 +106,9 @@ const HeaderDash = () => {
           </button>
 
           {/* Category Dropdown */}
-          <div className="mt-">
+          <div>
             <div
-              className="flex justify-between items-center cursor-pointer"
+              className="flex justify-between items-center cursor-pointer mt-3"
               onClick={toggleCategory}
             >
               <h1 className="text-sm font-semibold text-gray-700">Category</h1>
@@ -157,7 +157,7 @@ const HeaderDash = () => {
         {/* Logout Button */}
         <div className="mt-10">
           <button
-            className="w-full flex items-center justify-center px-4 py-3 bg-red-500 text-white rounded-md shadow hover:bg-red-600 transition duration-200"
+            className="w-full flex items-center justify-center px-4 py-3  bg-red-600 hover:bg-red-700 text-white rounded-md shadow hover:bg-red-600 transition duration-200"
             onClick={handleLogout}
           >
             <h1 className="text-sm font-semibold uppercase">Logout</h1>

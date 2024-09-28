@@ -5,8 +5,9 @@ import axios from "axios";
 import { itemsURL } from "../API/API_URL";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
+
 function UpdateProduct() {
-  const navigate =useNavigate()
+  const navigate = useNavigate();
   const { itemId } = useParams();
   const initialDatas = {
     name: "",
@@ -21,23 +22,21 @@ function UpdateProduct() {
     imageURL: "",
   };
   const [initialInformation, setInitialInformation] = useState(initialDatas);
+
   useEffect(() => {
     axios.get(`${itemsURL}/${itemId}`).then((res) => {
-      
       setInitialInformation(res.data);
-      console.log(res.data.available_sizes);
-      const sizes = res.data.available_sizes.join(",")
-      setInitialInformation(prev=>({
+      const sizes = res.data.available_sizes.join(",");
+      setInitialInformation((prev) => ({
         ...prev,
-       available_sizes:sizes
-      }))
+        available_sizes: sizes,
+      }));
     });
-  }, []);
-  // console.log(initialInformation);
+  }, [itemId]);
 
   const [imageUrl, setImageUrl] = useState(null);
+
   const handleSubmit = async (values) => {
-    console.log(values);
     const imageUrlToUse = imageUrl ? imageUrl : values.imageURL;
     const itemData = {
       ...values,
@@ -47,13 +46,14 @@ function UpdateProduct() {
     };
     try {
       await axios.put(`${itemsURL}/${itemId}`, itemData);
-      toast.success("Item uploaded");
+      toast.success("Item updated successfully");
       setImageUrl(null);
-      navigate(-1)
+      navigate(-1);
     } catch (error) {
       toast.error(error.message);
     }
   };
+
   const handleDrop = (e) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
@@ -63,8 +63,9 @@ function UpdateProduct() {
     };
     reader.readAsDataURL(file);
   };
+
   return (
-    <div className=" p-8">
+    <div className="p-8">
       <ToastContainer />
       <Formik
         enableReinitialize={true}
@@ -77,60 +78,76 @@ function UpdateProduct() {
             <div className="mb-6">
               <h1 className="text-3xl font-bold">Product Details</h1>
             </div>
-            <div className="flex justify-evenly">
+            <div className="flex justify-evenly bg-white p-3 shadow-lg rounded-lg">
               <div className="w-1/2 p-4">
                 <div className="mb-4">
                   <h2 className="font-semibold mb-1">Product Name</h2>
-
                   <Field
                     type="text"
                     name="name"
                     placeholder="Type name here"
                     onChange={handleChange}
                     value={values.name}
-                  ></Field>
+                    className={`bg-transparent border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                      errors.name && touched.name
+                        ? "border-red-500"
+                        : "border-gray-300"
+                    }`}
+                  />
                   {errors.name && touched.name && (
                     <small className="text-red-600">{errors.name}</small>
                   )}
                 </div>
                 <div className="mb-4">
                   <h2 className="font-semibold mb-1">Description</h2>
-
                   <Field
                     type="text"
                     name="description"
                     placeholder="Type description here"
                     onChange={handleChange}
                     value={values.description}
-                  ></Field>
+                    className={`bg-transparent border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                      errors.description && touched.description
+                        ? "border-red-500"
+                        : "border-gray-300"
+                    }`}
+                  />
                   {errors.description && touched.description && (
                     <small className="text-red-600">{errors.description}</small>
                   )}
                 </div>
                 <div className="mb-4">
                   <h2 className="font-semibold mb-1">Category</h2>
-
                   <Field
                     type="text"
                     name="category"
                     placeholder="Type category here"
                     onChange={handleChange}
                     value={values.category}
-                  ></Field>
+                    className={`bg-transparent border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                      errors.category && touched.category
+                        ? "border-red-500"
+                        : "border-gray-300"
+                    }`}
+                  />
                   {errors.category && touched.category && (
                     <small className="text-red-600">{errors.category}</small>
                   )}
                 </div>
                 <div className="mb-4">
                   <h2 className="font-semibold mb-1">Brand Name</h2>
-
                   <Field
                     type="text"
                     name="brand"
                     placeholder="Type brand name here"
                     onChange={handleChange}
                     value={values.brand}
-                  ></Field>
+                    className={`bg-transparent border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                      errors.brand && touched.brand
+                        ? "border-red-500"
+                        : "border-gray-300"
+                    }`}
+                  />
                   {errors.brand && touched.brand && (
                     <small className="text-red-600">{errors.brand}</small>
                   )}
@@ -145,7 +162,8 @@ function UpdateProduct() {
                         value="MEN"
                         onChange={handleChange}
                         checked={values.gender === "MEN"}
-                      ></Field>
+                        className="me-2"
+                      />
                       Men
                     </label>
                     <label className="flex items-center">
@@ -155,7 +173,8 @@ function UpdateProduct() {
                         value="WOMEN"
                         onChange={handleChange}
                         checked={values.gender === "WOMEN"}
-                      ></Field>
+                        className="me-2"
+                      />
                       Women
                     </label>
                     <label className="flex items-center">
@@ -165,7 +184,8 @@ function UpdateProduct() {
                         value="KIDS"
                         onChange={handleChange}
                         checked={values.gender === "KIDS"}
-                      ></Field>
+                        className="me-2"
+                      />
                       Kids
                     </label>
                     {errors.gender && touched.gender && (
@@ -175,14 +195,18 @@ function UpdateProduct() {
                 </div>
                 <div className="mb-4">
                   <h2 className="font-semibold mb-1">Stock Quantity</h2>
-
                   <Field
                     type="number"
                     name="items_left"
                     placeholder="Type quantity here"
                     onChange={handleChange}
                     value={values.items_left}
-                  ></Field>
+                    className={`bg-transparent border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                      errors.items_left && touched.items_left
+                        ? "border-red-500"
+                        : "border-gray-300"
+                    }`}
+                  />
                   {errors.items_left && touched.items_left && (
                     <small className="text-red-600">{errors.items_left}</small>
                   )}
@@ -191,17 +215,21 @@ function UpdateProduct() {
                   <h2 className="font-semibold mb-1">
                     Sizes{" "}
                     <span className="text-sm text-gray-500">
-                      (Enter sizes with ",")
+                      (Enter sizes separated by commas)
                     </span>
                   </h2>
-
                   <Field
                     type="text"
                     name="available_sizes"
                     placeholder="Enter sizes here"
                     onChange={handleChange}
                     value={values.available_sizes}
-                  ></Field>
+                    className={`bg-transparent border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                      errors.available_sizes && touched.available_sizes
+                        ? "border-red-500"
+                        : "border-gray-300"
+                    }`}
+                  />
                   {errors.available_sizes && touched.available_sizes && (
                     <small className="text-red-600">
                       {errors.available_sizes}
@@ -210,14 +238,18 @@ function UpdateProduct() {
                 </div>
                 <div className="mb-4">
                   <h2 className="font-semibold mb-1">Regular Price</h2>
-
                   <Field
                     type="number"
                     name="price"
-                    placeholder="Enter regular prices here"
+                    placeholder="Enter regular price here"
                     onChange={handleChange}
                     value={values.price}
-                  ></Field>
+                    className={`bg-transparent border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                      errors.price && touched.price
+                        ? "border-red-500"
+                        : "border-gray-300"
+                    }`}
+                  />
                   {errors.price && touched.price && (
                     <small className="text-red-600">{errors.price}</small>
                   )}
@@ -226,14 +258,14 @@ function UpdateProduct() {
                   <h2 className="font-semibold mb-1">
                     Sale Price <span>(optional)</span>
                   </h2>
-
                   <Field
                     type="number"
                     name="offer_price"
                     placeholder="Enter sale price here"
                     onChange={handleChange}
                     value={values.offer_price}
-                  ></Field>
+                    className="bg-transparent border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
                 </div>
               </div>
               <div className="w-1/2 p-4">
@@ -244,11 +276,11 @@ function UpdateProduct() {
                       <img
                         src={values.imageURL || imageUrl}
                         alt="Preview"
-                        className="w-full h-40 border border-gray-300 rounded-md object-cover"
+                        className="w-full  border border-gray-300 rounded-md object-cover"
                       />
                     ) : (
-                      <h1 className="w-full h-40 border text-center content-center border-gray-300 rounded-md object-cover">
-                        Enter image url
+                      <h1 className="w-full h-40 border text-center content-center border-gray-300 rounded-md flex items-center justify-center">
+                        Enter image URL or drop image
                       </h1>
                     )}
                   </div>
@@ -264,14 +296,18 @@ function UpdateProduct() {
                   </div>
                   <h2 className="text-center mb-2">OR</h2>
                   <h2 className="font-semibold mb-1">Image URL</h2>
-
                   <Field
                     type="text"
                     name="imageURL"
                     placeholder="Type image URL here"
                     onChange={handleChange}
                     value={values.imageURL}
-                  ></Field>
+                    className={`bg-transparent border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                      errors.imageURL && touched.imageURL
+                        ? "border-red-500"
+                        : "border-gray-300"
+                    }`}
+                  />
                   {errors.imageURL && touched.imageURL && (
                     <small className="text-red-600">{errors.imageURL}</small>
                   )}
