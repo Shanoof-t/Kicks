@@ -47,6 +47,7 @@ function Login() {
           error.password = "Your password is incorrect";
         } else if (matchedUser.isAdmin) {
           localStorage.setItem("adminId", matchedUser.id);
+          localStorage.setItem("isAdmin", matchedUser.isAdmin);
           navigate("/admin");
         } else {
           setIsAllowed(matchedUser.isAllowed);

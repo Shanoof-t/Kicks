@@ -8,7 +8,7 @@ import { itemsURL } from "../API/API_URL";
 import { toast, ToastContainer } from "react-toastify";
 
 function ProductsDash() {
-  const [menuToggle, setMenuToggle] = useState(null); // Track toggle per product
+  const [menuToggle, setMenuToggle] = useState(null); 
   const { productCategory } = useParams();
   const navigate = useNavigate();
   const { allitems } = useContext(ProductContext);
