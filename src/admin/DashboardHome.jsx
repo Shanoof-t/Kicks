@@ -92,7 +92,7 @@ function DashboardHome() {
   }, [orders, users]);
 
   return (
-    <div className="px-6 py-8 lg:px-16 lg:py-12 ms-64  min-h-screen">
+    <div className="px-6 py-8 lg:px-16 lg:py-12   min-h-screen">
       <h1 className="text-4xl font-bold mb-10 text-gray-900">Dashboard</h1>
 
       {/* Stats Overview */}

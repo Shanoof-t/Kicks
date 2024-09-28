@@ -28,7 +28,7 @@ function OrderList() {
     }
   };
   return (
-    <div className="min-h-screen p-6 ms-64">
+    <div className="min-h-screen p-6 ">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Order List</h1>
       </div>

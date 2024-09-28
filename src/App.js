@@ -41,15 +41,15 @@ function App() {
   return (
     <UserProvider>
       <ProductProvider>
-        {/* <div className={hideComponent ? "" : "container mx-auto"}>
-          {!hideHeaderDash && hideComponent && <HeaderDash />} */}
-        {/* {!hideHeaderDash && hideComponent && <AdminNavbar />} */}
-        {/* {!hideComponent && <Navbar />}
-          <div className="main">
-            <Routes> */}
-        {/* User Routes */}
+        <div className={hideComponent ? "" : "container mx-auto"}>
+          {/* {!hideHeaderDash && hideComponent && <HeaderDash />} */}
+          {/* {!hideHeaderDash && hideComponent && <AdminNavbar />} */}
+          {!hideComponent && <Navbar />}
+          {/* <div className="main"> */}
+            <Routes>
+              {/* User Routes */}
 
-        {/* <Route path="/" element={<Home />} />
+              <Route path="/" element={<Home />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
               <Route path="home" element={<Home />} />
@@ -66,33 +66,35 @@ function App() {
               <Route path="checkout" element={<Checkout />} />
               <Route path="profile" element={<Profile />} />
               <Route path="orderdetails" element={<OrderDetails />} />
-              <Route path="*" element={<NotFound />} /> */}
+              <Route path="*" element={<NotFound />} />
 
-        {/* Admin Routes */}
+              {/* Admin Routes */}
 
-        {/* <Route path="admin" element={<DashboardHome />} />
-              <Route
-                path="admin/productlist/:productCategory"
-                element={<ProductsDash />}
-              />
-              <Route path="admin/addproduct" element={<AddProduct />} />
-              <Route
-                path="admin/updateproduct/:itemId"
-                element={<UpdateProduct />}
-              />
-              <Route path="admin/orderlist" element={<OrderList />} />
-              <Route path="admin/order/:orderID" element={<Order />} />
-              <Route path="admin/users" element={<Users />} />
-              <Route
-                path="admin/userprofile/:userID"
-                element={<UserProfile />}
-              />
+              <Route path="admin" element={<HeaderDash />}>
+                <Route index  element={<DashboardHome />} />
+                <Route
+                  path="productlist/:productCategory"
+                  element={<ProductsDash />}
+                />
+                <Route path="addproduct" element={<AddProduct />} />
+                <Route
+                  path="updateproduct/:itemId"
+                  element={<UpdateProduct />}
+                />
+                <Route path="orderlist" element={<OrderList />} />
+                <Route path="order/:orderID" element={<Order />} />
+                <Route path="users" element={<Users />} />
+                <Route
+                  path="userprofile/:userID"
+                  element={<UserProfile />}
+                />
+              </Route>
             </Routes>
           </div>
-          {!hideComponent && <Footer />} */}
+          {!hideComponent && <Footer />}
         {/* </div> */}
-        <AdminRoutes />
-        <UserRoutes />
+        {/* <AdminRoutes />
+        <UserRoutes /> */}
       </ProductProvider>
     </UserProvider>
   );

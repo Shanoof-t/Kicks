@@ -64,7 +64,7 @@ function UpdateProduct() {
     reader.readAsDataURL(file);
   };
   return (
-    <div className="ms-64 p-8">
+    <div className=" p-8">
       <ToastContainer />
       <Formik
         enableReinitialize={true}

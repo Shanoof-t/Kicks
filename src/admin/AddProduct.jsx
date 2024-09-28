@@ -46,7 +46,7 @@ function AddProduct() {
     reader.readAsDataURL(file);
   };
   return (
-    <div className="ms-64 p-8">
+    <div className=" p-8">
       <ToastContainer />
       <Formik
         initialValues={initialInformation}

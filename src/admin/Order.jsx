@@ -47,7 +47,7 @@ function Order() {
     return <div className="text-center text-gray-700">Order not found.</div>;
 
   return (
-    <div className="ms-64 p-8 bg-gray-50 min-h-screen">
+    <div className=" p-8 bg-gray-50 min-h-screen">
       <div className="mb-8">
         <h1 className="text-4xl font-bold text-gray-800">Order Details</h1>
       </div>
