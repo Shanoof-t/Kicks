@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 function Login() {
   const navigate = useNavigate();
-
+  const [isAllowed, setIsAllowed] = useState(null);
   const initailValues = {
     email: "",
     password: "",
@@ -44,15 +45,16 @@ function Login() {
           error.email = "Your email is incorrect";
         } else if (values.password !== matchedUser.password) {
           error.password = "Your password is incorrect";
-        }
-        else if(matchedUser.isAdmin){
-          localStorage.setItem("adminId",matchedUser.id)
-          navigate('/admin')
+        } else if (matchedUser.isAdmin) {
+          localStorage.setItem("adminId", matchedUser.id);
+          navigate("/admin");
         } else {
+          setIsAllowed(matchedUser.isAllowed);
           localStorage.setItem("userId", matchedUser.id);
           localStorage.setItem("firstName", matchedUser.firstName);
           localStorage.setItem("lastName", matchedUser.lastName);
           localStorage.setItem("email", matchedUser.email);
+          localStorage.setItem("isAllowed", matchedUser.isAllowed);
         }
       } catch (error) {
         console.log(error);
@@ -62,11 +64,17 @@ function Login() {
   };
   useEffect(() => {
     if (Object.keys(loginError).length === 0 && isSubmit) {
-      navigate("/");
+      if (isAllowed) {
+        navigate("/");
+      } else {
+        toast.error("Authentication is Rejected");
+        localStorage.clear();
+      }
     }
   }, [loginError]);
   return (
     <div className="flex flex-col items-center justify-center h-screen  ">
+      <ToastContainer />
       <div className=" p-8 rounded-lg  w-full max-w-md">
         <h1 className="text-4xl font-bold text-center mb-6">Login</h1>
         <form onSubmit={handleSubmit}>

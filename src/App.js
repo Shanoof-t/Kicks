@@ -27,6 +27,8 @@ import Order from "./admin/Order";
 import UserProvider from "./context/UserProvider";
 import UserProfile from "./admin/UserProfile";
 import AdminNavbar from "./admin/components/AdminNavbar";
+import AdminRoutes from "./routes/AdminRoutes";
+import UserRoutes from "./routes/UserRoutes";
 function App() {
   const location = useLocation();
   const hideComponent =
@@ -39,15 +41,15 @@ function App() {
   return (
     <UserProvider>
       <ProductProvider>
-        <div className={hideComponent ? "" : "container mx-auto"}>
-          {!hideHeaderDash && hideComponent && <HeaderDash />}
-          {/* {!hideHeaderDash && hideComponent && <AdminNavbar />} */}
-          {!hideComponent && <Navbar />}
+        {/* <div className={hideComponent ? "" : "container mx-auto"}>
+          {!hideHeaderDash && hideComponent && <HeaderDash />} */}
+        {/* {!hideHeaderDash && hideComponent && <AdminNavbar />} */}
+        {/* {!hideComponent && <Navbar />}
           <div className="main">
-            <Routes>
-              {/* User Routes */}
+            <Routes> */}
+        {/* User Routes */}
 
-              <Route path="/" element={<Home />} />
+        {/* <Route path="/" element={<Home />} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
               <Route path="home" element={<Home />} />
@@ -64,11 +66,11 @@ function App() {
               <Route path="checkout" element={<Checkout />} />
               <Route path="profile" element={<Profile />} />
               <Route path="orderdetails" element={<OrderDetails />} />
-              <Route path="*" element={<NotFound />} />
+              <Route path="*" element={<NotFound />} /> */}
 
-              {/* Admin Routes */}
-              
-              <Route path="admin" element={<DashboardHome />} />
+        {/* Admin Routes */}
+
+        {/* <Route path="admin" element={<DashboardHome />} />
               <Route
                 path="admin/productlist/:productCategory"
                 element={<ProductsDash />}
@@ -87,8 +89,10 @@ function App() {
               />
             </Routes>
           </div>
-          {!hideComponent && <Footer />}
-        </div>
+          {!hideComponent && <Footer />} */}
+        {/* </div> */}
+        <AdminRoutes />
+        <UserRoutes />
       </ProductProvider>
     </UserProvider>
   );
