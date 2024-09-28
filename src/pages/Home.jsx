@@ -57,19 +57,19 @@ function Home() {
 
   const categories = [
     {
-      path: "men",
+      path: "/categorie/MEN",
       name: "Men",
       image:
         "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/b8f2b4d5-1240-4a80-aa73-7a3b3509fba6/AIR+DT+MAX+%2796.png",
     },
     {
-      path: "women",
+      path: "/categorie/WOMEN",
       name: "Women",
       image:
         "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/5fdb1586-7439-46ee-8aaf-7d654beb0f5c/W+NIKE+CORTEZ+VNTG.png",
     },
     {
-      path: "kids",
+      path: "/categorie/KIDS",
       name: "Kids",
       image:
         "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/3e6a746d-d11d-44bb-813b-0a93407bc667/NIKE+AIR+MORE+UPTEMPO+%28GS%29.png",

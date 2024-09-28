@@ -26,13 +26,13 @@ function Footer() {
               Categories
             </h2>
             <ul>
-              <Link to={'men'}>
+              <Link to={"/categorie/MEN"}>
                 <li className="mb-2">Men</li>
               </Link>
-              <Link to={'women'}>
+              <Link to={"/categorie/WOMEN"}>
                 <li className="mb-2">Women</li>
               </Link>
-              <Link to={'kids'}>
+              <Link to={"/categorie/KIDS"}>
                 <li className="mb-2">Kids</li>
               </Link>
               

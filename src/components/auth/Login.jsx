@@ -48,7 +48,7 @@ function Login() {
         } else if (matchedUser.isAdmin) {
           localStorage.setItem("adminId", matchedUser.id);
           localStorage.setItem("isAdmin", matchedUser.isAdmin);
-          navigate("/admin");
+          navigate("/admin", { replace: true });
         } else {
           setIsAllowed(matchedUser.isAllowed);
           localStorage.setItem("userId", matchedUser.id);
@@ -66,7 +66,7 @@ function Login() {
   useEffect(() => {
     if (Object.keys(loginError).length === 0 && isSubmit) {
       if (isAllowed) {
-        navigate("/");
+        navigate("/", { replace: true });
       } else {
         toast.error("Authentication is Rejected");
         localStorage.clear();

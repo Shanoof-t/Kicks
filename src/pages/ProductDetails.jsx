@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { CartContext } from "../context/CartProvider";
 function ProductDetails() {
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -14,6 +15,7 @@ function ProductDetails() {
   const [sizeError, setSizeError] = useState("");
   const [user, setUser] = useState("");
   const navigate = useNavigate();
+  const { setCartItems } = useContext(CartContext);
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     setUser(userId);
@@ -31,7 +33,6 @@ function ProductDetails() {
         console.log(err.message);
       });
   }, [productId]);
-
 
   const handleCart = () => {
     if (!user) {
@@ -57,16 +58,17 @@ function ProductDetails() {
             axios.patch(`http://localhost:4000/user/${user}`, {
               cart: updatedCart,
             });
+            setCartItems(updatedCart);
           })
           .then(() => {
-            toast.success("Product added to cart",{className:"mt-12"});
+            toast.success("Product added to cart", { className: "mt-12" });
           })
           .catch((err) => {
-            toast.error(err.message,{className:"mt-12"});
+            toast.error(err.message, { className: "mt-12" });
           });
-          if(size >0){
-            setSizeError('')
-          }
+    if (size > 0) {
+      setSizeError("");
+    }
   };
 
   return (

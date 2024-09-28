@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import logo from "../../assets/logo/Logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -12,6 +12,7 @@ import {
 import { useNavigate, Link } from "react-router-dom";
 import { Transition } from "@headlessui/react";
 import axios from "axios";
+import { CartContext } from "../../context/CartProvider";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -22,28 +23,28 @@ function Navbar() {
   const [searchText, setSearchText] = useState("");
   const [allItems, setAllItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
-  const [cartItems, setCartItems] = useState([]);
-  const [user, setUser] = useState("");
+  // const [user, setUser] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
+  const { cartItems, setUser } = useContext(CartContext);
   useEffect(() => {
     setUser(localStorage.getItem("userId"));
   }, []);
 
-  useEffect(() => {
-    if (user) {
-      axios
-        .get(`http://localhost:4000/user/${user}`)
-        .then((res) => {
-          const cart = res.data.cart;
-          setCartItems(cart);
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
-    } else {
-      setCartItems([]);
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     axios
+  //       .get(`http://localhost:4000/user/${user}`)
+  //       .then((res) => {
+  //         const cart = res.data.cart;
+  //         setCartItems(cart);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err.message);
+  //       });
+  //   } else {
+  //     setCartItems([]);
+  //   }
+  // }, [user]);
 
   useEffect(() => {
     axios
@@ -68,7 +69,7 @@ function Navbar() {
   };
 
   const toggleDropdown = () => {
-    setShowDropdown((prevState) => !prevState);
+    setShowDropdown(!showDropdown);
   };
 
   const toggleMobileMenu = () => {

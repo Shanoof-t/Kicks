@@ -1,18 +1,19 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { CartContext } from "../context/CartProvider";
 
 function Cart() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItem, setCartItem] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [user, setUser] = useState("");
-  
+  const { setCartItems } = useContext(CartContext);
   useEffect(() => {
     setUser(localStorage.getItem("userId"));
   }, []);
@@ -22,7 +23,7 @@ function Cart() {
       axios
         .get(`http://localhost:4000/user/${user}`)
         .then((res) => {
-          setCartItems(res.data.cart)
+          setCartItem(res.data.cart);
         })
         .catch((err) => {
           toast.error(err.message);
@@ -31,19 +32,20 @@ function Cart() {
   }, [user]);
 
   useEffect(() => {
-    const total = cartItems.reduce((acc, val) => {
+    const total = cartItem.reduce((acc, val) => {
       return acc + val.price * val.quantity;
     }, 0);
     setTotalPrice(total);
-  }, [cartItems]);
+  }, [cartItem]);
 
   const handleQuantity = (id, newQuantity) => {
-    const updatedCart = cartItems.map((item) =>
+    const updatedCart = cartItem.map((item) =>
       item.id === id ? { ...item, quantity: newQuantity } : item
     );
     axios
       .patch(`http://localhost:4000/user/${user}`, { cart: updatedCart })
       .then((res) => {
+        setCartItem(updatedCart);
         setCartItems(updatedCart);
       })
       .catch((err) => {
@@ -52,10 +54,11 @@ function Cart() {
       });
   };
   const handleDelete = (id) => {
-    const updatedCart = cartItems.filter((item) => item.id !== id);
+    const updatedCart = cartItem.filter((item) => item.id !== id);
     axios
       .patch(`http://localhost:4000/user/${user}`, { cart: updatedCart })
       .then(() => {
+        setCartItem(updatedCart);
         setCartItems(updatedCart);
       })
       .catch((err) => {
@@ -76,8 +79,8 @@ function Cart() {
       <div className="flex flex-col lg:flex-row gap-12">
         {/* Cart Items Section */}
         <div className="lg:w-2/3">
-          {cartItems.length > 0 ? (
-            cartItems.map((value) => {
+          {cartItem.length > 0 ? (
+            cartItem.map((value) => {
               return (
                 <div
                   key={value.id}
@@ -139,7 +142,7 @@ function Cart() {
           <h1 className="text-2xl font-bold mb-6">Order Summary</h1>
           <div className="flex justify-between text-lg mb-4">
             <h5>
-              {cartItems.length} ITEM{cartItems.length > 1 ? "S" : ""}
+              {cartItem.length} ITEM{cartItem.length > 1 ? "S" : ""}
             </h5>
             <h5>${totalPrice}</h5>
           </div>

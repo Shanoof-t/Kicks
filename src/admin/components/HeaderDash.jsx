@@ -10,8 +10,9 @@ import { userURL } from "../../API/API_URL";
 const HeaderDash = () => {
   const navigate = useNavigate();
   const { allitems } = useContext(ProductContext);
-  const [admin, setAdmin] = useState(false);
-  const id = localStorage.getItem("adminId");
+  // const [admin, setAdmin] = useState(false);
+  // const id = localStorage.getItem("adminId");
+  const admin = localStorage.getItem("isAdmin");
 
   const casualFiltered = allitems.filter(
     (value) => value.category === "CASUAL"
@@ -35,20 +36,20 @@ const HeaderDash = () => {
     navigate("/");
   };
 
-  useEffect(() => {
-    axios
-      .get(`${userURL}/${id}`)
-      .then((res) => {
-        if (res.data?.isAdmin) {
-          setAdmin(true);
-        }
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  }, [id]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`${userURL}/${id}`)
+  //     .then((res) => {
+  //       if (res.data?.isAdmin) {
+  //         setAdmin(true);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.message);
+  //     });
+  // }, [id]);
 
-  if (!id || !admin) {
+  if (!admin) {
     return (
       <div className="flex items-center justify-center h-screen bg-gray-100">
         <div className="text-center">

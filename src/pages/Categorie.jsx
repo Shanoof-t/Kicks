@@ -5,6 +5,9 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 function Categorie() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
   const { categorieGender } = useParams();
   const [items, setItems] = useState([]);
   const navigate = useNavigate();
@@ -18,14 +21,14 @@ function Categorie() {
         toast.error(err.message);
       });
   }, [categorieGender]);
-  const [load,setLoad]=useState(true)
-  const handleInitialLoad = () =>{
-    setLoad(!load)
-  }
-  useEffect(()=>{
-    navigate(`CASUAL`)
-  },[load,categorieGender])
- 
+  const [load, setLoad] = useState(true);
+  const handleInitialLoad = () => {
+    setLoad(!load);
+  };
+  useEffect(() => {
+    navigate(`CASUAL`);
+  }, [load, categorieGender]);
+
   return (
     <div className="min-h-screen px-4 sm:px-6 lg:px-8 py-8 ">
       <div className="flex items-center justify-center mb-8">
@@ -50,7 +53,7 @@ function Categorie() {
           </li>
         </ul>
       </div>
-      <Outlet context={{categorieGender}} />
+      <Outlet context={{ categorieGender }} />
     </div>
   );
 }

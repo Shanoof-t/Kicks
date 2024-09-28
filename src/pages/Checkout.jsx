@@ -1,15 +1,17 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { v4 as uuidv4 } from "uuid";
+import { CartContext } from "../context/CartProvider";
 function Checkout() {
   const navigate = useNavigate();
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItem, setCartItem] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [user, setUser] = useState("");
+  const { setCartItems } = useContext(CartContext);
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     setUser(userId);
@@ -19,8 +21,8 @@ function Checkout() {
       .get(`http://localhost:4000/user/${user}`)
       .then((res) => {
         const existingCart = res.data.cart || [];
-        setCartItems(existingCart);
-        console.log(cartItems);
+        setCartItem(existingCart);
+        console.log(cartItem);
       })
       .catch((err) => {
         toast.error(err.message);
@@ -28,11 +30,11 @@ function Checkout() {
   }, [user]);
 
   useEffect(() => {
-    const total = cartItems.reduce((acc, val) => {
+    const total = cartItem.reduce((acc, val) => {
       return acc + val.price * val.quantity;
     }, 0);
     setTotalPrice(total);
-  }, [cartItems]);
+  }, [cartItem]);
   const moment = require("moment");
   const currentDate = moment().format("YYYY-MM-DD");
   const initialInformation = {
@@ -105,7 +107,7 @@ function Checkout() {
   };
 
   useEffect(() => {
-    const products = cartItems.map((el) => {
+    const products = cartItem.map((el) => {
       return {
         name: el.name,
         productId: el.id,
@@ -118,7 +120,7 @@ function Checkout() {
     setContactDetails((p) => {
       return { ...p, product: products };
     });
-  }, [cartItems]);
+  }, [cartItem]);
 
   const addOrderTojson = (value) => {
     if (Object.keys(contactDetailsErrors).length === 0 && isSubmit && user) {
@@ -131,6 +133,7 @@ function Checkout() {
             order: updatedOrder,
             cart: [],
           });
+         setCartItems([])
         })
         .then(() => {
           toast.success("Your Order is Placed", { className: "mt-12" });
@@ -151,7 +154,7 @@ function Checkout() {
 
   useEffect(() => {
     if (Object.keys(contactDetailsErrors).length === 0 && isSubmit) {
-      addOrderTojson(cartItems);
+      addOrderTojson(cartItem);
     }
   }, [isSubmit]);
 
@@ -263,7 +266,7 @@ function Checkout() {
           <div className="p-6 rounded-lg border border-gray-300">
             <h1 className="text-2xl font-semibold mb-4">Order Summary</h1>
             <div className="flex justify-between text-lg mb-4">
-              <span>{cartItems.length} ITEMS</span>
+              <span>{cartItem.length} ITEMS</span>
               <span>${totalPrice}</span>
             </div>
             <hr className="my-4" />
@@ -277,7 +280,7 @@ function Checkout() {
           <div className="p-6 rounded-lg border border-gray-300 space-y-4">
             <h1 className="text-2xl font-semibold mb-2">Your Order</h1>
             <div className="space-y-2">
-              {cartItems.map((item) => (
+              {cartItem.map((item) => (
                 <div
                   key={item.id}
                   className="flex justify-between items-center"
