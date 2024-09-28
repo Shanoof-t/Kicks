@@ -1,17 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import logo from "../../assets/logo/Logo.png";
 import { Outlet, useNavigate } from "react-router-dom";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ProductContext } from "../../context/ProductProvider";
-import axios from "axios";
-import { userURL } from "../../API/API_URL";
+import dash from "../../assets/icons/dashboaard.svg";
+import productImg from "../../assets/icons/albums.svg";
+import orderListImg from "../../assets/icons/document-text.svg";
 
 const HeaderDash = () => {
   const navigate = useNavigate();
   const { allitems } = useContext(ProductContext);
-  // const [admin, setAdmin] = useState(false);
-  // const id = localStorage.getItem("adminId");
   const admin = localStorage.getItem("isAdmin");
 
   const casualFiltered = allitems.filter(
@@ -36,19 +35,6 @@ const HeaderDash = () => {
     navigate("/");
   };
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`${userURL}/${id}`)
-  //     .then((res) => {
-  //       if (res.data?.isAdmin) {
-  //         setAdmin(true);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.message);
-  //     });
-  // }, [id]);
-
   if (!admin) {
     return (
       <div className="flex items-center justify-center h-screen bg-gray-100">
@@ -68,113 +54,123 @@ const HeaderDash = () => {
     );
   }
 
-  if (admin) {
-    return (
-      <div className="flex h-screen">
-        <div className=" bg-white shadow-lg flex flex-col py-6 px-4">
-          {/* Logo Section */}
-          <div className="mb-10 flex justify-center">
-            <img src={logo} alt="Logo" className="h-12" />
-          </div>
+  return (
+    <div className="flex h-screen">
+      {/* Sidebar */}
+      <div className="w-1/5 bg-white border-r shadow-lg flex flex-col py-6 px-4 fixed h-screen">
+        {/* Logo */}
+        <div className="mb-6 flex justify-center">
+          <img src={logo} alt="Logo" className="h-8" />
+        </div>
 
-          {/* Button Section */}
-          <div className="space-y-4 flex-grow">
-            <button
-              className="flex items-center justify-center w-full px-4 py-3 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 transition duration-200"
-              onClick={() => navigate("/admin")}
-            >
-              <h1 className="text-sm font-semibold uppercase">Dashboard</h1>
-            </button>
-            <button
-              className="flex items-center justify-center w-full px-4 py-3 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 transition duration-200"
-              onClick={() => handleCategory("allitems")}
-            >
-              <h1 className="text-sm font-semibold uppercase">All Products</h1>
-            </button>
-            <button
-              className="flex items-center justify-center w-full px-4 py-3 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 transition duration-200"
-              onClick={() => navigate("orderlist")}
-            >
-              <h1 className="text-sm font-semibold uppercase">Order List</h1>
-            </button>
-            <button
-              className="flex items-center justify-center w-full px-4 py-3 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 transition duration-200"
-              onClick={() => navigate("users")}
-            >
-              <h1 className="text-sm font-semibold uppercase">Users</h1>
-            </button>
+        {/* Button Section */}
+        <div className="space-y-2 flex-grow">
+          <button
+            className="w-full flex items-center justify-start px-4 py-3 rounded-md text-gray-700 hover:text-white hover:bg-secondaryBlue focus:bg-secondaryBlue focus:text-white transition duration-200"
+            onClick={() => navigate("/admin")}
+          >
+            <img src={dash} alt="Dashboard Icon" className="mr-3 h-5 w-5" />
+            <h1 className="text-sm font-semibold uppercase">Dashboard</h1>
+          </button>
 
-            {/* Category Section */}
-            <div className="mt-6">
-              <div
-                className="flex justify-between items-center cursor-pointer"
-                onClick={toggleCategory}
-              >
-                <h1 className="text-sm font-semibold text-gray-700">
-                  Category
-                </h1>
-                <FontAwesomeIcon
-                  icon={faChevronDown}
-                  className={`transition-transform duration-300 ${
-                    categoryShow ? "rotate-180" : ""
-                  }`}
-                />
-              </div>
+          <button
+            className="w-full flex items-center justify-start px-4 py-3 rounded-md text-gray-700 hover:text-white hover:bg-secondaryBlue focus:bg-secondaryBlue focus:text-white transition duration-200"
+            onClick={() => handleCategory("allitems")}
+          >
+            <img
+              src={productImg}
+              alt="All Products Icon"
+              className="mr-3 h-5 w-5"
+            />
+            <h1 className="text-sm font-semibold uppercase">All Products</h1>
+          </button>
 
-              {categoryShow && (
-                <div className="space-y-2 mt-2">
-                  <div
-                    className="flex justify-between cursor-pointer py-1"
-                    onClick={() => handleCategory("CASUAL")}
-                  >
-                    <h1 className="text-sm text-gray-600">Casual</h1>
-                    <span className="text-gray-600">
-                      {casualFiltered.length}
-                    </span>
-                  </div>
-                  <div
-                    className="flex justify-between cursor-pointer py-1"
-                    onClick={() => handleCategory("FOOTBALL")}
-                  >
-                    <h1 className="text-sm text-gray-600">Football</h1>
-                    <span className="text-gray-600">
-                      {footballFiltered.length}
-                    </span>
-                  </div>
-                  <div
-                    className="flex justify-between cursor-pointer py-1"
-                    onClick={() => handleCategory("RUNNING")}
-                  >
-                    <h1 className="text-sm text-gray-600">Running</h1>
-                    <span className="text-gray-600">
-                      {runningFiltered.length}
-                    </span>
-                  </div>
-                </div>
-              )}
+          <button
+            className="w-full flex items-center justify-start px-4 py-3 rounded-md text-gray-700 hover:text-white hover:bg-secondaryBlue focus:bg-secondaryBlue focus:text-white transition duration-200"
+            onClick={() => navigate("orderlist")}
+          >
+            <img
+              src={orderListImg}
+              alt="Order List Icon"
+              className="mr-3 h-5 w-5"
+            />
+            <h1 className="text-sm font-semibold uppercase">Order List</h1>
+          </button>
+
+          <button
+            className="w-full flex items-center justify-start px-4 py-3 rounded-md text-gray-700 hover:text-white hover:bg-secondaryBlue focus:bg-secondaryBlue focus:text-white transition duration-200"
+            onClick={() => navigate("users")}
+          >
+            <FontAwesomeIcon icon={faUser} className="mr-3 h-5 w-5" />
+            <h1 className="text-sm font-semibold uppercase">Users</h1>
+          </button>
+
+          {/* Category Dropdown */}
+          <div className="mt-">
+            <div
+              className="flex justify-between items-center cursor-pointer"
+              onClick={toggleCategory}
+            >
+              <h1 className="text-sm font-semibold text-gray-700">Category</h1>
+              <FontAwesomeIcon
+                icon={faChevronDown}
+                className={`transition-transform duration-300 ${
+                  categoryShow ? "rotate-180" : ""
+                }`}
+              />
             </div>
-          </div>
 
-          {/* Logout Section */}
-          <div className="mt-10">
-            <button
-              className="flex items-center justify-center w-full px-4 py-3 bg-red-500 text-white rounded-md shadow hover:bg-red-600 transition duration-200"
-              onClick={handleLogout}
-            >
-              <h1 className="text-sm font-semibold uppercase">Logout</h1>
-            </button>
+            {categoryShow && (
+              <div className="space-y-2 mt-4">
+                <div
+                  className="flex justify-between cursor-pointer py-1 font-bold items-center hover:bg-gray-100 px-2 rounded transition"
+                  onClick={() => handleCategory("CASUAL")}
+                >
+                  <h1 className="text-sm text-gray-600">Casual</h1>
+                  <span className="text-white bg-secondaryBlue text-center rounded w-10 h-8 flex items-center justify-center">
+                    {casualFiltered.length}
+                  </span>
+                </div>
+                <div
+                  className="flex justify-between cursor-pointer py-1 font-bold hover:bg-gray-100 items-center px-2 rounded transition"
+                  onClick={() => handleCategory("FOOTBALL")}
+                >
+                  <h1 className="text-sm text-gray-600">Football</h1>
+                  <span className="text-white bg-secondaryBlue text-center rounded w-10 h-8 flex items-center justify-center">
+                    {footballFiltered.length}
+                  </span>
+                </div>
+                <div
+                  className="flex justify-between cursor-pointer items-center font-bold py-1 hover:bg-gray-100 px-2 rounded transition"
+                  onClick={() => handleCategory("RUNNING")}
+                >
+                  <h1 className="text-sm text-gray-600">Running</h1>
+                  <span className="text-white bg-secondaryBlue text-center rounded w-10 h-8 flex items-center justify-center">
+                    {runningFiltered.length}
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Main Content */}
-        <div className="flex-grow bg-gray-100 p-8">
-          <Outlet />
+        {/* Logout Button */}
+        <div className="mt-10">
+          <button
+            className="w-full flex items-center justify-center px-4 py-3 bg-red-500 text-white rounded-md shadow hover:bg-red-600 transition duration-200"
+            onClick={handleLogout}
+          >
+            <h1 className="text-sm font-semibold uppercase">Logout</h1>
+          </button>
         </div>
       </div>
-    );
-  }
 
-  return null;
+      {/* Main Content */}
+      <div className="ml-64 flex-grow bg-gray-100 p-8 overflow-auto">
+        <Outlet />
+      </div>
+    </div>
+  );
 };
 
 export default HeaderDash;

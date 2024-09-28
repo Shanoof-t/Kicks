@@ -14,7 +14,7 @@
       "lastName": "t",
       "email": "shanoof.001@gmail.com",
       "password": "123456",
-      "isAllowed": true,
+      "isAllowed": false,
       "cart": [],
       "order": [
         {
@@ -88,7 +88,7 @@
           "address": "kozhikode",
           "phone": "9961628080",
           "paymentMethod": "cash",
-          "status": true,
+          "status": false,
           "date": "2024-09-28",
           "amount": 200,
           "product": [
@@ -122,6 +122,29 @@
               "quantity": 2,
               "imageURL": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/i1-5cc7de3b-2afc-49c2-a1e4-0508997d09e6/react-miler-mens-running-shoe-DgF6nr.jpg",
               "price": 130
+            }
+          ]
+        },
+        {
+          "userId": "b851",
+          "orderId": "e0102211-718c-4ad9-b1a7-c9dce1b79ab8",
+          "email": "jumail@gmail.com",
+          "firstName": "jumail",
+          "lastName": "k",
+          "address": "perinthalmanna",
+          "phone": "1234567895",
+          "paymentMethod": "cash",
+          "status": true,
+          "date": "2024-09-28",
+          "amount": 90,
+          "product": [
+            {
+              "name": "Nike Air Force 1",
+              "productId": "10",
+              "size": "6",
+              "quantity": 1,
+              "imageURL": "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/178b2a46-3ee4-492b-882e-f71efdd53a36/air-force-1-big-kids-shoe-2zqp8D.jpg",
+              "price": 90
             }
           ]
         }

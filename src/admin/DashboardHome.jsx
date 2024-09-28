@@ -92,12 +92,12 @@ function DashboardHome() {
   }, [orders, users]);
 
   return (
-    <div className="px-6 py-8 lg:px-16 lg:py-12   min-h-screen">
+    <div className="px-6 py-8 lg:px-16 lg:py-12 min-h-screen bg-gray-50">
       <h1 className="text-4xl font-bold mb-10 text-gray-900">Dashboard</h1>
 
       {/* Stats Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-        <div className="bg-white p-6 rounded-lg shadow-md flex items-center justify-between">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+        <div className="bg-white p-6 rounded-lg shadow-lg flex items-center justify-between hover:shadow-xl transition duration-300">
           <div>
             <h1 className="text-lg font-semibold text-gray-600">Total Orders</h1>
             <div className="flex items-center gap-4 mt-2">
@@ -107,7 +107,7 @@ function DashboardHome() {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-md flex items-center justify-between">
+        <div className="bg-white p-6 rounded-lg shadow-lg flex items-center justify-between hover:shadow-xl transition duration-300">
           <div>
             <h1 className="text-lg font-semibold text-gray-600">Total Customers</h1>
             <div className="flex items-center gap-4 mt-2">
@@ -117,7 +117,7 @@ function DashboardHome() {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-md flex items-center justify-between">
+        <div className="bg-white p-6 rounded-lg shadow-lg flex items-center justify-between hover:shadow-xl transition duration-300">
           <div>
             <h1 className="text-lg font-semibold text-gray-600">Total Products</h1>
             <div className="flex items-center gap-4 mt-2">
@@ -129,7 +129,7 @@ function DashboardHome() {
       </div>
 
       {/* Sales Graph */}
-      <div className="bg-white p-6 rounded-lg shadow-md mb-10">
+      <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 mb-10">
         <h1 className="text-xl font-semibold mb-4 text-gray-800">Sales Graph</h1>
         <ReactApexChart options={chartData.options} series={chartData.series} type="line" height="300" />
       </div>

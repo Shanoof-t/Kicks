@@ -1,5 +1,4 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import "./App.css";
 import Home from "./pages/Home";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
