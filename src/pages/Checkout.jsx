@@ -5,13 +5,16 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { v4 as uuidv4 } from "uuid";
 import { CartContext } from "../context/CartProvider";
+import { bestSellers } from "../API/API_URL";
 function Checkout() {
   const navigate = useNavigate();
   const [cartItem, setCartItem] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [user, setUser] = useState("");
+  const [bestProducts, setBestProducts] = useState([]);
   const { setCartItems } = useContext(CartContext);
+
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     setUser(userId);
@@ -22,12 +25,35 @@ function Checkout() {
       .then((res) => {
         const existingCart = res.data.cart || [];
         setCartItem(existingCart);
-        console.log(cartItem);
+        return existingCart;
+      })
+      .then((cart) => {
+        axios
+          .get(bestSellers)
+          .then((res) => {
+            let updatedBestSeller = [];
+            const bestSelllers = res.data;
+            for (let x of cart) {
+              updatedBestSeller.push(x);
+            }
+            for (let x of bestSelllers) {
+              updatedBestSeller.push(x);
+            }
+            setBestProducts(updatedBestSeller);
+
+            axios.put(bestSellers, updatedBestSeller).then(()=>{
+              console.log("Success");
+              
+            }).catch((err) => {
+              console.log(err.message);
+            });
+          })
+          .catch((err) => console.log(err.message));
       })
       .catch((err) => {
         toast.error(err.message);
       });
-  }, [user]);
+  }, [user, bestSellers]);
 
   useEffect(() => {
     const total = cartItem.reduce((acc, val) => {

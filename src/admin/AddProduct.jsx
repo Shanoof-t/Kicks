@@ -4,7 +4,9 @@ import { addProductValidation } from "./components/AddProductValidation";
 import axios from "axios";
 import { itemsURL } from "../API/API_URL";
 import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 function AddProduct() {
+  const navigate = useNavigate();
   const initialInformation = {
     name: "",
     description: "",
@@ -29,7 +31,7 @@ function AddProduct() {
     };
     try {
       await axios.post(itemsURL, itemData);
-      toast.success("Item Updated");
+      toast.success("Item Updated", { onClose: () => navigate(-1) });
 
       setImageUrl(null);
     } catch (error) {
@@ -104,7 +106,7 @@ function AddProduct() {
                 <div className="mb-4">
                   <h2 className="font-semibold mb-1">Category</h2>
 
-                  <Field
+                  {/* <Field
                     type="text"
                     name="category"
                     placeholder="Type category here"
@@ -116,7 +118,20 @@ function AddProduct() {
                           ? "border-red-500"
                           : "border-gray-300"
                       }`}
-                  ></Field>
+                  ></Field> */}
+                  <select
+                    name="category"
+                    onChange={handleChange}
+                    className="border border-gray-300 rounded-lg p-2  w-full bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  >
+                    <option value="" disabled selected>
+                      Categories
+                    </option>
+                    <option value="CASUAL">Casual</option>
+                    <option value="FOOTBALL">Football</option>
+                    <option value="RUNNING">Running</option>
+                  </select>
+
                   {errors.category && touched.category && (
                     <small className="text-red-600">{errors.category}</small>
                   )}
@@ -272,7 +287,7 @@ function AddProduct() {
               <div className="w-1/2 p-4">
                 <div className="mb-4">
                   <h2 className="font-semibold mb-1">Preview</h2>
-                  <div >
+                  <div>
                     {values.imageURL || imageUrl ? (
                       <img
                         src={values.imageURL || imageUrl}
@@ -322,7 +337,7 @@ function AddProduct() {
                 className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200"
                 type="submit"
               >
-                Update Product
+                Add Product
               </button>
             </div>
           </Form>

@@ -91,7 +91,7 @@ function DashboardHome() {
     setOrderDetails({ totalOrders: orders.length });
   }, [orders, users]);
   const [bestSeller, setBestSeller] = useState([]);
-  
+
   let bestSellers = orders.map((value) => {});
   return (
     <div className="px-6 py-8 lg:px-8 lg:py-6 min-h-screen ">
@@ -186,9 +186,9 @@ function DashboardHome() {
             </tr>
           </thead>
           <tbody className="text-center">
-            {orderList.map((order) => (
+            {orderList.map((order, index) => (
               <tr
-                key={order.orderId}
+                key={order.orderId + index}
                 className="hover:bg-gray-50 transition duration-200"
               >
                 <td className="border-b border-gray-200 py-4 px-6">{`${order.firstName} ${order.lastName}`}</td>

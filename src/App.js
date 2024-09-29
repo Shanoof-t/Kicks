@@ -5,7 +5,6 @@ import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
-import Checkout from "./pages/Checkout";
 import NotFound from "./pages/NotFound";
 import Profile from "./pages/Profile";
 import OrderDetails from "./pages/OrderDetails";
@@ -28,6 +27,7 @@ import React, { Suspense, useEffect } from "react";
 import Loading from "./components/Loading";
 const Home = React.lazy(() => import("./pages/Home"));
 const HeaderDash = React.lazy(() => import("./admin/components/HeaderDash"));
+const Checkout = React.lazy(() => import("./pages/Checkout"));
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -35,11 +35,12 @@ function App() {
     location.pathname === "/login" ||
     location.pathname === "/register" ||
     location.pathname.startsWith("/admin");
-  useEffect(() => {
-    if (localStorage.getItem("isAdmin")) {
-      navigate("/admin");
-    }
-  }, []);
+
+  // useEffect(() => {
+  //   if (localStorage.getItem("isAdmin")) {
+  //     navigate("/admin");
+  //   }
+  // }, []);
   return (
     <CartProvider>
       <UserProvider>
@@ -72,7 +73,14 @@ function App() {
               <Route path="women/:productId" element={<ProductDetails />} />
               <Route path="kids/:productId" element={<ProductDetails />} />
               <Route path="cart" element={<Cart />} />
-              <Route path="checkout" element={<Checkout />} />
+              <Route
+                path="checkout"
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <Checkout />
+                  </Suspense>
+                }
+              />
               <Route path="profile" element={<Profile />} />
               <Route path="orderdetails" element={<OrderDetails />} />
               <Route path="*" element={<NotFound />} />

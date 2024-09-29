@@ -58,7 +58,7 @@ function OrderList() {
               <th className="py-3 px-4">Amount</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="text-center">
             {orderList.map((order) => (
               <tr
                 key={order.orderId}
@@ -78,7 +78,15 @@ function OrderList() {
                   {order.paymentMethod}
                 </td>
                 <td className="border-b border-gray-200 py-3 px-4">
-                  {order.status ? "Pending" : "Delivered"}
+                  <span
+                    className={`px-2 py-1 rounded-lg text-sm font-medium ${
+                      order.status
+                        ? "bg-yellow-100 text-yellow-700"
+                        : "bg-green-100 text-green-700"
+                    }`}
+                  >
+                    {order.status ? "Pending" : "Delivered"}
+                  </span>
                 </td>
                 <td className="border-b border-gray-200 py-3 px-4">
                   ${order.amount}
