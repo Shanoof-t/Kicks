@@ -8,6 +8,7 @@ function UserProfile() {
   const { userID } = useParams();
   const { users, setUsers } = useContext(UserContext);
   const [user, setUser] = useState(null);
+
   useEffect(() => {
     const userData = users.find((value) => value.id === userID);
     if (userData) {
@@ -24,11 +25,11 @@ function UserProfile() {
     }
   }, [users, userID]);
 
-  const hanldeBlock = (id) => {
+  const handleBlock = (id) => {
     axios
       .patch(`${userURL}/${id}`, { isAllowed: !user.isAllowed })
       .then(() => {
-        setUser((prev) => ({ ...prev, isAllowed: !user.isAllowed }));
+        setUser((prev) => ({ ...prev, isAllowed: !prev.isAllowed }));
         setUsers((prev) => {
           return prev.map((value) =>
             value.id === id ? { ...value, isAllowed: !value.isAllowed } : value
@@ -42,23 +43,21 @@ function UserProfile() {
 
   if (!user) {
     return (
-      <div>
-        <h1>Loading....</h1>
+      <div className="flex justify-center items-center min-h-screen bg-gray-100">
+        <h1 className="text-xl text-gray-600">Loading....</h1>
       </div>
     );
   } else {
     return (
-      <div className=" p-6 bg-gray-100 min-h-screen" key={user.id}>
+      <div className="p-6 bg-gray-100 min-h-screen">
         {/* User Details Section */}
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-gray-700">User Details</h1>
         </div>
 
         <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-          <div className="mb-4">
-            <h1 className="font-bold text-xl text-gray-800">{`User ID: ${user.id}`}</h1>
-          </div>
-          <div className="space-y-2">
+          <h1 className="font-bold text-xl text-gray-800">{`User ID: ${user.id}`}</h1>
+          <div className="space-y-2 mt-4">
             <h1 className="text-lg text-gray-600">
               <span className="font-semibold">Name:</span>{" "}
               {`${user.firstName} ${user.lastName}`}
@@ -67,18 +66,18 @@ function UserProfile() {
               <span className="font-semibold">Email:</span> {user.email}
             </h1>
           </div>
-          <div>
+          <div className="mt-4">
             {user.isAllowed ? (
               <button
                 className="bg-red-700 text-white font-semibold py-2 px-4 rounded-md hover:bg-red-800 transition duration-300"
-                onClick={() => hanldeBlock(user.id)}
+                onClick={() => handleBlock(user.id)}
               >
                 Block User
               </button>
             ) : (
               <button
                 className="bg-green-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-green-700 transition duration-300"
-                onClick={() => hanldeBlock(user.id)}
+                onClick={() => handleBlock(user.id)}
               >
                 Unblock User
               </button>
@@ -89,7 +88,7 @@ function UserProfile() {
         {/* User Cart Section */}
         <div className="bg-white p-6 rounded-lg shadow-md mb-8">
           <h1 className="text-2xl font-bold text-gray-700 mb-4">Cart</h1>
-          <table className="min-w-full table-auto">
+          <table className="min-w-full table-auto border border-gray-300">
             <thead className="bg-gray-200">
               <tr>
                 <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
@@ -137,7 +136,7 @@ function UserProfile() {
         {/* User Orders Section */}
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h1 className="text-2xl font-bold text-gray-700 mb-4">Orders</h1>
-          <table className="min-w-full table-auto">
+          <table className="min-w-full table-auto border border-gray-300">
             <thead className="bg-gray-200">
               <tr>
                 <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
@@ -155,8 +154,8 @@ function UserProfile() {
               </tr>
             </thead>
             <tbody>
-              {user.order.map((item) =>
-                item.product.map((product) => (
+              {user.order.map((order) =>
+                order.product.map((product) => (
                   <tr key={product.productId} className="hover:bg-gray-100">
                     <td className="border px-4 py-2 text-sm text-gray-600">
                       {product.productId}

@@ -90,7 +90,9 @@ function DashboardHome() {
     }
     setOrderDetails({ totalOrders: orders.length });
   }, [orders, users]);
-
+  const [bestSeller, setBestSeller] = useState([]);
+  
+  let bestSellers = orders.map((value) => {});
   return (
     <div className="px-6 py-8 lg:px-8 lg:py-6 min-h-screen ">
       <h1 className="text-4xl font-bold mb-10 text-gray-900">Dashboard</h1>
@@ -99,39 +101,72 @@ function DashboardHome() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10 ">
         <div className="bg-white p-6 rounded-3xl shadow-lg  flex items-center justify-between hover:shadow-xl  transition duration-300">
           <div>
-            <h1 className="text-lg font-semibold text-center text-black">Total Orders</h1>
+            <h1 className="text-lg font-semibold text-center text-black">
+              Total Orders
+            </h1>
             <div className="flex items-center gap-4 mt-2 ">
-              <FontAwesomeIcon icon={faBagShopping} className="text-4xl text-blue-500" />
-              <h2 className="text-3xl font-bold text-gray-800">{orderDetails.totalOrders}</h2>
+              <FontAwesomeIcon
+                icon={faBagShopping}
+                className="text-4xl text-blue-500"
+              />
+              <h2 className="text-3xl font-bold text-gray-800">
+                {orderDetails.totalOrders}
+              </h2>
             </div>
           </div>
         </div>
 
         <div className="bg-white p-6 rounded-lg shadow-lg flex items-center justify-between hover:shadow-xl transition duration-300">
           <div>
-            <h1 className="text-lg font-semibold text-gray-600">Total Customers</h1>
+            <h1 className="text-lg font-semibold text-gray-600">
+              Total Customers
+            </h1>
             <div className="flex items-center gap-4 mt-2">
-              <FontAwesomeIcon icon={faUser} className="text-4xl text-green-500" />
-              <h2 className="text-3xl font-bold text-gray-800">{users.length}</h2>
+              <FontAwesomeIcon
+                icon={faUser}
+                className="text-4xl text-green-500"
+              />
+              <h2 className="text-3xl font-bold text-gray-800">
+                {users.length}
+              </h2>
             </div>
           </div>
         </div>
 
         <div className="bg-white p-6 rounded-lg shadow-lg flex items-center justify-between hover:shadow-xl transition duration-300">
           <div>
-            <h1 className="text-lg font-semibold text-gray-600">Total Products</h1>
+            <h1 className="text-lg font-semibold text-gray-600">
+              Total Products
+            </h1>
             <div className="flex items-center gap-4 mt-2">
               <img src={album} alt="Products Icon" className="w-10 h-10" />
-              <h2 className="text-3xl font-bold text-gray-800">{allitems.length}</h2>
+              <h2 className="text-3xl font-bold text-gray-800">
+                {allitems.length}
+              </h2>
             </div>
           </div>
         </div>
       </div>
 
       {/* Sales Graph */}
-      <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 mb-10">
-        <h1 className="text-xl font-semibold mb-4 text-gray-800">Sales Graph</h1>
-        <ReactApexChart options={chartData.options} series={chartData.series} type="line" height="300" />
+      <div className="grid grid-cols-2 gap-5">
+        <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 mb-10">
+          <h1 className="text-xl font-semibold mb-4 text-gray-800">
+            Sales Graph
+          </h1>
+          <div>
+            <ReactApexChart
+              options={chartData.options}
+              series={chartData.series}
+              type="line"
+              height="300"
+            />
+          </div>
+        </div>
+        <div>
+          <h1>Best Sellers</h1>
+          <div></div>
+        </div>
       </div>
 
       {/* Recent Orders */}
@@ -152,21 +187,34 @@ function DashboardHome() {
           </thead>
           <tbody className="text-center">
             {orderList.map((order) => (
-              <tr key={order.orderId} className="hover:bg-gray-50 transition duration-200">
+              <tr
+                key={order.orderId}
+                className="hover:bg-gray-50 transition duration-200"
+              >
                 <td className="border-b border-gray-200 py-4 px-6">{`${order.firstName} ${order.lastName}`}</td>
-                <td className="border-b border-gray-200 py-4 px-6">{order.orderId.slice(0, 5)}</td>
-                <td className="border-b border-gray-200 py-4 px-6">{order.date}</td>
-                <td className="border-b border-gray-200 py-4 px-6">{order.paymentMethod}</td>
+                <td className="border-b border-gray-200 py-4 px-6">
+                  {order.orderId.slice(0, 5)}
+                </td>
+                <td className="border-b border-gray-200 py-4 px-6">
+                  {order.date}
+                </td>
+                <td className="border-b border-gray-200 py-4 px-6">
+                  {order.paymentMethod}
+                </td>
                 <td className="border-b border-gray-200 py-4 px-6">
                   <span
                     className={`px-2 py-1 rounded-lg text-sm font-medium ${
-                      order.status ? "bg-yellow-100 text-yellow-700" : "bg-green-100 text-green-700"
+                      order.status
+                        ? "bg-yellow-100 text-yellow-700"
+                        : "bg-green-100 text-green-700"
                     }`}
                   >
                     {order.status ? "Pending" : "Delivered"}
                   </span>
                 </td>
-                <td className="border-b border-gray-200 py-4 px-6">${order.amount}</td>
+                <td className="border-b border-gray-200 py-4 px-6">
+                  ${order.amount}
+                </td>
               </tr>
             ))}
           </tbody>

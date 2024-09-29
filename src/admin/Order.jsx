@@ -9,23 +9,21 @@ import { Link, useParams } from "react-router-dom";
 import { UserContext } from "../context/UserProvider";
 import axios from "axios";
 import { userURL } from "../API/API_URL";
+
 function Order() {
   const { orderID } = useParams();
   const { orders, setOrders } = useContext(UserContext);
   const order = orders.find((value) => value.orderId === orderID);
-  console.log(orders);
 
   const handleDelivered = (orderId, userId) => {
-    // const deliveredOrder = { ...order, status: "delivered" };
-
     axios
       .get(`${userURL}/${userId}`)
       .then((res) => {
         const currData = res.data;
-
         const updatedData = currData.order.map((value) =>
           value.orderId === orderId ? { ...value, status: false } : value
         );
+
         axios
           .patch(`${userURL}/${userId}`, { order: updatedData })
           .then(() => {
@@ -43,36 +41,38 @@ function Order() {
         console.log(err.message);
       });
   };
+
   if (!order)
     return <div className="text-center text-gray-700">Order not found.</div>;
 
   return (
-    <div className=" p-8 bg-gray-50 min-h-screen">
+    <div className="p-8 bg-gray-50 min-h-screen">
       <div className="mb-8">
         <h1 className="text-4xl font-bold text-gray-800">Order Details</h1>
       </div>
 
       <div className="bg-white p-6 shadow-md rounded-lg mb-8">
-        <div className="grid grid-cols-2 gap-5 mb-6">
-          <div className="flex">
-            <h2 className="font-semibold text-gray-700">
-              Order ID:{" "}
-              <span className="font-normal">{order.orderId.slice(0, 5)}</span>
-            </h2>
-            <div className="bg-secondaryColor text-white p-2 rounded-md text-center">
-              <span className="font-medium">
-                {order.status ? "Pending" : "Delivered"}
-              </span>
+        <div className="mb-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <h2 className="font-semibold text-gray-700">
+                Order ID:{" "}
+                <span className="font-normal">{order.orderId.slice(0, 5)}</span>
+              </h2>
+              <div className="bg-secondaryColor text-white p-2 rounded-md text-center ml-4">
+                <span className="font-medium">
+                  {order.status ? "Pending" : "Delivered"}
+                </span>
+              </div>
             </div>
-          </div>
-
-          <div>
-            <button
-              className="bg-blue-500 text-white p-2 rounded-md text-center"
-              onClick={() => handleDelivered(order.orderId, order.userId)}
-            >
-              Mask as Delivered
-            </button>
+            <div>
+              <button
+                className="bg-blue-500 text-white p-2 rounded-md text-center hover:bg-blue-600 transition duration-300"
+                onClick={() => handleDelivered(order.orderId, order.userId)}
+              >
+                Mark as Delivered
+              </button>
+            </div>
           </div>
         </div>
 
@@ -155,23 +155,23 @@ function Order() {
         <table className="min-w-full bg-white border border-gray-200">
           <thead>
             <tr className="bg-gray-200">
-              <th className="py-3 px-4 font-semibold text-gray-600 border-b">
+              <th className="py-3 px-4 font-semibold text-gray-600 border-b text-left">
                 Product Name
               </th>
-              <th className="py-3 px-4 font-semibold text-gray-600 border-b">
+              <th className="py-3 px-4 font-semibold text-gray-600 border-b text-left">
                 Product ID
               </th>
-              <th className="py-3 px-4 font-semibold text-gray-600 border-b">
+              <th className="py-3 px-4 font-semibold text-gray-600 border-b text-left">
                 Quantity
               </th>
-              <th className="py-3 px-4 font-semibold text-gray-600 border-b">
+              <th className="py-3 px-4 font-semibold text-gray-600 border-b text-left">
                 Total
               </th>
             </tr>
           </thead>
           <tbody>
             {order.product.map((prdct) => (
-              <tr key={prdct.productId} className="border-b">
+              <tr key={prdct.productId} className="border-b hover:bg-gray-100">
                 <td className="py-3 px-4">{prdct.name}</td>
                 <td className="py-3 px-4">{prdct.productId}</td>
                 <td className="py-3 px-4">{prdct.quantity}</td>

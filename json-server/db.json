@@ -1,4 +1,5 @@
 {
+  "bestsellers": [],
   "user": [
     {
       "id": "7d59",
@@ -14,7 +15,7 @@
       "lastName": "t",
       "email": "shanoof.001@gmail.com",
       "password": "123456",
-      "isAllowed": true,
+      "isAllowed": false,
       "cart": [],
       "order": [
         {
@@ -142,6 +143,54 @@
               "name": "Nike Air Force 1",
               "productId": "10",
               "size": "6",
+              "quantity": 1,
+              "imageURL": "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/178b2a46-3ee4-492b-882e-f71efdd53a36/air-force-1-big-kids-shoe-2zqp8D.jpg",
+              "price": 90
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e2f4",
+      "firstName": "salman",
+      "lastName": "faris",
+      "email": "salman@gmail.com",
+      "password": "123456",
+      "isAllowed": true,
+      "cart": [],
+      "order": [
+        {
+          "userId": "e2f4",
+          "orderId": "3b69afa1-4811-4f82-945e-1bd8b5a95006",
+          "email": "salman@gmail.com",
+          "firstName": "salman",
+          "lastName": "faris",
+          "address": "Rua Inexistente, 2000",
+          "phone": "9961628082",
+          "paymentMethod": "cash",
+          "status": true,
+          "date": "2024-09-29",
+          "amount": 0,
+          "product": []
+        },
+        {
+          "userId": "e2f4",
+          "orderId": "08f03973-fade-4d6a-b5f1-f92c11890403",
+          "email": "salman@gmail.com",
+          "firstName": "salman",
+          "lastName": "Doe",
+          "address": "Rua Inexistente, 2000",
+          "phone": "9961628082",
+          "paymentMethod": "UPI",
+          "status": true,
+          "date": "2024-09-29",
+          "amount": 90,
+          "product": [
+            {
+              "name": "Nike Air Force 1",
+              "productId": "10",
+              "size": "5",
               "quantity": 1,
               "imageURL": "https://static.nike.com/a/images/t_PDP_864_v1/f_auto,b_rgb:f5f5f5/178b2a46-3ee4-492b-882e-f71efdd53a36/air-force-1-big-kids-shoe-2zqp8D.jpg",
               "price": 90

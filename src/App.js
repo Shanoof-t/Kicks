@@ -1,5 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
-import Home from "./pages/Home";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Navbar from "./components/Navbar/Navbar";
@@ -16,7 +15,6 @@ import CategorieDetails from "./pages/CategorieDetails";
 import ItemDisplay from "./components/ItemDisplay";
 import AddProduct from "./admin/AddProduct";
 import DashboardHome from "./admin/DashboardHome";
-import HeaderDash from "./admin/components/HeaderDash";
 import ProductProvider from "./context/ProductProvider";
 import ProductsDash from "./admin/ProductsDash";
 import UpdateProduct from "./admin/UpdateProduct";
@@ -25,17 +23,23 @@ import OrderList from "./admin/OrderList";
 import Order from "./admin/Order";
 import UserProvider from "./context/UserProvider";
 import UserProfile from "./admin/UserProfile";
-import AdminNavbar from "./admin/components/AdminNavbar";
-import AdminRoutes from "./routes/AdminRoutes";
-import UserRoutes from "./routes/UserRoutes";
 import CartProvider from "./context/CartProvider";
+import React, { Suspense, useEffect } from "react";
+import Loading from "./components/Loading";
+const Home = React.lazy(() => import("./pages/Home"));
+const HeaderDash = React.lazy(() => import("./admin/components/HeaderDash"));
 function App() {
+  const navigate = useNavigate();
   const location = useLocation();
   const hideComponent =
     location.pathname === "/login" ||
     location.pathname === "/register" ||
     location.pathname.startsWith("/admin");
-
+  useEffect(() => {
+    if (localStorage.getItem("isAdmin")) {
+      navigate("/admin");
+    }
+  }, []);
   return (
     <CartProvider>
       <UserProvider>
@@ -47,7 +51,14 @@ function App() {
             <Routes>
               {/* User Routes */}
 
-              <Route path="/" element={<Home />} />
+              <Route
+                path="/"
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <Home />
+                  </Suspense>
+                }
+              />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
               <Route path="home" element={<Home />} />
@@ -68,7 +79,14 @@ function App() {
 
               {/* Admin Routes */}
 
-              <Route path="admin" element={<HeaderDash />}>
+              <Route
+                path="admin"
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <HeaderDash />
+                  </Suspense>
+                }
+              >
                 <Route index element={<DashboardHome />} />
                 <Route
                   path="productlist/:productCategory"

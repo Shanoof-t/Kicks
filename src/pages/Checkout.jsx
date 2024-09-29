@@ -133,17 +133,15 @@ function Checkout() {
             order: updatedOrder,
             cart: [],
           });
-         setCartItems([])
+          setCartItems([]);
         })
         .then(() => {
-          toast.success("Your Order is Placed", { className: "mt-12" });
+          toast.success("Your Order is Placed", {
+            className: "mt-12",
+            onClose: () => navigate("/"),
+          });
         })
 
-        .then(() => {
-          setTimeout(() => {
-            navigate("/");
-          }, 6000);
-        })
         .catch((err) => {
           toast.error(err.message, { className: "mt-12" });
         });

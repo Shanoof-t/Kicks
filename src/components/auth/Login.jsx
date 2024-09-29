@@ -1,8 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-
 function Login() {
   const navigate = useNavigate();
   const [isAllowed, setIsAllowed] = useState(null);
@@ -13,6 +11,7 @@ function Login() {
   const [LoginValues, setLoginValues] = useState(initailValues);
   const [loginError, setLoginError] = useState({});
   const [isSubmit, serIsSubmit] = useState(false);
+  const [blockError, setBlockError] = useState(null);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setLoginValues({ ...LoginValues, [name]: value });
@@ -68,14 +67,13 @@ function Login() {
       if (isAllowed) {
         navigate("/", { replace: true });
       } else {
-        toast.error("Authentication is Rejected");
+        setBlockError("Authentication is Rejected");
         localStorage.clear();
       }
     }
   }, [loginError]);
   return (
     <div className="flex flex-col items-center justify-center h-screen  ">
-      <ToastContainer />
       <div className=" p-8 rounded-lg  w-full max-w-md">
         <h1 className="text-4xl font-bold text-center mb-6">Login</h1>
         <form onSubmit={handleSubmit}>
@@ -88,7 +86,7 @@ function Login() {
               name="email"
               className="w-full px-4 py-3 bg-transparent border border-black rounded-md text-gray-800 focus:outline-none focus:ring-0"
             />
-            <p>{loginError.email}</p>
+            <p className="text-red-600">{loginError.email}</p>
           </div>
           <div className="mb-6">
             <input
@@ -99,10 +97,23 @@ function Login() {
               name="password"
               className="w-full px-4 py-3 bg-transparent border border-black rounded-md text-gray-800 focus:outline-none focus:ring-0"
             />
-            <p>{loginError.password}</p>
+            <p className="text-red-600">
+              {loginError.password}
+              {blockError}
+            </p>
           </div>
+          {!blockError ? (
+            ""
+          ) : (
+            <button
+              className="w-full  text-white py-3 rounded-md font-semibold bg-red-600 hover:bg-red-800 transition duration-300"
+              onClick={() => navigate("/")}
+            >
+              Go Back
+            </button>
+          )}
           <button
-            className="w-full  text-white py-3 rounded-md font-semibold bg-thirdColor hover:bg-hoverColor transition duration-300"
+            className="w-full mt-3 text-white py-3 rounded-md font-semibold bg-thirdColor hover:bg-hoverColor transition duration-300"
             type="submit"
           >
             Log In
