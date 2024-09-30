@@ -12,7 +12,6 @@ function Checkout() {
   const [totalPrice, setTotalPrice] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [user, setUser] = useState("");
-  const [bestProducts, setBestProducts] = useState([]);
   const { setCartItems } = useContext(CartContext);
 
   useEffect(() => {
@@ -25,35 +24,11 @@ function Checkout() {
       .then((res) => {
         const existingCart = res.data.cart || [];
         setCartItem(existingCart);
-        return existingCart;
-      })
-      .then((cart) => {
-        axios
-          .get(bestSellers)
-          .then((res) => {
-            let updatedBestSeller = [];
-            const bestSelllers = res.data;
-            for (let x of cart) {
-              updatedBestSeller.push(x);
-            }
-            for (let x of bestSelllers) {
-              updatedBestSeller.push(x);
-            }
-            setBestProducts(updatedBestSeller);
-
-            axios.put(bestSellers, updatedBestSeller).then(()=>{
-              console.log("Success");
-              
-            }).catch((err) => {
-              console.log(err.message);
-            });
-          })
-          .catch((err) => console.log(err.message));
       })
       .catch((err) => {
         toast.error(err.message);
       });
-  }, [user, bestSellers]);
+  }, [user]);
 
   useEffect(() => {
     const total = cartItem.reduce((acc, val) => {
@@ -147,6 +122,7 @@ function Checkout() {
       return { ...p, product: products };
     });
   }, [cartItem]);
+console.log(cartItem);
 
   const addOrderTojson = (value) => {
     if (Object.keys(contactDetailsErrors).length === 0 && isSubmit && user) {
@@ -155,6 +131,23 @@ function Checkout() {
         .then((res) => {
           const existingOrders = res.data.order || [];
           const updatedOrder = [...existingOrders, contactDetails];
+
+          
+          // axios.get(bestSellers).then((res)=>{
+          //   const currPro = res.data
+          //   const bestProducts = cartItem.map((value) => {
+          //     return {
+          //       ...value,
+          //       sale:1
+          //     };
+          //   });
+          //   const final = currPro.map(value=>{
+          //     return {
+
+          //     }
+          //   })
+          // })
+          
           axios.patch(`http://localhost:4000/user/${user}`, {
             order: updatedOrder,
             cart: [],

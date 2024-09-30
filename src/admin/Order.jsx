@@ -9,6 +9,7 @@ import { Link, useParams } from "react-router-dom";
 import { UserContext } from "../context/UserProvider";
 import axios from "axios";
 import { userURL } from "../API/API_URL";
+import { toast, ToastContainer } from "react-toastify";
 
 function Order() {
   const { orderID } = useParams();
@@ -32,6 +33,7 @@ function Order() {
                 value.orderId === orderId ? { ...value, status: false } : value
               );
             });
+            toast.success("Order Delivered!");
           })
           .catch((err) => {
             console.log(err.message);
@@ -47,6 +49,7 @@ function Order() {
 
   return (
     <div className="p-8 bg-gray-50 min-h-screen">
+      <ToastContainer />
       <div className="mb-8">
         <h1 className="text-4xl font-bold text-gray-800">Order Details</h1>
       </div>

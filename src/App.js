@@ -29,7 +29,7 @@ const Home = React.lazy(() => import("./pages/Home"));
 const HeaderDash = React.lazy(() => import("./admin/components/HeaderDash"));
 const Checkout = React.lazy(() => import("./pages/Checkout"));
 function App() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const location = useLocation();
   const hideComponent =
     location.pathname === "/login" ||
@@ -41,6 +41,7 @@ function App() {
   //     navigate("/admin");
   //   }
   // }, []);
+  const admin = localStorage.getItem("isAdmin");
   return (
     <CartProvider>
       <UserProvider>

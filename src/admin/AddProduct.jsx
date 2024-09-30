@@ -64,7 +64,6 @@ function AddProduct() {
               <div className="w-1/2 p-4">
                 <div className="mb-4">
                   <h2 className="font-semibold mb-1">Product Name</h2>
-
                   <Field
                     type="text"
                     name="name"

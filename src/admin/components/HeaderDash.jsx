@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import logo from "../../assets/logo/Logo.png";
 import { Outlet, useNavigate } from "react-router-dom";
-import { faChevronDown, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ProductContext } from "../../context/ProductProvider";
 import dash from "../../assets/icons/dashboaard.svg";
@@ -24,7 +24,10 @@ const HeaderDash = () => {
   );
 
   const [categoryShow, setCategoryShow] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Toggle sidebar on mobile
+
   const toggleCategory = () => setCategoryShow(!categoryShow);
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
   const handleCategory = (type) => {
     navigate(`productlist/${type}`);
@@ -56,10 +59,24 @@ const HeaderDash = () => {
 
   return (
     <div className="flex h-screen">
+      {/* Mobile Navbar */}
+      <div className="lg:hidden flex justify-between items-center px-4 py-3 bg-white shadow-md fixed w-full z-10">
+        <img src={logo} alt="Logo" className="h-8" />
+        <button onClick={toggleSidebar} className="text-gray-700">
+          <FontAwesomeIcon icon={faBars} className="h-6 w-6" />
+        </button>
+      </div>
+
       {/* Sidebar */}
-      <div className="w-1/5 bg-white border-r shadow-lg flex flex-col py-6 px-4 fixed h-screen">
+      <div
+        className={`${
+          sidebarOpen ? "block" : "hidden"
+        } lg:block lg:w-1/5 bg-white border-r shadow-lg flex flex-col py-6 px-4 fixed h-full z-20 transition-transform duration-300 ease-in-out transform ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:translate-x-0`}
+      >
         {/* Logo */}
-        <div className="mb-6 flex justify-center">
+        <div className="mb-6 flex justify-center lg:hidden">
           <img src={logo} alt="Logo" className="h-8" />
         </div>
 
@@ -157,7 +174,7 @@ const HeaderDash = () => {
         {/* Logout Button */}
         <div className="mt-10">
           <button
-            className="w-full flex items-center justify-center px-4 py-3  bg-red-600 hover:bg-red-700 text-white rounded-md shadow hover:bg-red-600 transition duration-200"
+            className="w-full flex items-center justify-center px-4 py-3  bg-red-600 hover:bg-red-700 text-white rounded-md shadow  transition duration-200"
             onClick={handleLogout}
           >
             <h1 className="text-sm font-semibold uppercase">Logout</h1>
@@ -166,7 +183,7 @@ const HeaderDash = () => {
       </div>
 
       {/* Main Content */}
-      <div className="ml-64 flex-grow bg-gray-100 p-8 overflow-auto">
+      <div className="lg:ml-64 flex-grow bg-gray-100 p-8 overflow-auto mt-12 lg:mt-0">
         <Outlet />
       </div>
     </div>
