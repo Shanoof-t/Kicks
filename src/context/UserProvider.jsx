@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import { userURL } from "../API/API_URL";
+import { userURL } from "../utils/API_URL"; 
 import axios from "axios";
 export const UserContext = createContext();
 function UserProvider({ children }) {

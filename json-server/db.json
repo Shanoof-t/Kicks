@@ -18,12 +18,12 @@
       "isAllowed": true,
       "cart": [
         {
-          "id": "18",
-          "name": "Air Jordan 1 Low",
-          "imageURL": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco,u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/25dfd854-eb11-45db-984d-24721d8c34cc/AIR+JORDAN+1+LOW.png",
-          "price": 280,
+          "id": "16",
+          "name": "Nike Air Force 1 LV8 2",
+          "imageURL": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/294b25e0-fc5d-436b-b09f-d2e30ac760e1/AIR+FORCE+1+LV8+2+%28GS%29.png",
+          "price": 230,
           "quantity": 1,
-          "size": "9"
+          "size": "4"
         }
       ],
       "order": [

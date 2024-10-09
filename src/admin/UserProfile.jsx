@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../context/UserProvider";
 import axios from "axios";
-import { userURL } from "../API/API_URL";
+import { userURL } from "../utils/API_URL"; 
 
 function UserProfile() {
   const { userID } = useParams();

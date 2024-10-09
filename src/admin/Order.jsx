@@ -8,7 +8,7 @@ import React, { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { UserContext } from "../context/UserProvider";
 import axios from "axios";
-import { userURL } from "../API/API_URL";
+import { userURL } from "../utils/API_URL";
 import { toast, ToastContainer } from "react-toastify";
 
 function Order() {

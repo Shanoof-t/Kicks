@@ -5,29 +5,32 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { CartContext } from "../context/CartProvider";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deleteCartItems,
+  fetchCartItems,
+  updateCartQuantity,
+} from "../features/cart/cartAPI";
+import Loading from "../components/Loading";
+import { setCartTotalPrice, setUser } from "../features/cart/cartSlice";
 
 function Cart() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  const [cartItem, setCartItem] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [user, setUser] = useState("");
-  const { setCartItems } = useContext(CartContext);
+  const dispatch = useDispatch();
+  const cartItem = useSelector((state) => state.cart.cartItems);
+  const loading = useSelector((state) => state.cart.cartLoading);
+  const totalPrice = useSelector((state) => state.cart.cartTotalPrice);
+  const user = useSelector((state) => state.cart.user);
   useEffect(() => {
-    setUser(localStorage.getItem("userId"));
+    const user = localStorage.getItem("userId");
+    dispatch(setUser(user));
   }, []);
 
   useEffect(() => {
     if (user) {
-      axios
-        .get(`http://localhost:4000/user/${user}`)
-        .then((res) => {
-          setCartItem(res.data.cart);
-        })
-        .catch((err) => {
-          toast.error(err.message);
-        });
+      dispatch(fetchCartItems(user));
     }
   }, [user]);
 
@@ -35,37 +38,27 @@ function Cart() {
     const total = cartItem.reduce((acc, val) => {
       return acc + val.price * val.quantity;
     }, 0);
-    setTotalPrice(total);
+    dispatch(setCartTotalPrice(total));
   }, [cartItem]);
 
   const handleQuantity = (id, newQuantity) => {
     const updatedCart = cartItem.map((item) =>
       item.id === id ? { ...item, quantity: newQuantity } : item
     );
-    axios
-      .patch(`http://localhost:4000/user/${user}`, { cart: updatedCart })
-      .then((res) => {
-        setCartItem(updatedCart);
-        setCartItems(updatedCart);
-      })
-      .catch((err) => {
-        toast.error(err.message);
-        console.log(err.message);
-      });
+    dispatch(updateCartQuantity({ user, updatedCart })).then(() => {
+      dispatch(fetchCartItems(user));
+    });
   };
   const handleDelete = (id) => {
     const updatedCart = cartItem.filter((item) => item.id !== id);
-    axios
-      .patch(`http://localhost:4000/user/${user}`, { cart: updatedCart })
-      .then(() => {
-        setCartItem(updatedCart);
-        setCartItems(updatedCart);
-      })
-      .catch((err) => {
-        toast.error(err.message);
-      });
+    dispatch(deleteCartItems({ user, updatedCart })).then(() => {
+      dispatch(fetchCartItems(user));
+    });
   };
 
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <div className="container mx-auto p-8 ">
       {/* Page Heading */}

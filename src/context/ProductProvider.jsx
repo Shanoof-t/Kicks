@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from 'react'
-import { itemsURL } from '../API/API_URL';
+import { itemsURL } from '../utils/API_URL'; 
 import axios from 'axios';
 export const ProductContext = createContext()
 function ProductProvider({children}) {

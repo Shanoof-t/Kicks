@@ -16,7 +16,7 @@ function CartProvider({ children }) {
           console.log(err.message);
         });
     }
-  }, [user]);
+  }, [user])
   return (
     <CartContext.Provider value={{ cartItems, setUser, setCartItems }}>
       {children}

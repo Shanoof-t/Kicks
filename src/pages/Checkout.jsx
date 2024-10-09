@@ -5,7 +5,6 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { v4 as uuidv4 } from "uuid";
 import { CartContext } from "../context/CartProvider";
-import { bestSellers } from "../API/API_URL";
 function Checkout() {
   const navigate = useNavigate();
   const [cartItem, setCartItem] = useState([]);

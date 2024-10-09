@@ -8,7 +8,7 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { itemsURL } from "../API/API_URL";
+import { itemsURL } from "../utils/API_URL"; 
 import { toast, ToastContainer } from "react-toastify";
 
 function ProductsDash() {

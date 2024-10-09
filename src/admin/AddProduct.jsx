@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Field, Form, Formik } from "formik";
 import { addProductValidation } from "./components/AddProductValidation";
 import axios from "axios";
-import { itemsURL } from "../API/API_URL";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { itemsURL } from "../utils/API_URL";
 function AddProduct() {
   const navigate = useNavigate();
   const initialInformation = {
