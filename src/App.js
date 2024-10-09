@@ -29,19 +29,18 @@ const Home = React.lazy(() => import("./pages/Home"));
 const HeaderDash = React.lazy(() => import("./admin/components/HeaderDash"));
 const Checkout = React.lazy(() => import("./pages/Checkout"));
 function App() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
   const hideComponent =
     location.pathname === "/login" ||
     location.pathname === "/register" ||
     location.pathname.startsWith("/admin");
 
-  // useEffect(() => {
-  //   if (localStorage.getItem("isAdmin")) {
-  //     navigate("/admin");
-  //   }
-  // }, []);
-  const admin = localStorage.getItem("isAdmin");
+  useEffect(() => {
+    if (localStorage.getItem("isAdmin")) {
+      navigate("/admin");
+    }
+  }, []);
   return (
     <CartProvider>
       <UserProvider>
@@ -70,9 +69,7 @@ function App() {
                 </Route>
               </Route>
               <Route path="all" element={<AllItems />} />
-              <Route path="men/:productId" element={<ProductDetails />} />
-              <Route path="women/:productId" element={<ProductDetails />} />
-              <Route path="kids/:productId" element={<ProductDetails />} />
+              <Route path="product/:productId" element={<ProductDetails />} />
               <Route path="cart" element={<Cart />} />
               <Route
                 path="checkout"

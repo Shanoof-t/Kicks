@@ -24,10 +24,10 @@ const HeaderDash = () => {
   );
 
   const [categoryShow, setCategoryShow] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false); // Toggle sidebar on mobile
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleCategory = () => setCategoryShow(!categoryShow);
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  const toggleMenu = () => setMenuOpen(!menuOpen);
 
   const handleCategory = (type) => {
     navigate(`productlist/${type}`);
@@ -59,24 +59,22 @@ const HeaderDash = () => {
 
   return (
     <div className="flex h-screen">
-      {/* Mobile Navbar */}
-      <div className="lg:hidden flex justify-between items-center px-4 py-3 bg-white shadow-md fixed w-full z-10">
+      {/* Mobile Menu Button */}
+      <div className="fixed top-0  left-0 w-full bg-white flex justify-between p-4 md:hidden z-50">
         <img src={logo} alt="Logo" className="h-8" />
-        <button onClick={toggleSidebar} className="text-gray-700">
+        <button onClick={toggleMenu}>
           <FontAwesomeIcon icon={faBars} className="h-6 w-6" />
         </button>
       </div>
 
       {/* Sidebar */}
       <div
-        className={`${
-          sidebarOpen ? "block" : "hidden"
-        } lg:block lg:w-1/5 bg-white border-r shadow-lg flex flex-col py-6 px-4 fixed h-full z-20 transition-transform duration-300 ease-in-out transform ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:translate-x-0`}
+        className={`w-64 bg-white border-r shadow-lg flex flex-col py-6 px-4 fixed h-screen z-40 transition-transform duration-300 md:translate-x-0 ${
+          menuOpen ? "translate-x-0" : "-translate-x-full"
+        }  md:block md:relative md:translate-x-0`}
       >
         {/* Logo */}
-        <div className="mb-6 flex justify-center lg:hidden">
+        <div className="mb-6 flex justify-center">
           <img src={logo} alt="Logo" className="h-8" />
         </div>
 
@@ -183,7 +181,7 @@ const HeaderDash = () => {
       </div>
 
       {/* Main Content */}
-      <div className="lg:ml-64 flex-grow bg-gray-100 p-8 overflow-auto mt-12 lg:mt-0">
+      <div className="ml-0 flex-grow bg-gray-100 p-8 overflow-auto">
         <Outlet />
       </div>
     </div>

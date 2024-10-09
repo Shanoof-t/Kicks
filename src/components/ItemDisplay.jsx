@@ -25,7 +25,7 @@ function ItemDisplay({ value, type, gender }) {
             />
             <div className="p-4">
               <h2 className="text-xl font-semibold mb-2">{item.name}</h2>
-              <Link to={`/kids/${item.id}`}>
+              <Link to={`/product/${item.id}`}>
                 <button className="w-full px-4 py-2 text-white bg-thirdColor font-bold rounded hover:bg-hoverColor transition-colors duration-300">
                   VIEW PRODUCT - ${item.price}
                 </button>

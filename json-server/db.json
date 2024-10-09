@@ -82,7 +82,7 @@
           "address": "Rua Inexistente, 2000",
           "phone": "9961628080",
           "paymentMethod": "cash",
-          "status": true,
+          "status": false,
           "date": "2024-09-29",
           "amount": 160,
           "product": [
