@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { registerDataPost } from "./registerAPI";
 const initialState = {
+  dataPostValue: {
+    loading: false,
+    error: "",
+  },
   formValues: {
     firstName: "",
     lastName: "",
@@ -39,6 +44,19 @@ const registerSlice = createSlice({
       state.formValues.confirmPassword = "";
       state.formValues.gender = "";
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(registerDataPost.pending, (state) => {
+        state.dataPostValue.loading = true;
+      })
+      .addCase(registerDataPost.fulfilled, (state) => {
+        state.dataPostValue.loading = false;
+      })
+      .addCase(registerDataPost.rejected, (state, action) => {
+        state.dataPostValue.loading = false;
+        state.dataPostValue.error = action.error.message;
+      });
   },
 });
 

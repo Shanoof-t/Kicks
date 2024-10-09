@@ -7,6 +7,7 @@ import {
   setRegisterFormValuesNull,
   setRegisterGender,
 } from "../../features/register/registerSlice";
+import { registerDataPost } from "../../features/register/registerAPI";
 function Register() {
   const dispatch = useDispatch();
   const navigateToHome = useNavigate();
@@ -60,21 +61,30 @@ function Register() {
   };
   const handleRegistrationNavigation = () => {
     if (Object.keys(registerErrors).length === 0 && isSubmit) {
-      axios
-        .post("http://localhost:4000/user", {
-          firstName: registerValues.firstName,
-          lastName: registerValues.lastName,
-          email: registerValues.email,
-          password: registerValues.password,
-          isAllowed: true,
-          cart: [],
-          order: [],
-        })
+      const data = {
+        firstName: registerValues.firstName,
+        lastName: registerValues.lastName,
+        email: registerValues.email,
+        password: registerValues.password,
+        isAllowed: true,
+        cart: [],
+        order: [],
+      };
+      dispatch(registerDataPost(data))
         .then(() => {
           navigateToHome("/login");
           dispatch(setRegisterFormValuesNull());
         })
-        .catch((err) => console.log(err.message));
+        .catch((err) => {
+          console.log(err.message);
+        });
+      // axios
+      //   .post("http://localhost:4000/user")
+      //   .then(() => {
+      //     navigateToHome("/login");
+      //     dispatch(setRegisterFormValuesNull());
+      //   })
+      //   .catch((err) => console.log(err.message));
     }
   };
   useEffect(() => {
