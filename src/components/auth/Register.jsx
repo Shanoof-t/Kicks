@@ -12,6 +12,7 @@ function Register() {
   const dispatch = useDispatch();
   const navigateToHome = useNavigate();
   const registerValues = useSelector((state) => state.register.formValues);
+  const dataPostValue = useSelector((state) => state.register.dataPostValue);
   const [registerErrors, setRegisterErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const hanldeChange = (e) => {
@@ -70,21 +71,14 @@ function Register() {
         cart: [],
         order: [],
       };
-      dispatch(registerDataPost(data))
-        .then(() => {
+      dispatch(registerDataPost(data)).then(() => {
+        if (dataPostValue.error) {
+          console.log(dataPostValue.error);
+        } else {
           navigateToHome("/login");
           dispatch(setRegisterFormValuesNull());
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
-      // axios
-      //   .post("http://localhost:4000/user")
-      //   .then(() => {
-      //     navigateToHome("/login");
-      //     dispatch(setRegisterFormValuesNull());
-      //   })
-      //   .catch((err) => console.log(err.message));
+        }
+      });
     }
   };
   useEffect(() => {

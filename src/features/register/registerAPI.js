@@ -5,7 +5,7 @@ import { userURL } from "../../utils/API_URL";
 export const registerDataPost = createAsyncThunk(
   "register/registerDataPost",
   async (data) => {
-    const res = await axios.post(userURL,data);
+    const res = await axios.post(userURL, data);
     return res.data;
   }
 );
