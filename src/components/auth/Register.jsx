@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setRegisterFormValues,
+  setRegisterFormValuesNull,
+  setRegisterGender,
+} from "../../features/register/registerSlice";
 function Register() {
+  const dispatch = useDispatch();
   const navigateToHome = useNavigate();
-
-  const initialValues = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    gender: "",
-  };
-  const [registerValues, setRegisterValues] = useState(initialValues);
+  const registerValues = useSelector((state) => state.register.formValues);
   const [registerErrors, setRegisterErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const hanldeChange = (e) => {
     const { name, value } = e.target;
-    setRegisterValues({ ...registerValues, [name]: value });
+    dispatch(setRegisterFormValues({ name, value }));
   };
   const handleRegistration = (e) => {
     e.preventDefault();
@@ -57,10 +55,8 @@ function Register() {
     }
     return error;
   };
-  const [gender, setGender] = useState("");
   const hanldeGender = (gen) => {
-    setGender(gen);
-    setRegisterValues({ ...registerValues, gender: { gen } });
+    dispatch(setRegisterGender(gen));
   };
   const handleRegistrationNavigation = () => {
     if (Object.keys(registerErrors).length === 0 && isSubmit) {
@@ -70,12 +66,13 @@ function Register() {
           lastName: registerValues.lastName,
           email: registerValues.email,
           password: registerValues.password,
-          isAllowed:true,
-          cart:[],
-          order:[]
+          isAllowed: true,
+          cart: [],
+          order: [],
         })
-        .then((res) => {
+        .then(() => {
           navigateToHome("/login");
+          dispatch(setRegisterFormValuesNull());
         })
         .catch((err) => console.log(err.message));
     }
@@ -125,7 +122,7 @@ function Register() {
                 <input
                   type="checkbox"
                   className="form-checkbox h-4 w-4"
-                  checked={gender === "male"}
+                  checked={registerValues.gender === "male"}
                   onChange={() => hanldeGender("male")}
                 />
                 <span className="font-medium">Male</span>
@@ -134,7 +131,7 @@ function Register() {
                 <input
                   type="checkbox"
                   className="form-checkbox h-4 w-4"
-                  checked={gender === "female"}
+                  checked={registerValues.gender === "female"}
                   onChange={() => hanldeGender("female")}
                 />
                 <span className="font-medium">Female</span>

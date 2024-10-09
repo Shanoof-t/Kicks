@@ -113,6 +113,16 @@
           ]
         }
       ]
+    },
+    {
+      "id": "fc65",
+      "firstName": "salman",
+      "lastName": "faris",
+      "email": "salman@gmail.com",
+      "password": "123456",
+      "isAllowed": true,
+      "cart": [],
+      "order": []
     }
   ],
   "items": [
