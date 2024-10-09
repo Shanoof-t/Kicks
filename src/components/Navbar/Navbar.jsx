@@ -13,9 +13,13 @@ import { useNavigate, Link } from "react-router-dom";
 import { Transition } from "@headlessui/react";
 import axios from "axios";
 import { CartContext } from "../../context/CartProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCartItems } from "../../features/cart/cartAPI";
+import { updateCartSize } from "../../features/product_details/productDetailsAPI";
 
 function Navbar() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [showDropdown, setShowDropdown] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showMobileCategories, setShowMobileCategories] = useState(false);
@@ -23,28 +27,20 @@ function Navbar() {
   const [searchText, setSearchText] = useState("");
   const [allItems, setAllItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
-  // const [user, setUser] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
-  const { cartItems, setUser } = useContext(CartContext);
+  const cartItems = useSelector((state) => state.cart.cartItems);
+
+  const [user, setUser] = useState("");
   useEffect(() => {
-    setUser(localStorage.getItem("userId"));
+    const user = localStorage.getItem("userId");
+    setUser(user);
   }, []);
 
-  // useEffect(() => {
-  //   if (user) {
-  //     axios
-  //       .get(`http://localhost:4000/user/${user}`)
-  //       .then((res) => {
-  //         const cart = res.data.cart;
-  //         setCartItems(cart);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err.message);
-  //       });
-  //   } else {
-  //     setCartItems([]);
-  //   }
-  // }, [user]);
+  useEffect(() => {
+    if (user) {
+      dispatch(fetchCartItems(user));
+    }
+  }, [user,fetchCartItems]);
 
   useEffect(() => {
     axios

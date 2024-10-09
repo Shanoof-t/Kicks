@@ -1,10 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import { CartContext } from "../context/CartProvider";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteCartItems,
@@ -22,12 +19,11 @@ function Cart() {
   const cartItem = useSelector((state) => state.cart.cartItems);
   const loading = useSelector((state) => state.cart.cartLoading);
   const totalPrice = useSelector((state) => state.cart.cartTotalPrice);
-  const user = useSelector((state) => state.cart.user);
+  const [user, setUser] = useState("");
   useEffect(() => {
     const user = localStorage.getItem("userId");
-    dispatch(setUser(user));
+    setUser(user);
   }, []);
-
   useEffect(() => {
     if (user) {
       dispatch(fetchCartItems(user));
@@ -55,7 +51,6 @@ function Cart() {
       dispatch(fetchCartItems(user));
     });
   };
-
   if (loading) {
     return <Loading />;
   }

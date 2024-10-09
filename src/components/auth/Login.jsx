@@ -1,7 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setUser } from "../../features/login/loginSlice";
 function Login() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isAllowed, setIsAllowed] = useState(null);
   const initailValues = {

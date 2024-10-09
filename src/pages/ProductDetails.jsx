@@ -4,22 +4,34 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CartContext } from "../context/CartProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { setSizeError } from "../features/product_details/productDetailsSlice";
+import { updateCartSize } from "../features/product_details/productDetailsAPI";
+import { fetchCartItems } from "../features/cart/cartAPI";
 function ProductDetails() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const UpdateCartError = useSelector(
+    (state) => state.productDetails.error.updateError
+  );
   const { productId } = useParams();
   const [items, setItems] = useState({});
   const [sizes, setSizes] = useState([]);
   const [size, setSize] = useState(0);
-  const [sizeError, setSizeError] = useState("");
+  const sizeError = useSelector(
+    (state) => state.productDetails.error.sizeError
+  );
   const [user, setUser] = useState("");
+  useEffect(() => {
+    const user = localStorage.getItem("userId");
+    setUser(user);
+  }, []);
   const navigate = useNavigate();
   const { setCartItems } = useContext(CartContext);
-  useEffect(() => {
-    const userId = localStorage.getItem("userId");
-    setUser(userId);
-  }, []);
+
   useEffect(() => {
     axios
       .get(`http://localhost:4000/items?id=${productId}`)
@@ -38,7 +50,7 @@ function ProductDetails() {
     if (!user) {
       navigate("/login");
     }
-    const cartItems = [
+    const cartData = [
       {
         id: items.id,
         name: items.name,
@@ -49,25 +61,36 @@ function ProductDetails() {
       },
     ];
     size === 0
-      ? setSizeError("Choose shoe size")
-      : axios
-          .get(`http://localhost:4000/user/${user}`)
-          .then((res) => {
-            const existingCart = res.data.cart || [];
-            const updatedCart = [...existingCart, ...cartItems];
-            axios.patch(`http://localhost:4000/user/${user}`, {
-              cart: updatedCart,
-            });
-            setCartItems(updatedCart);
-          })
-          .then(() => {
-            toast.success("Product added to cart", { className: "mt-12" });
-          })
-          .catch((err) => {
-            toast.error(err.message, { className: "mt-12" });
+      ? dispatch(setSizeError("Choose shoe size"))
+      : dispatch(updateCartSize({ user, cartItems, cartData })).then(() => {
+          dispatch(fetchCartItems(user)).then(() => {
+            if (!UpdateCartError) {
+              toast.success("Product added to cart", { className: "mt-12" });
+            }
           });
+        });
+
+    // : axios
+    //     .get(`http://localhost:4000/user/${user}`)
+    //     .then((res) => {
+    //       const existingCart = res.data.cart || [];
+    //       const updatedCart = [...existingCart, ...cartItems];
+    //       axios.patch(`http://localhost:4000/user/${user}`, {
+    //         cart: updatedCart,
+    //       });
+    //       setCartItems(updatedCart);
+    //     })
+    //     .then(() => {
+    //       toast.success("Product added to cart", { className: "mt-12" });
+    //     })
+    //     .catch((err) => {
+    //       toast.error(err.message, { className: "mt-12" });
+    //     });
     if (size > 0) {
-      setSizeError("");
+      dispatch(setSizeError(""));
+    }
+    if (UpdateCartError) {
+      toast.error(UpdateCartError, { className: "mt-12" });
     }
   };
 
