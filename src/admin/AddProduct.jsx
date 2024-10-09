@@ -21,7 +21,6 @@ function AddProduct() {
   };
   const [imageUrl, setImageUrl] = useState(null);
   const handleSubmit = async (values) => {
-    console.log(values);
     const imageUrlToUse = imageUrl ? imageUrl : values.imageURL;
     const itemData = {
       ...values,
@@ -32,7 +31,6 @@ function AddProduct() {
     try {
       await axios.post(itemsURL, itemData);
       toast.success("Item Updated", { onClose: () => navigate(-1) });
-
       setImageUrl(null);
     } catch (error) {
       toast.error(error.message);

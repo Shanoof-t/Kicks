@@ -1,23 +1,22 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setUser } from "../../features/login/loginSlice";
+import {
+  setFormValues,
+  setFormValuesNull,
+} from "../../features/login/loginSlice";
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isAllowed, setIsAllowed] = useState(null);
-  const initailValues = {
-    email: "",
-    password: "",
-  };
-  const [LoginValues, setLoginValues] = useState(initailValues);
+  const LoginValues = useSelector((state) => state.login.formValues);
   const [loginError, setLoginError] = useState({});
   const [isSubmit, serIsSubmit] = useState(false);
   const [blockError, setBlockError] = useState(null);
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setLoginValues({ ...LoginValues, [name]: value });
+    dispatch(setFormValues({ name, value }));
   };
 
   const handleSubmit = async (e) => {
@@ -38,10 +37,8 @@ function Login() {
       try {
         const response = await axios.get("http://localhost:4000/user");
         const users = response.data;
-        console.log(users);
 
         const matchedUser = users.find((obj) => values.email === obj.email);
-        console.log(matchedUser);
 
         if (!matchedUser) {
           error.email = "Your email is incorrect";
@@ -69,6 +66,7 @@ function Login() {
     if (Object.keys(loginError).length === 0 && isSubmit) {
       if (isAllowed) {
         navigate("/", { replace: true });
+        dispatch(setFormValuesNull());
       } else {
         setBlockError("Authentication is Rejected");
         localStorage.clear();
