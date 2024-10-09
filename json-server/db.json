@@ -24,6 +24,22 @@
           "price": 130,
           "quantity": 1,
           "size": "9"
+        },
+        {
+          "id": "3",
+          "name": "Nike Air Zoom Pegasus 37",
+          "imageURL": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/i1-33b0a0a5-c171-46cc-ad20-04a768703e47/air-zoom-pegasus-37-womens-running-shoe-Jl0bDf.jpg",
+          "price": 120,
+          "quantity": 1,
+          "size": "8"
+        },
+        {
+          "id": "3",
+          "name": "Nike Air Zoom Pegasus 37",
+          "imageURL": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/i1-33b0a0a5-c171-46cc-ad20-04a768703e47/air-zoom-pegasus-37-womens-running-shoe-Jl0bDf.jpg",
+          "price": 120,
+          "quantity": 1,
+          "size": "8"
         }
       ],
       "order": [

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { userURL } from "../../utils/API_URL";
+import { itemsURL, userURL } from "../../utils/API_URL";
 
 export const updateCartSize = createAsyncThunk(
   "productdetails/updateCartSize",
@@ -13,3 +13,13 @@ export const updateCartSize = createAsyncThunk(
     return (await res).data;
   }
 );
+
+export const fetchItem = createAsyncThunk(
+  "productdetails/fetchItem",
+  async (productId) => {
+    const res = await axios.get(itemsURL);
+    const item = res.data.find((item) => item.id === productId);
+    return item;
+  }
+);
+
