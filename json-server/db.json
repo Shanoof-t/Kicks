@@ -16,24 +16,7 @@
       "email": "shanoof.001@gmail.com",
       "password": "123456",
       "isAllowed": true,
-      "cart": [
-        {
-          "id": "1",
-          "name": "Nike React Infinity Run Flyknit",
-          "imageURL": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/i1-665455a5-45de-40fb-945f-c1852b82400d/react-infinity-run-flyknit-mens-running-shoe-zX42Nc.jpg",
-          "price": 160,
-          "quantity": 2,
-          "size": "9"
-        },
-        {
-          "id": "2",
-          "name": "Nike React Miler",
-          "imageURL": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/i1-5cc7de3b-2afc-49c2-a1e4-0508997d09e6/react-miler-mens-running-shoe-DgF6nr.jpg",
-          "price": 130,
-          "quantity": 1,
-          "size": "9"
-        }
-      ],
+      "cart": [],
       "order": [
         {
           "userId": "a953",
@@ -101,6 +84,60 @@
               "quantity": 1,
               "imageURL": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/i1-665455a5-45de-40fb-945f-c1852b82400d/react-infinity-run-flyknit-mens-running-shoe-zX42Nc.jpg",
               "price": 160
+            }
+          ]
+        },
+        {
+          "userId": "a953",
+          "orderId": "3079041e-5189-4dd4-8621-b76d95b76b22",
+          "email": "shanoof.001@gmail.com",
+          "firstName": "shanoof",
+          "lastName": "t",
+          "address": "perinthalmanna",
+          "phone": "9961628082",
+          "paymentMethod": "cash",
+          "status": true,
+          "date": "2024-10-10",
+          "amount": 450,
+          "product": [
+            {
+              "name": "Nike React Infinity Run Flyknit",
+              "productId": "1",
+              "size": "9",
+              "quantity": 2,
+              "imageURL": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/i1-665455a5-45de-40fb-945f-c1852b82400d/react-infinity-run-flyknit-mens-running-shoe-zX42Nc.jpg",
+              "price": 160
+            },
+            {
+              "name": "Nike React Miler",
+              "productId": "2",
+              "size": "9",
+              "quantity": 1,
+              "imageURL": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/i1-5cc7de3b-2afc-49c2-a1e4-0508997d09e6/react-miler-mens-running-shoe-DgF6nr.jpg",
+              "price": 130
+            }
+          ]
+        },
+        {
+          "userId": "a953",
+          "orderId": "378ca42b-94ad-41a3-bade-bc9ddd2b5cd8",
+          "email": "shanoof.001@gmail.com",
+          "firstName": "shanoof",
+          "lastName": "t",
+          "address": "perinthalmanna",
+          "phone": "9961628083",
+          "paymentMethod": "cash",
+          "status": true,
+          "date": "2024-10-10",
+          "amount": 130,
+          "product": [
+            {
+              "name": "Nike React Miler",
+              "productId": "2",
+              "size": "8",
+              "quantity": 1,
+              "imageURL": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/i1-5cc7de3b-2afc-49c2-a1e4-0508997d09e6/react-miler-mens-running-shoe-DgF6nr.jpg",
+              "price": 130
             }
           ]
         }

@@ -22,7 +22,6 @@ import OrderList from "./admin/OrderList";
 import Order from "./admin/Order";
 import UserProvider from "./context/UserProvider";
 import UserProfile from "./admin/UserProfile";
-import CartProvider from "./context/CartProvider";
 import React, { Suspense, useEffect } from "react";
 import Loading from "./components/Loading";
 const Home = React.lazy(() => import("./pages/Home"));
@@ -42,7 +41,7 @@ function App() {
     }
   }, []);
   return (
-    <CartProvider>
+    
       <UserProvider>
         <ProductProvider>
           <div className={hideComponent ? "" : "container mx-auto"}>
@@ -116,7 +115,6 @@ function App() {
         <UserRoutes /> */}
         </ProductProvider>
       </UserProvider>
-    </CartProvider>
   );
 }
 

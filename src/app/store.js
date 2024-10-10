@@ -5,6 +5,7 @@ import home from "../features/home/homeSlice";
 import productDetails from "../features/product_details/productDetailsSlice";
 import register from "../features/register/registerSlice";
 import navbar from "../features/navbar/navbarSlice";
+import checkout from "../features/checkout/checkoutSlice";
 const store = configureStore({
   reducer: {
     login,
@@ -13,6 +14,7 @@ const store = configureStore({
     cart,
     home,
     navbar,
+    checkout,
   },
 });
 

@@ -1,33 +1,38 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { v4 as uuidv4 } from "uuid";
-import { CartContext } from "../context/CartProvider";
+import { setCartItems } from "../features/cart/cartSlice";
+
+// import { CartContext } from "../context/CartProvider";
 function Checkout() {
+  const dispatch =useDispatch()
   const navigate = useNavigate();
-  const [cartItem, setCartItem] = useState([]);
+  
+  const cartItem = useSelector((state) => state.cart.cartItems);
   const [totalPrice, setTotalPrice] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [user, setUser] = useState("");
-  const { setCartItems } = useContext(CartContext);
+  // const { setCartItems } = useContext(CartContext);
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     setUser(userId);
   }, []);
-  useEffect(() => {
-    axios
-      .get(`http://localhost:4000/user/${user}`)
-      .then((res) => {
-        const existingCart = res.data.cart || [];
-        setCartItem(existingCart);
-      })
-      .catch((err) => {
-        toast.error(err.message);
-      });
-  }, [user]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://localhost:4000/user/${user}`)
+  //     .then((res) => {
+  //       const existingCart = res.data.cart || [];
+  //       setCartItem(existingCart);
+  //     })
+  //     .catch((err) => {
+  //       toast.error(err.message);
+  //     });
+  // }, [user]);
 
   useEffect(() => {
     const total = cartItem.reduce((acc, val) => {
@@ -121,7 +126,6 @@ function Checkout() {
       return { ...p, product: products };
     });
   }, [cartItem]);
-console.log(cartItem);
 
   const addOrderTojson = (value) => {
     if (Object.keys(contactDetailsErrors).length === 0 && isSubmit && user) {
@@ -130,33 +134,17 @@ console.log(cartItem);
         .then((res) => {
           const existingOrders = res.data.order || [];
           const updatedOrder = [...existingOrders, contactDetails];
-
-          
-          // axios.get(bestSellers).then((res)=>{
-          //   const currPro = res.data
-          //   const bestProducts = cartItem.map((value) => {
-          //     return {
-          //       ...value,
-          //       sale:1
-          //     };
-          //   });
-          //   const final = currPro.map(value=>{
-          //     return {
-
-          //     }
-          //   })
-          // })
           
           axios.patch(`http://localhost:4000/user/${user}`, {
             order: updatedOrder,
             cart: [],
           });
-          setCartItems([]);
+          
         })
         .then(() => {
           toast.success("Your Order is Placed", {
             className: "mt-12",
-            onClose: () => navigate("/"),
+            onClose: handleToastClose,
           });
         })
 
@@ -167,7 +155,10 @@ console.log(cartItem);
       navigate("/login");
     }
   };
-
+const handleToastClose =()=>{
+  navigate("/")
+  dispatch(setCartItems([]))
+}
   useEffect(() => {
     if (Object.keys(contactDetailsErrors).length === 0 && isSubmit) {
       addOrderTojson(cartItem);

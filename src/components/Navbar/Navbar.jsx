@@ -11,11 +11,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, Link } from "react-router-dom";
 import { Transition } from "@headlessui/react";
-import axios from "axios";
-import { CartContext } from "../../context/CartProvider";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCartItems } from "../../features/cart/cartAPI";
-import { updateCartSize } from "../../features/product_details/productDetailsAPI";
 import { fetchAllItem_navbar } from "../../features/navbar/navbarAPI";
 import {
   setFillteredItems,
