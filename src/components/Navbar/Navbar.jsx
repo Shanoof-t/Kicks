@@ -16,19 +16,24 @@ import { CartContext } from "../../context/CartProvider";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCartItems } from "../../features/cart/cartAPI";
 import { updateCartSize } from "../../features/product_details/productDetailsAPI";
+import { fetchAllItem_navbar } from "../../features/navbar/navbarAPI";
+import {
+  setFillteredItems,
+  setIsSubmit,
+  setSearchText,
+  setUiFlags,
+} from "../../features/navbar/navbarSlice";
 
 function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
-  const [showMobileCategories, setShowMobileCategories] = useState(false);
-  const [searchVisible, setSearchVisible] = useState(false);
-  const [searchText, setSearchText] = useState("");
-  const [allItems, setAllItems] = useState([]);
-  const [filteredItems, setFilteredItems] = useState([]);
-  const [isSubmit, setIsSubmit] = useState(false);
   const cartItems = useSelector((state) => state.cart.cartItems);
+  const searchText = useSelector((state) => state.navbar.searchText);
+  const allItems = useSelector((state) => state.navbar.allItems);
+  const filteredItems = useSelector((state) => state.navbar.filteredItems);
+  const isSubmit = useSelector((state) => state.navbar.isSubmit);
+  const uiFlags = useSelector((state) => state.navbar.navbarUiFlags);
+
 
   const [user, setUser] = useState("");
   useEffect(() => {
@@ -40,23 +45,23 @@ function Navbar() {
     if (user) {
       dispatch(fetchCartItems(user));
     }
-  }, [user,fetchCartItems]);
+  }, [user, fetchCartItems]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:4000/items")
-      .then((res) => setAllItems(res.data))
-      .catch((err) => console.log(err.message));
-  }, []);
+    dispatch(fetchAllItem_navbar());
+    if (allItems.error) {
+      console.log(allItems.error);
+    }
+  }, [allItems.error, dispatch]);
 
   useEffect(() => {
     if (searchText.trim().length > 0) {
-      const filtered = allItems.filter((item) =>
+      const filtered = allItems.data.filter((item) =>
         item.name.toLowerCase().includes(searchText.toLowerCase())
       );
-      setFilteredItems(filtered);
+      dispatch(setFillteredItems(filtered));
     } else {
-      setFilteredItems([]);
+      dispatch(setFillteredItems([]));
     }
   }, [allItems, searchText]);
 
@@ -65,38 +70,57 @@ function Navbar() {
   };
 
   const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
+    dispatch(
+      setUiFlags({ name: "showDropdown", value: !uiFlags.showDropdown })
+    );
   };
 
   const toggleMobileMenu = () => {
-    setShowMobileMenu((prevState) => !prevState);
-    if (showMobileMenu) {
-      setShowMobileCategories(false);
+    dispatch(
+      setUiFlags({ name: "showMobileMenu", value: !uiFlags.showMobileMenu })
+    );
+    if (uiFlags.showMobileMenu) {
+      dispatch(setUiFlags({ name: "showMobileCategories", value: false }));
     }
   };
 
   const toggleMobileCategories = () => {
-    setShowMobileCategories((prevState) => !prevState);
+    dispatch(
+      setUiFlags({
+        name: "showMobileCategories",
+        value: !uiFlags.showMobileCategories,
+      })
+    );
   };
 
   const toggleSearch = () => {
-    setSearchVisible((prev) => !prev);
-    if (searchVisible) {
-      setIsSubmit(false);
-      setSearchText("");
-      setFilteredItems([]);
+    dispatch(
+      setUiFlags({
+        name: "searchVisible",
+        value: !uiFlags.searchVisible,
+      })
+    );
+    if (uiFlags.searchVisible) {
+      dispatch(setIsSubmit(false));
+      dispatch(setSearchText(""));
+      dispatch(setFillteredItems([]));
     }
   };
 
   const handleSearchSubmit = useCallback((e) => {
     e.preventDefault();
-    setIsSubmit(true);
+    dispatch(setIsSubmit(true));
   }, []);
 
   const handleItemClick = () => {
-    setSearchVisible(false);
-    setSearchText("");
-    setIsSubmit(false);
+    dispatch(
+      setUiFlags({
+        name: "searchVisible",
+        value: false,
+      })
+    );
+    dispatch(setSearchText(""));
+    dispatch(setIsSubmit(false));
   };
 
   return (
@@ -112,7 +136,7 @@ function Navbar() {
               <FontAwesomeIcon icon={faCaretDown} className="ms-1.5" />
 
               <Transition
-                show={showDropdown}
+                show={uiFlags.showDropdown}
                 enter="transition ease-out duration-200 transform"
                 enterFrom="opacity-0 scale-95"
                 enterTo="opacity-100 scale-100"
@@ -144,10 +168,12 @@ function Navbar() {
               className="p-2 focus:outline-none text-2xl"
               aria-label="Toggle Menu"
             >
-              <FontAwesomeIcon icon={showMobileMenu ? faTimes : faBars} />
+              <FontAwesomeIcon
+                icon={uiFlags.showMobileMenu ? faTimes : faBars}
+              />
             </button>
             <Transition
-              show={showMobileMenu}
+              show={uiFlags.showMobileMenu}
               enter="transition ease-out duration-200 transform"
               enterFrom="opacity-0 scale-95"
               enterTo="opacity-100 scale-100"
@@ -168,13 +194,13 @@ function Navbar() {
                   <FontAwesomeIcon
                     icon={faCaretDown}
                     className={`ms-1.5 transform ${
-                      showMobileCategories ? "rotate-180" : "rotate-0"
+                      uiFlags.showMobileCategories ? "rotate-180" : "rotate-0"
                     } transition-transform duration-200`}
                   />
                 </li>
 
                 <Transition
-                  show={showMobileCategories}
+                  show={uiFlags.showMobileCategories}
                   enter="transition ease-out duration-200 transform"
                   enterFrom="opacity-0 scale-95"
                   enterTo="opacity-100 scale-100"
@@ -225,7 +251,7 @@ function Navbar() {
 
             {/* Search Input */}
             <Transition
-              show={searchVisible}
+              show={uiFlags.searchVisible}
               enter="transition ease-out duration-200 transform"
               enterFrom="opacity-0 scale-95"
               enterTo="opacity-100 scale-100"
@@ -240,7 +266,7 @@ function Navbar() {
                   <input
                     type="text"
                     value={searchText}
-                    onChange={(e) => setSearchText(e.target.value)}
+                    onChange={(e) => dispatch(setSearchText(e.target.value))}
                     placeholder="Search..."
                     className="w-full px-4 py-2 bg-thirdColor text-white focus:outline-none"
                   />
@@ -250,7 +276,7 @@ function Navbar() {
                     {filteredItems.map((value) => (
                       <div className="m-1 p-1" key={value.id}>
                         <Link
-                          to={`/${value.gender}/${value.id}`}
+                          to={`/product/${value.id}`}
                           onClick={handleItemClick}
                         >
                           <h6 className="text-gray-700 hover:text-secondaryColor">
