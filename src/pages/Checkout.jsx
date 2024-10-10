@@ -6,33 +6,22 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { v4 as uuidv4 } from "uuid";
 import { setCartItems } from "../features/cart/cartSlice";
+import { addOrder, fetchUser } from "../features/checkout/checkoutAPI";
 
-// import { CartContext } from "../context/CartProvider";
 function Checkout() {
-  const dispatch =useDispatch()
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
+  const userData = useSelector((state) => state.checkout.fetchUserData);
   const cartItem = useSelector((state) => state.cart.cartItems);
   const [totalPrice, setTotalPrice] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [user, setUser] = useState("");
-  // const { setCartItems } = useContext(CartContext);
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     setUser(userId);
   }, []);
-  // useEffect(() => {
-  //   axios
-  //     .get(`http://localhost:4000/user/${user}`)
-  //     .then((res) => {
-  //       const existingCart = res.data.cart || [];
-  //       setCartItem(existingCart);
-  //     })
-  //     .catch((err) => {
-  //       toast.error(err.message);
-  //     });
-  // }, [user]);
 
   useEffect(() => {
     const total = cartItem.reduce((acc, val) => {
@@ -129,25 +118,21 @@ function Checkout() {
 
   const addOrderTojson = (value) => {
     if (Object.keys(contactDetailsErrors).length === 0 && isSubmit && user) {
-      axios
-        .get(`http://localhost:4000/user/${user}`)
-        .then((res) => {
-          const existingOrders = res.data.order || [];
-          const updatedOrder = [...existingOrders, contactDetails];
-          
-          axios.patch(`http://localhost:4000/user/${user}`, {
-            order: updatedOrder,
-            cart: [],
-          });
-          
-        })
+      const userDetails = userData.userData;
+      dispatch(fetchUser(user))
         .then(() => {
-          toast.success("Your Order is Placed", {
-            className: "mt-12",
-            onClose: handleToastClose,
-          });
-        })
+          dispatch(addOrder({ user, contactDetails, userDetails }))
+            .then(() => {
+              toast.success("Your Order is Placed", {
+                className: "mt-12",
+                onClose: handleToastClose,
+              });
+            })
 
+            .catch((err) => {
+              toast.error(err.message, { className: "mt-12" });
+            });
+        })
         .catch((err) => {
           toast.error(err.message, { className: "mt-12" });
         });
@@ -155,10 +140,10 @@ function Checkout() {
       navigate("/login");
     }
   };
-const handleToastClose =()=>{
-  navigate("/")
-  dispatch(setCartItems([]))
-}
+  const handleToastClose = () => {
+    navigate("/");
+    dispatch(setCartItems([]));
+  };
   useEffect(() => {
     if (Object.keys(contactDetailsErrors).length === 0 && isSubmit) {
       addOrderTojson(cartItem);
