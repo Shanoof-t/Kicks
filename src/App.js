@@ -1,6 +1,4 @@
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import Login from "./components/auth/Login";
-import Register from "./components/auth/Register";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import ProductDetails from "./pages/ProductDetails";
@@ -24,6 +22,8 @@ import UserProvider from "./context/UserProvider";
 import UserProfile from "./admin/UserProfile";
 import React, { Suspense, useEffect } from "react";
 import Loading from "./components/Loading";
+import Register from "./components/auth/Register/Register";
+import Login from "./components/auth/Login/Login";
 const Home = React.lazy(() => import("./pages/Home"));
 const HeaderDash = React.lazy(() => import("./admin/components/HeaderDash"));
 const Checkout = React.lazy(() => import("./pages/Checkout"));

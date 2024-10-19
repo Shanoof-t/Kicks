@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import {
   setFormValues,
   setFormValuesNull,
-} from "../../features/login/loginSlice";
+} from "../../../features/login/loginSlice";
+
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
