@@ -12,22 +12,22 @@ const initialState = {
     slidesToShow: 3,
     slidesToScroll: 1,
     arrows: false,
-    nextArrow: (
-      <button className="bg-gray-300 p-2 md:p-3 rounded-full mx-1 hover:bg-gray-400 transition duration-300">
-        <FontAwesomeIcon
-          icon={faChevronRight}
-          className="text-gray-700 text-lg md:text-xl"
-        />
-      </button>
-    ),
-    prevArrow: (
-      <button className="bg-gray-300 p-2 md:p-3 rounded-full mx-1 hover:bg-gray-400 transition duration-300">
-        <FontAwesomeIcon
-          icon={faChevronLeft}
-          className="text-gray-700 text-lg md:text-xl"
-        />
-      </button>
-    ),
+    // nextArrow: (
+    //   <button className="bg-gray-300 p-2 md:p-3 rounded-full mx-1 hover:bg-gray-400 transition duration-300">
+    //     <FontAwesomeIcon
+    //       icon={faChevronRight}
+    //       className="text-gray-700 text-lg md:text-xl"
+    //     />
+    //   </button>
+    // ),
+    // prevArrow: (
+    //   <button className="bg-gray-300 p-2 md:p-3 rounded-full mx-1 hover:bg-gray-400 transition duration-300">
+    //     <FontAwesomeIcon
+    //       icon={faChevronLeft}
+    //       className="text-gray-700 text-lg md:text-xl"
+    //     />
+    //   </button>
+    // ),
     responsive: [
       {
         breakpoint: 1024,

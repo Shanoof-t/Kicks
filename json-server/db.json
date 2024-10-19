@@ -16,16 +16,7 @@
       "email": "shanoof.001@gmail.com",
       "password": "123456",
       "isAllowed": true,
-      "cart": [
-        {
-          "id": "4",
-          "name": "Nike Joyride Run Flyknit",
-          "imageURL": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/99a7d3cb-e40c-4474-91c2-0f2e6d231fd2/joyride-run-flyknit-womens-running-shoe-HcfnJd.jpg",
-          "price": 180,
-          "quantity": 1,
-          "size": "8"
-        }
-      ],
+      "cart": [],
       "order": [
         {
           "userId": "a953",

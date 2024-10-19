@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { v4 as uuidv4 } from "uuid";
 import { setCartItems } from "../features/cart/cartSlice";
 import { addOrder, fetchUser } from "../features/checkout/checkoutAPI";
+import {  setTotalPrice } from "../features/checkout/checkoutSlice";
 
 function Checkout() {
   const dispatch = useDispatch();
@@ -14,42 +15,46 @@ function Checkout() {
 
   const userData = useSelector((state) => state.checkout.fetchUserData);
   const cartItem = useSelector((state) => state.cart.cartItems);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [paymentMethod, setPaymentMethod] = useState("");
-  const [user, setUser] = useState("");
+  const totalPrice = useSelector((state) => state.checkout.totalPrice);
+  const contactDetails = useSelector((state) => state.checkout.contactDetails);
 
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const moment = require("moment");
+  const currentDate = moment().format("YYYY-MM-DD");
+
+  // const initialInformation = {
+  //   userId: "",
+  //   orderId: uuidv4(),
+  //   email: "",
+  //   firstName: "",
+  //   lastName: "",
+  //   address: "",
+  //   phone: "",
+  //   paymentMethod: "",
+  //   status: true,
+  //   date: currentDate,
+  //   amount: 0,
+  // };
+
+  // const [contactDetails, setContactDetails] = useState(initialInformation);
+  const [contactDetailsErrors, setContactDetailsErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+
+  const [user, setUser] = useState("");
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     setUser(userId);
   }, []);
 
   useEffect(() => {
-    const total = cartItem.reduce((acc, val) => {
-      return acc + val.price * val.quantity;
-    }, 0);
-    setTotalPrice(total);
+    dispatch(setTotalPrice(cartItem));
   }, [cartItem]);
-  const moment = require("moment");
-  const currentDate = moment().format("YYYY-MM-DD");
-  const initialInformation = {
-    userId: "",
-    orderId: uuidv4(),
-    email: "",
-    firstName: "",
-    lastName: "",
-    address: "",
-    phone: "",
-    paymentMethod: "",
-    status: true,
-    date: currentDate,
-    amount: 0,
-  };
-  const [contactDetails, setContactDetails] = useState(initialInformation);
-  const [contactDetailsErrors, setContactDetailsErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    dispatch(setContactDetails({ name, value }));
+    
     setContactDetails({
       ...contactDetails,
       [name]: value,
@@ -116,7 +121,7 @@ function Checkout() {
     });
   }, [cartItem]);
 
-  const addOrderTojson = (value) => {
+  const addOrderTojson = () => {
     if (Object.keys(contactDetailsErrors).length === 0 && isSubmit && user) {
       const userDetails = userData.userData;
       dispatch(fetchUser(user))
@@ -128,7 +133,6 @@ function Checkout() {
                 onClose: handleToastClose,
               });
             })
-
             .catch((err) => {
               toast.error(err.message, { className: "mt-12" });
             });
@@ -146,7 +150,7 @@ function Checkout() {
   };
   useEffect(() => {
     if (Object.keys(contactDetailsErrors).length === 0 && isSubmit) {
-      addOrderTojson(cartItem);
+      addOrderTojson();
     }
   }, [isSubmit]);
 
