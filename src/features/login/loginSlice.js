@@ -1,9 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { userFetch } from "./loginAPI";
+import { DateSchema } from "yup";
 
 const initialState = {
   formValues: {
     email: "",
     password: "",
+  },
+  userFetchValues: {
+    loading: false,
+    data: [],
+    error: "",
   },
 };
 const loginSlice = createSlice({
@@ -21,6 +28,19 @@ const loginSlice = createSlice({
       state.formValues.email = "";
       state.formValues.password = "";
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(userFetch.pending, (state) => {
+        state.userFetchValues.loading = true;
+      })
+      .addCase(userFetch.fulfilled, (state, action) => {
+        state.userFetchValues.loading =false
+        state.userFetchValues.data = action.payload;
+      })
+      .addCase(userFetch.rejected, (state, action) => {
+        state.userFetchValues.error = action.error.message;
+      });
   },
 });
 export const { setFormValues, setFormValuesNull } = loginSlice.actions;
