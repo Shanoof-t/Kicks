@@ -39,7 +39,7 @@ function Login() {
           onSubmit={handleSubmit}
           validationSchema={() => loginValidation(userFetchDetails.data)}
         >
-          {({ errors, handleChange, values, touched }) => (
+          {({ errors, touched }) => (
             <Form>
               <div className="mb-4">
                 <Field

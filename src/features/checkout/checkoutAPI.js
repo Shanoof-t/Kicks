@@ -12,12 +12,13 @@ export const fetchUser = createAsyncThunk(
 
 export const addOrder = createAsyncThunk(
   "checkout/addOrder",
-  async ({ user, contactDetails, userDetails }) => {
-    const existingOrders = userDetails.data.order || [];
-    const updatedOrder = [...existingOrders, contactDetails];
-    await axios.patch(`${userURL}/${user}`, {
+  async ({ user, values, userDetails }) => {
+    const existingOrders = userDetails.order || [];
+    const updatedOrder = [...existingOrders, values];
+    const res = await axios.patch(`${userURL}/${user}`, {
       order: updatedOrder,
       cart: [],
     });
+    return res.data;
   }
 );

@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { addOrder, fetchUser } from "./checkoutAPI";
 const initialState = {
-  totalPrice: 0,
   fetchUserData: {
     loading: false,
     userData: [],
@@ -24,6 +23,7 @@ const initialState = {
     status: true,
     date: "",
     amount: 0,
+    product: [],
   },
 };
 const checkoutSlice = createSlice({
@@ -34,34 +34,46 @@ const checkoutSlice = createSlice({
       const total = action.payload.reduce((acc, val) => {
         return acc + val.price * val.quantity;
       }, 0);
-      state.totalPrice = total;
+      state.contactDetails.amount = total;
     },
-    setContactDetails: (state, action) => {
-      switch (action.payload.name) {
-        case "userId":
-          state.contactDetails.userId = action.payload.value;
-        case "orderId":
-          state.contactDetails.orderId = action.payload.value;
-        case "email":
-          state.contactDetails.email = action.payload.value;
-        case "firstName":
-          state.contactDetails.firstName = action.payload.value;
-        case "lastName":
-          state.contactDetails.lastName = action.payload.value;
-        case "address":
-          state.contactDetails.address = action.payload.value;
-        case "phone":
-          state.contactDetails.phone = action.payload.value;
-        case "paymentMethod":
-          state.contactDetails.paymentMethod = action.payload.value;
-        case "status":
-          state.contactDetails.status = action.payload.value;
-        case "date":
-          state.contactDetails.date = action.payload.value;
-        case "amount":
-          state.contactDetails.amount = action.payload.value;
-      }
+    setUser: (state, action) => {
+      state.contactDetails.userId = action.payload;
     },
+    setProducts: (state, action) => {
+      state.contactDetails.product = action.payload;
+    },
+    setDate: (state, action) => {
+      state.contactDetails.date = action.payload;
+    },
+    setOrderId: (state, action) => {
+      state.contactDetails.orderId = action.payload;
+    },
+    // setContactDetails: (state, action) => {
+    //   switch (action.payload.name) {
+    //     case "userId":
+    //       state.contactDetails.userId = action.payload.value;
+    //     case "orderId":
+    //       state.contactDetails.orderId = action.payload.value;
+    //     case "email":
+    //       state.contactDetails.email = action.payload.value;
+    //     case "firstName":
+    //       state.contactDetails.firstName = action.payload.value;
+    //     case "lastName":
+    //       state.contactDetails.lastName = action.payload.value;
+    //     case "address":
+    //       state.contactDetails.address = action.payload.value;
+    //     case "phone":
+    //       state.contactDetails.phone = action.payload.value;
+    //     case "paymentMethod":
+    //       state.contactDetails.paymentMethod = action.payload.value;
+    //     case "status":
+    //       state.contactDetails.status = action.payload.value;
+    //     case "date":
+    //       state.contactDetails.date = action.payload.value;
+    //     case "amount":
+    //       state.contactDetails.amount = action.payload.value;
+    //   }
+    // },
   },
   extraReducers: (builder) => {
     builder
@@ -88,5 +100,12 @@ const checkoutSlice = createSlice({
       });
   },
 });
-export const { setTotalPrice, setContactDetails } = checkoutSlice.actions;
+export const {
+  setTotalPrice,
+  setContactDetails,
+  setUser,
+  setProducts,
+  setDate,
+  setOrderId,
+} = checkoutSlice.actions;
 export default checkoutSlice.reducer;
