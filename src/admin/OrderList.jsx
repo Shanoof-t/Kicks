@@ -1,32 +1,29 @@
-import React, { useContext, useEffect, useState } from "react";
-import { userURL } from "../utils/API_URL"; 
-import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { UserContext } from "../context/UserProvider";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setOrderList } from "../features/orderList/orderListSlice";
 function OrderList() {
   const navigate = useNavigate();
-  // const { orders, users } = useContext(UserContext);
+  const dispatch = useDispatch();
   const orders = useSelector((state) => state.allOrders.data);
   const users = useSelector((state) => state.allUsers.data);
-  const [orderList, setOrderList] = useState(orders);
-
+  const orderList = useSelector((state) => state.orderList.orderList);
   useEffect(() => {
     if (orders) {
-      setOrderList(orders);
+      dispatch(setOrderList(orders));
     }
   }, [users]);
 
   const handleStatusSelector = (e) => {
     const { value } = e.target;
     if (value === "allorder") {
-      setOrderList(orders);
+      dispatch(setOrderList(orders));
     } else if (value === "delivered") {
       const deliveredOrders = orders.filter((value) => !value.status);
-      setOrderList(deliveredOrders);
+      dispatch(setOrderList(deliveredOrders));
     } else if (value === "pending") {
       const pendingOrders = orders.filter((value) => value.status);
-      setOrderList(pendingOrders);
+      dispatch(setOrderList(pendingOrders));
     }
   };
   return (

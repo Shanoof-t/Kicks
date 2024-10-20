@@ -15,6 +15,7 @@ import allOrders from "../features/common/allOrders/allOrdersSlice";
 import allUsers from "../features/common/allUsers/allUsersSlice";
 import dashboardHome from "../features/Dashboard_Home/dashboardHomeSlice";
 import order from "../features/order/orderSlice";
+import orderList from "../features/orderList/orderListSlice";
 const store = configureStore({
   reducer: {
     login,
@@ -33,6 +34,7 @@ const store = configureStore({
     allUsers,
     dashboardHome,
     order,
+    orderList
   },
 });
 
