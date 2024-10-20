@@ -9,6 +9,7 @@ import checkout from "../features/checkout/checkoutSlice";
 import displayItem from "../features/displayItem/displayItemSlice";
 import categorie from "../features/Categorie/categorieSlice";
 import categorieDetails from "../features/categorie_details/categorieDetailsSlice";
+import allProducts from "../features/common/allProducts/allProductsSlice";
 const store = configureStore({
   reducer: {
     login,
@@ -21,6 +22,7 @@ const store = configureStore({
     displayItem,
     categorie,
     categorieDetails,
+    allProducts,
   },
 });
 

@@ -3,12 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserProvider";
 import ReactApexChart from "react-apexcharts";
-import { ProductContext } from "../context/ProductProvider";
+// import { ProductContext } from "../context/ProductProvider";
 import album from "../assets/icons/albums.svg";
+import { useSelector } from "react-redux";
 
 function DashboardHome() {
   const { orders, users } = useContext(UserContext);
-  const { allitems } = useContext(ProductContext);
+  // const { allitems } = useContext(ProductContext);
+  const allitems = useSelector((state) => state.allProducts.items.data);
   const [orderList, setOrderList] = useState(orders);
 
   const initialOrderData = {
@@ -58,7 +60,7 @@ function DashboardHome() {
       acc[date] = (acc[date] || 0) + order.amount;
       return acc;
     }, {});
-    
+
     const categories = Object.keys(salesByDate);
     const data = Object.values(salesByDate);
     setChartData((prevData) => ({
@@ -98,7 +100,6 @@ function DashboardHome() {
         Dashboard
       </h1>
 
-    
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 mb-8">
         <div className="bg-white p-4 lg:p-6 rounded-3xl shadow-lg flex items-center justify-between hover:shadow-xl transition duration-300">
           <div>
@@ -140,7 +141,11 @@ function DashboardHome() {
               Total Products
             </h1>
             <div className="flex items-center gap-3 lg:gap-4 mt-2">
-              <img src={album} alt="Products Icon" className="w-8 lg:w-10 h-8 lg:h-10" />
+              <img
+                src={album}
+                alt="Products Icon"
+                className="w-8 lg:w-10 h-8 lg:h-10"
+              />
               <h2 className="text-2xl lg:text-3xl font-bold text-gray-800">
                 {allitems.length}
               </h2>

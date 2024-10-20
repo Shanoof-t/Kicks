@@ -1,19 +1,41 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { setCategrieType } from "../features/categorie_details/categorieDetailsSlice";
+import { Link, useLocation } from "react-router-dom";
+import {
+  setCategrieType,
+  setItems,
+} from "../features/categorie_details/categorieDetailsSlice";
+import { fetchAllProducts } from "../features/common/allProducts/allProductAPI";
+import { setCategorieGender } from "../features/Categorie/categorieSlice";
+import Loading from "./Loading";
 function ItemDisplay() {
-  
   const dispatch = useDispatch();
-  const items = useSelector((state) => state.categorieDetails.items.data);
+  const { pathname } = useLocation();
+  const catogrieProducts = useSelector(
+    (state) => state.categorieDetails.items.data
+  );
+  const catogrieProductsLoading = useSelector(
+    (state) => state.categorieDetails.items.loading
+  );
   const type = useSelector((state) => state.categorieDetails.categrieType);
   const gender = useSelector((state) => state.categorie.categorieGender);
+  const allproducts = useSelector((state) => state.allProducts.items.data);
+  const allproductsLoading = useSelector(
+    (state) => state.allProducts.items.loading
+  );
 
   useEffect(() => {
-    if (!type && !gender) {
+    if (pathname === "/all") {
       dispatch(setCategrieType("ALL"));
+      dispatch(setCategorieGender(""));
+      dispatch(fetchAllProducts());
     }
-  }, [type,gender,dispatch]);
+  }, [pathname, dispatch, fetchAllProducts, setItems]);
+  
+  const items = pathname === "/all" ? allproducts : catogrieProducts;
+  if (allproductsLoading || catogrieProductsLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="min-h-screen px-4 sm:px-6 lg:px-8 py-8 pt-16">

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ProductContext } from "../context/ProductProvider";
+// import { ProductContext } from "../context/ProductProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCirclePlus,
@@ -10,12 +10,14 @@ import {
 import axios from "axios";
 import { itemsURL } from "../utils/API_URL"; 
 import { toast, ToastContainer } from "react-toastify";
+import { useSelector } from "react-redux";
 
 function ProductsDash() {
   const [menuToggle, setMenuToggle] = useState(null);
   const { productCategory } = useParams();
   const navigate = useNavigate();
-  const { allitems } = useContext(ProductContext);
+  // const { allitems } = useContext(ProductContext);
+  const allitems = useSelector((state) => state.allProducts.items.data);
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
