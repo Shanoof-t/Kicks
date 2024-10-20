@@ -7,6 +7,7 @@ import {
   setLoad,
 } from "../features/Categorie/categorieSlice";
 function Categorie() {
+  
   useEffect(() => {
     window.scrollTo(0, 0);
   });

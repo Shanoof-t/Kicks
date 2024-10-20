@@ -1,5 +1,5 @@
 import React from "react";
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import ItemDisplay from "../components/ItemDisplay";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,13 +7,12 @@ import { fetchCategorieItems } from "../features/categorie_details/categorieDeta
 import { setCategrieType } from "../features/categorie_details/categorieDetailsSlice";
 
 function CategorieDetails() {
-
   const { categrieType } = useParams();
   const dispatch = useDispatch();
   const categorieGender = useSelector(
     (state) => state.categorie.categorieGender
   );
-  
+
   useEffect(() => {
     if (categrieType) {
       dispatch(setCategrieType(categrieType));
@@ -21,12 +20,11 @@ function CategorieDetails() {
   }, [dispatch, categrieType]);
 
   useEffect(() => {
-    dispatch(fetchCategorieItems(categrieType, categorieGender));
+    if (categrieType && categorieGender) {
+      dispatch(fetchCategorieItems({ categrieType, categorieGender }));
+    }
   }, [categrieType, categorieGender]);
 
-  return (
-    <ItemDisplay />
-  );
+  return <ItemDisplay />;
 }
-// value={items} gender={categorieGender} type={categrieType} 
 export default CategorieDetails;

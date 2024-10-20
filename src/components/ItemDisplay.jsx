@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { setCategrieType } from "../features/categorie_details/categorieDetailsSlice";
 function ItemDisplay() {
+  
   const dispatch = useDispatch();
   const items = useSelector((state) => state.categorieDetails.items.data);
   const type = useSelector((state) => state.categorieDetails.categrieType);
@@ -13,10 +14,6 @@ function ItemDisplay() {
       dispatch(setCategrieType("ALL"));
     }
   }, [type,gender,dispatch]);
-
-  // console.log(items);
-  // console.log(type);
-  // console.log(gender);
 
   return (
     <div className="min-h-screen px-4 sm:px-6 lg:px-8 py-8 pt-16">
