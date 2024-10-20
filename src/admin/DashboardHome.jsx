@@ -23,7 +23,7 @@ function DashboardHome() {
   useEffect(() => {
     dispatch(setOrderDetails({ totalOrders: orders.length }));
   }, [orders, users]);
-
+  
   const initialChartData = {
     series: [
       {

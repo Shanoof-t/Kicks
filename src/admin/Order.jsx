@@ -4,33 +4,27 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
-// import { UserContext } from "../context/UserProvider";
-import axios from "axios";
 import { userURL } from "../utils/API_URL";
 import { toast, ToastContainer } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrders } from "../features/common/allOrders/allOrdersSlice";
+import { fetchOrderUser, UpdateUserOrder } from "../features/order/orderAPI";
 
 function Order() {
   const { orderID } = useParams();
   const dispatch = useDispatch();
-  // const { orders, setOrders } = useContext(UserContext);
   const orders = useSelector((state) => state.allOrders.data);
   const order = orders.find((value) => value.orderId === orderID);
 
   const handleDelivered = (orderId, userId) => {
-    axios
-      .get(`${userURL}/${userId}`)
+    dispatch(fetchOrderUser({ userURL, userId }))
       .then((res) => {
-        const currData = res.data;
+        const currData = res.payload;
         const updatedData = currData.order.map((value) =>
           value.orderId === orderId ? { ...value, status: false } : value
         );
-
-        axios
-          .patch(`${userURL}/${userId}`, { order: updatedData })
+        dispatch(UpdateUserOrder({ userURL, userId, updatedData }))
           .then(() => {
             dispatch(
               setOrders(
@@ -41,11 +35,6 @@ function Order() {
                 )
               )
             );
-            // setOrders((prev) => {
-            // return prev.map((value) =>
-            //   value.orderId === orderId ? { ...value, status: false } : value
-            // );
-            // });
             toast.success("Order Delivered!");
           })
           .catch((err) => {

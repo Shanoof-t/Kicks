@@ -96,7 +96,7 @@
           "address": "perinthalmanna",
           "phone": "9961628082",
           "paymentMethod": "cash",
-          "status": true,
+          "status": false,
           "date": "2024-10-10",
           "amount": 450,
           "product": [
@@ -127,7 +127,7 @@
           "address": "perinthalmanna",
           "phone": "9961628083",
           "paymentMethod": "cash",
-          "status": true,
+          "status": false,
           "date": "2024-10-10",
           "amount": 130,
           "product": [
