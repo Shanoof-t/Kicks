@@ -8,18 +8,22 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { itemsURL } from "../utils/API_URL"; 
+import { itemsURL } from "../utils/API_URL";
 import { toast, ToastContainer } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllProducts } from "../features/common/allProducts/allProductAPI";
 
 function ProductsDash() {
   const [menuToggle, setMenuToggle] = useState(null);
   const { productCategory } = useParams();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   // const { allitems } = useContext(ProductContext);
   const allitems = useSelector((state) => state.allProducts.items.data);
   const [products, setProducts] = useState([]);
-
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+  }, []);
   useEffect(() => {
     if (productCategory === "allitems") {
       setProducts(allitems);

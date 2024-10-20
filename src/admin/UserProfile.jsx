@@ -1,12 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { UserContext } from "../context/UserProvider";
+// import { UserContext } from "../context/UserProvider";
 import axios from "axios";
-import { userURL } from "../utils/API_URL"; 
+import { userURL } from "../utils/API_URL";
+import { useDispatch, useSelector } from "react-redux";
+import { setUsers } from "../features/common/allUsers/allUsersSlice";
 
 function UserProfile() {
   const { userID } = useParams();
-  const { users, setUsers } = useContext(UserContext);
+  const dispatch = useDispatch();
+  // const { users, setUsers } = useContext(UserContext);
+  const users = useSelector((state) => state.allUsers.data);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -30,11 +34,20 @@ function UserProfile() {
       .patch(`${userURL}/${id}`, { isAllowed: !user.isAllowed })
       .then(() => {
         setUser((prev) => ({ ...prev, isAllowed: !prev.isAllowed }));
-        setUsers((prev) => {
-          return prev.map((value) =>
-            value.id === id ? { ...value, isAllowed: !value.isAllowed } : value
-          );
-        });
+        dispatch(
+          setUsers(
+            users.map((value) =>
+              value.id === id
+                ? { ...value, isAllowed: !value.isAllowed }
+                : value
+            )
+          )
+        );
+        // setUsers((prev) => {
+        // return prev.map((value) =>
+        //   value.id === id ? { ...value, isAllowed: !value.isAllowed } : value
+        // );
+        // });
       })
       .catch((err) => {
         console.log(err.message);

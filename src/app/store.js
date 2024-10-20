@@ -11,6 +11,8 @@ import categorie from "../features/Categorie/categorieSlice";
 import categorieDetails from "../features/categorie_details/categorieDetailsSlice";
 import allProducts from "../features/common/allProducts/allProductsSlice";
 import orderDetails from "../features/order_details/orderDetailsSlice";
+import allOrders from "../features/common/allOrders/allOrdersSlice";
+import allUsers from "../features/common/allUsers/allUsersSlice";
 const store = configureStore({
   reducer: {
     login,
@@ -25,6 +27,8 @@ const store = configureStore({
     categorieDetails,
     allProducts,
     orderDetails,
+    allOrders,
+    allUsers,
   },
 });
 

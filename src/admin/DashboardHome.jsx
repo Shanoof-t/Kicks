@@ -1,15 +1,25 @@
 import { faBagShopping, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../context/UserProvider";
+// import { UserContext } from "../context/UserProvider";
 import ReactApexChart from "react-apexcharts";
 // import { ProductContext } from "../context/ProductProvider";
 import album from "../assets/icons/albums.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllOrder } from "../features/common/allOrders/allOrdersAPI";
+import { allUsersFetch } from "../features/common/allUsers/allUsersAPI";
 
 function DashboardHome() {
-  const { orders, users } = useContext(UserContext);
-  // const { allitems } = useContext(ProductContext);
+  // const { orders, users } = useContext(UserContext);
+  const dispatch = useDispatch();
+  const orders = useSelector((state) => state.allOrders.data);
+  const users = useSelector((state) => state.allUsers.data);
+
+  useEffect(() => {
+    dispatch(fetchAllOrder());
+    dispatch(allUsersFetch());
+  }, []);
+  
   const allitems = useSelector((state) => state.allProducts.items.data);
   const [orderList, setOrderList] = useState(orders);
 

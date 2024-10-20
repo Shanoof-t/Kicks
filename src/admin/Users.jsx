@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
-import { UserContext } from "../context/UserProvider";
+// import { UserContext } from "../context/UserProvider";
 import UserList from "./components/UserList";
+import { useSelector } from "react-redux";
 
 function Users() {
-  const { users } = useContext(UserContext);
+  // const { users } = useContext(UserContext);
+  const users = useSelector((state) => state.allUsers.data);
   const [userType, setUserType] = useState("allusers");
   const activeUsers = users.filter((value) => value.isAllowed);
   const nonActiveUsers = users.filter((value) => !value.isAllowed);

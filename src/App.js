@@ -10,13 +10,12 @@ import CategorieDetails from "./pages/CategorieDetails";
 import ItemDisplay from "./components/ItemDisplay";
 import AddProduct from "./admin/AddProduct";
 import DashboardHome from "./admin/DashboardHome";
-// import ProductProvider from "./context/ProductProvider";
 import ProductsDash from "./admin/ProductsDash";
 import UpdateProduct from "./admin/UpdateProduct";
 import Users from "./admin/Users";
 import OrderList from "./admin/OrderList";
 import Order from "./admin/Order";
-import UserProvider from "./context/UserProvider";
+// import UserProvider from "./context/UserProvider";
 import UserProfile from "./admin/UserProfile";
 import React, { lazy, Suspense, useEffect } from "react";
 import Loading from "./components/Loading";
@@ -40,96 +39,98 @@ function App() {
     }
   }, []);
   return (
-    <UserProvider>
-      {/* <ProductProvider> */}
-      <div className={hideComponent ? "" : "container mx-auto"}>
-        {/* {!hideHeaderDash && hideComponent && <AdminNavbar />} */}
-        {!hideComponent && <Navbar />}
-        {/* <div className="main"> */}
-        <Routes>
-          {/* User Routes */}
-          <Route
-            path="/"
-            element={
-              <Suspense fallback={<Loading />}>
-                <Home />
-              </Suspense>
-            }
-          />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
-          <Route path="home" element={<Home />} />
-          <Route path="categorie/:categorieGender" element={<Categorie />}>
-            <Route path=":categrieType" element={<CategorieDetails />}>
-              <Route
-                index
-                element={
-                  <Suspense fallback={<Loading />}>
-                    <ItemDisplay />
-                  </Suspense>
-                }
-              />
-            </Route>
-          </Route>
-          <Route
-            path="all"
-            element={
-              <Suspense fallback={<Loading />}>
-                <ItemDisplay />
-              </Suspense>
-            }
-          />
-          <Route path="product/:productId" element={<ProductDetails />} />
-          <Route path="cart" element={<Cart />} />
-          <Route
-            path="checkout"
-            element={
-              <Suspense fallback={<Loading />}>
-                <Checkout />
-              </Suspense>
-            }
-          />
-          <Route path="profile" element={<Profile />} />
-          <Route
-            path="orderdetails"
-            element={
-              <Suspense fallback={<Loading />}>
-                <OrderDetails />
-              </Suspense>
-            }
-          />
-          <Route path="*" element={<NotFound />} />
-
-          {/* Admin Routes */}
-
-          <Route
-            path="admin"
-            element={
-              <Suspense fallback={<Loading />}>
-                <HeaderDash />
-              </Suspense>
-            }
-          >
-            <Route index element={<DashboardHome />} />
+    <>
+      {/* <UserProvider> */}
+        {/* <ProductProvider> */}
+        <div className={hideComponent ? "" : "container mx-auto"}>
+          {/* {!hideHeaderDash && hideComponent && <AdminNavbar />} */}
+          {!hideComponent && <Navbar />}
+          {/* <div className="main"> */}
+          <Routes>
+            {/* User Routes */}
             <Route
-              path="productlist/:productCategory"
-              element={<ProductsDash />}
+              path="/"
+              element={
+                <Suspense fallback={<Loading />}>
+                  <Home />
+                </Suspense>
+              }
             />
-            <Route path="addproduct" element={<AddProduct />} />
-            <Route path="updateproduct/:itemId" element={<UpdateProduct />} />
-            <Route path="orderlist" element={<OrderList />} />
-            <Route path="order/:orderID" element={<Order />} />
-            <Route path="users" element={<Users />} />
-            <Route path="userprofile/:userID" element={<UserProfile />} />
-          </Route>
-        </Routes>
-      </div>
-      {!hideComponent && <Footer />}
-      {/* </div> */}
-      {/* <AdminRoutes />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="home" element={<Home />} />
+            <Route path="categorie/:categorieGender" element={<Categorie />}>
+              <Route path=":categrieType" element={<CategorieDetails />}>
+                <Route
+                  index
+                  element={
+                    <Suspense fallback={<Loading />}>
+                      <ItemDisplay />
+                    </Suspense>
+                  }
+                />
+              </Route>
+            </Route>
+            <Route
+              path="all"
+              element={
+                <Suspense fallback={<Loading />}>
+                  <ItemDisplay />
+                </Suspense>
+              }
+            />
+            <Route path="product/:productId" element={<ProductDetails />} />
+            <Route path="cart" element={<Cart />} />
+            <Route
+              path="checkout"
+              element={
+                <Suspense fallback={<Loading />}>
+                  <Checkout />
+                </Suspense>
+              }
+            />
+            <Route path="profile" element={<Profile />} />
+            <Route
+              path="orderdetails"
+              element={
+                <Suspense fallback={<Loading />}>
+                  <OrderDetails />
+                </Suspense>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+
+            {/* Admin Routes */}
+
+            <Route
+              path="admin"
+              element={
+                <Suspense fallback={<Loading />}>
+                  <HeaderDash />
+                </Suspense>
+              }
+            >
+              <Route index element={<DashboardHome />} />
+              <Route
+                path="productlist/:productCategory"
+                element={<ProductsDash />}
+              />
+              <Route path="addproduct" element={<AddProduct />} />
+              <Route path="updateproduct/:itemId" element={<UpdateProduct />} />
+              <Route path="orderlist" element={<OrderList />} />
+              <Route path="order/:orderID" element={<Order />} />
+              <Route path="users" element={<Users />} />
+              <Route path="userprofile/:userID" element={<UserProfile />} />
+            </Route>
+          </Routes>
+        </div>
+        {!hideComponent && <Footer />}
+        {/* </div> */}
+        {/* <AdminRoutes />
         <UserRoutes /> */}
-      {/* </ProductProvider> */}
-    </UserProvider>
+        {/* </ProductProvider> */}
+      {/* </UserProvider> */}
+    </>
   );
 }
 

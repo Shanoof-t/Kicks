@@ -2,11 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { userURL } from "../utils/API_URL"; 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../context/UserProvider";
+// import { UserContext } from "../context/UserProvider";
+import { useSelector } from "react-redux";
 function OrderList() {
   const navigate = useNavigate();
-  const { orders, users } = useContext(UserContext);
-
+  // const { orders, users } = useContext(UserContext);
+  const orders = useSelector((state) => state.allOrders.data);
+  const users = useSelector((state) => state.allUsers.data);
   const [orderList, setOrderList] = useState(orders);
 
   useEffect(() => {

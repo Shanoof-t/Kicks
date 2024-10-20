@@ -21,7 +21,6 @@ function Checkout() {
   const cartItem = useSelector((state) => state.cart.cartItems);
   const contactDetails = useSelector((state) => state.checkout.contactDetails);
   const user = contactDetails.userId;
-  // const moment = dayjs();
   const currentDate = dayjs().format("YYYY-MM-DD");
 
   useEffect(() => {

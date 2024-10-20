@@ -6,14 +6,18 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
-import { UserContext } from "../context/UserProvider";
+// import { UserContext } from "../context/UserProvider";
 import axios from "axios";
 import { userURL } from "../utils/API_URL";
 import { toast, ToastContainer } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { setOrders } from "../features/common/allOrders/allOrdersSlice";
 
 function Order() {
   const { orderID } = useParams();
-  const { orders, setOrders } = useContext(UserContext);
+  const dispatch = useDispatch();
+  // const { orders, setOrders } = useContext(UserContext);
+  const orders = useSelector((state) => state.allOrders.data);
   const order = orders.find((value) => value.orderId === orderID);
 
   const handleDelivered = (orderId, userId) => {
@@ -28,11 +32,20 @@ function Order() {
         axios
           .patch(`${userURL}/${userId}`, { order: updatedData })
           .then(() => {
-            setOrders((prev) => {
-              return prev.map((value) =>
-                value.orderId === orderId ? { ...value, status: false } : value
-              );
-            });
+            dispatch(
+              setOrders(
+                orders.map((value) =>
+                  value.orderId === orderId
+                    ? { ...value, status: false }
+                    : value
+                )
+              )
+            );
+            // setOrders((prev) => {
+            // return prev.map((value) =>
+            //   value.orderId === orderId ? { ...value, status: false } : value
+            // );
+            // });
             toast.success("Order Delivered!");
           })
           .catch((err) => {
