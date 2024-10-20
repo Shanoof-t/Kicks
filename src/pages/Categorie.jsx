@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCategorieItems } from "../features/Categorie/categorieAPI";
 import {
   setCategorieGender,
   setLoad,
@@ -11,27 +10,27 @@ function Categorie() {
   useEffect(() => {
     window.scrollTo(0, 0);
   });
+
   const { categorieGender } = useParams();
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (categorieGender) {
       dispatch(setCategorieGender(categorieGender));
     }
   }, [dispatch, categorieGender]);
 
-  const items = useSelector((state) => state.categorie.items.data);
   const load = useSelector((state) => state.categorie.load);
   const navigate = useNavigate();
-  useEffect(() => {
-    dispatch(fetchCategorieItems(categorieGender));
-  }, [categorieGender, dispatch]);
-  
+
   const handleInitialLoad = () => {
-    dispatch(setLoad());
+    dispatch(setLoad(!load));
+    navigate(`CASUAL`);
   };
+
   useEffect(() => {
     navigate(`CASUAL`);
-  }, [load, navigate]);
+  }, [categorieGender,load]);
 
   return (
     <div className="min-h-screen px-4 sm:px-6 lg:px-8 py-8 ">
@@ -57,7 +56,7 @@ function Categorie() {
           </li>
         </ul>
       </div>
-      <Outlet context={{ categorieGender }} />
+      <Outlet />
     </div>
   );
 }

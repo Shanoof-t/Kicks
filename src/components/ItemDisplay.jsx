@@ -1,16 +1,23 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-function ItemDisplay({ value, type, gender }) {
-  const items = value;
-  if (!type && !gender) {
-    type = "ALL";
-  }
-  console.log(value);
+import { setCategrieType } from "../features/categorie_details/categorieDetailsSlice";
+function ItemDisplay() {
+  const dispatch = useDispatch();
+  const items = useSelector((state) => state.categorieDetails.items.data);
+  const type = useSelector((state) => state.categorieDetails.categrieType);
+  const gender = useSelector((state) => state.categorie.categorieGender);
+
+  useEffect(() => {
+    if (!type && !gender) {
+      dispatch(setCategrieType("ALL"));
+    }
+  }, [type,gender,dispatch]);
+
+  // console.log(items);
   // console.log(type);
   // console.log(gender);
-  
-  // const values = useSelector((state) => state.displayItem.);
+
   return (
     <div className="min-h-screen px-4 sm:px-6 lg:px-8 py-8 pt-16">
       <h1 className="text-3xl font-bold mb-4">

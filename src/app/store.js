@@ -8,6 +8,7 @@ import navbar from "../features/navbar/navbarSlice";
 import checkout from "../features/checkout/checkoutSlice";
 import displayItem from "../features/displayItem/displayItemSlice";
 import categorie from "../features/Categorie/categorieSlice";
+import categorieDetails from "../features/categorie_details/categorieDetailsSlice";
 const store = configureStore({
   reducer: {
     login,
@@ -19,6 +20,7 @@ const store = configureStore({
     checkout,
     displayItem,
     categorie,
+    categorieDetails,
   },
 });
 
