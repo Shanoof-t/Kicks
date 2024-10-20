@@ -18,6 +18,7 @@ import order from "../features/order/orderSlice";
 import orderList from "../features/orderList/orderListSlice";
 import addProduct from "../features/addProduct/addProductSlice";
 import updateProduct from "../features/updateProduct/updateProductSlice";
+import userProfile from "../features/userProfile/userProfileSlice";
 const store = configureStore({
   reducer: {
     login,
@@ -38,7 +39,8 @@ const store = configureStore({
     order,
     orderList,
     addProduct,
-    updateProduct
+    updateProduct,
+    userProfile,
   },
 });
 

@@ -1,11 +1,15 @@
-import React, { useContext, useState } from "react";
-// import { UserContext } from "../context/UserProvider";
+import React, { useEffect, useState } from "react";
 import UserList from "./components/UserList";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { allUsersFetch } from "../features/common/allUsers/allUsersAPI";
 
 function Users() {
-  // const { users } = useContext(UserContext);
   const users = useSelector((state) => state.allUsers.data);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(allUsersFetch());
+  }, []);
+
   const [userType, setUserType] = useState("allusers");
   const activeUsers = users.filter((value) => value.isAllowed);
   const nonActiveUsers = users.filter((value) => !value.isAllowed);
@@ -23,16 +27,26 @@ function Users() {
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-6">
         <div className="bg-white p-6 rounded-lg shadow-md text-center">
-          <h2 className="text-lg font-semibold text-gray-600">Total Customers</h2>
+          <h2 className="text-lg font-semibold text-gray-600">
+            Total Customers
+          </h2>
           <h3 className="text-2xl font-bold text-gray-800">{users.length}</h3>
         </div>
         <div className="bg-white p-6 rounded-lg shadow-md text-center">
-          <h2 className="text-lg font-semibold text-gray-600">Active Customers</h2>
-          <h3 className="text-2xl font-bold text-green-600">{activeUsers.length}</h3>
+          <h2 className="text-lg font-semibold text-gray-600">
+            Active Customers
+          </h2>
+          <h3 className="text-2xl font-bold text-green-600">
+            {activeUsers.length}
+          </h3>
         </div>
         <div className="bg-white p-6 rounded-lg shadow-md text-center">
-          <h2 className="text-lg font-semibold text-gray-600">Nonactive Customers</h2>
-          <h3 className="text-2xl font-bold text-red-600">{nonActiveUsers.length}</h3>
+          <h2 className="text-lg font-semibold text-gray-600">
+            Nonactive Customers
+          </h2>
+          <h3 className="text-2xl font-bold text-red-600">
+            {nonActiveUsers.length}
+          </h3>
         </div>
       </div>
 
@@ -51,14 +65,24 @@ function Users() {
         <table className="min-w-full table-auto">
           <thead className="bg-gray-200">
             <tr>
-              <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">ID</th>
-              <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Name</th>
-              <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Email</th>
-              <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">Status</th>
+              <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
+                ID
+              </th>
+              <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
+                Name
+              </th>
+              <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
+                Email
+              </th>
+              <th className="px-4 py-2 text-left text-sm font-medium text-gray-700">
+                Status
+              </th>
             </tr>
           </thead>
           <tbody>
-            <UserList value={{ userType, users, activeUsers, nonActiveUsers }} />
+            <UserList
+              value={{ userType, users, activeUsers, nonActiveUsers }}
+            />
           </tbody>
         </table>
       </div>

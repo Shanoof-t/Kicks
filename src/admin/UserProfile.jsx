@@ -1,39 +1,37 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-// import { UserContext } from "../context/UserProvider";
-import axios from "axios";
 import { userURL } from "../utils/API_URL";
 import { useDispatch, useSelector } from "react-redux";
+import { setUserProfileUser } from "../features/userProfile/userProfileSlice";
+import { fetchUserProfile, updateBlockedUser } from "../features/userProfile/userProfileAPI";
+import { allUsersFetch } from "../features/common/allUsers/allUsersAPI";
 import { setUsers } from "../features/common/allUsers/allUsersSlice";
 
 function UserProfile() {
   const { userID } = useParams();
   const dispatch = useDispatch();
-  // const { users, setUsers } = useContext(UserContext);
+
   const users = useSelector((state) => state.allUsers.data);
-  const [user, setUser] = useState(null);
+  const user = useSelector((state) => state.userProfile.user);
+
+  useEffect(() => {
+    dispatch(allUsersFetch());
+  }, []);
 
   useEffect(() => {
     const userData = users.find((value) => value.id === userID);
     if (userData) {
-      setUser(userData);
+      dispatch(setUserProfileUser(userData));
     } else {
-      axios
-        .get(`${userURL}/${userID}`)
-        .then((res) => {
-          setUser(res.data);
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
+      dispatch(fetchUserProfile({ userURL, userID })).then((res) => {
+        dispatch(setUserProfileUser(res.payload));
+      });
     }
   }, [users, userID]);
 
   const handleBlock = (id) => {
-    axios
-      .patch(`${userURL}/${id}`, { isAllowed: !user.isAllowed })
+    dispatch(updateBlockedUser({ userURL, id, user }))
       .then(() => {
-        setUser((prev) => ({ ...prev, isAllowed: !prev.isAllowed }));
         dispatch(
           setUsers(
             users.map((value) =>
@@ -43,15 +41,8 @@ function UserProfile() {
             )
           )
         );
-        // setUsers((prev) => {
-        // return prev.map((value) =>
-        //   value.id === id ? { ...value, isAllowed: !value.isAllowed } : value
-        // );
-        // });
       })
-      .catch((err) => {
-        console.log(err.message);
-      });
+      
   };
 
   if (!user) {

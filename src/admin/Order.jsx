@@ -10,13 +10,19 @@ import { toast, ToastContainer } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrders } from "../features/common/allOrders/allOrdersSlice";
 import { fetchOrderUser, UpdateUserOrder } from "../features/order/orderAPI";
+import { useEffect } from "react";
+import { fetchAllOrder } from "../features/common/allOrders/allOrdersAPI";
+import { allUsersFetch } from "../features/common/allUsers/allUsersAPI";
 
 function Order() {
   const { orderID } = useParams();
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.allOrders.data);
   const order = orders.find((value) => value.orderId === orderID);
-
+  useEffect(() => {
+    dispatch(fetchAllOrder());
+    dispatch(allUsersFetch());
+  }, []);
   const handleDelivered = (orderId, userId) => {
     dispatch(fetchOrderUser({ userURL, userId }))
       .then((res) => {

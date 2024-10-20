@@ -1,9 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import logo from "../../assets/logo/Logo.png";
 import { Outlet, useNavigate } from "react-router-dom";
-import { faChevronDown, faUser, faBars } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronDown,
+  faUser,
+  faBars,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { ProductContext } from "../../context/ProductProvider";
 import dash from "../../assets/icons/dashboaard.svg";
 import productImg from "../../assets/icons/albums.svg";
 import orderListImg from "../../assets/icons/document-text.svg";
@@ -11,7 +14,6 @@ import { useSelector } from "react-redux";
 
 const HeaderDash = () => {
   const navigate = useNavigate();
-  // const { allitems } = useContext(ProductContext);
   const allitems = useSelector((state) => state.allProducts.items.data);
   const admin = localStorage.getItem("isAdmin");
 
