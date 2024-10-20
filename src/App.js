@@ -33,11 +33,11 @@ function App() {
     location.pathname === "/register" ||
     location.pathname.startsWith("/admin");
 
-  useEffect(() => {
-    if (localStorage.getItem("isAdmin")) {
-      navigate("/admin");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (localStorage.getItem("isAdmin")) {
+  //     navigate("/admin");
+  //   }
+  // }, []);
   return (
     <>
       {/* <UserProvider> */}

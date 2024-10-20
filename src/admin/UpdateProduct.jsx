@@ -1,40 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Field, Form, Formik } from "formik";
 import { addProductValidation } from "./components/AddProductValidation";
-import axios from "axios";
-import { itemsURL } from "../utils/API_URL"; 
+import { itemsURL } from "../utils/API_URL";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setInitialInformation,
+  updateImageUrl,
+} from "../features/updateProduct/updateProductSlice";
+import {
+  fetchProduct,
+  updateProduct,
+} from "../features/updateProduct/updateProductAPI";
 
 function UpdateProduct() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { itemId } = useParams();
-  const initialDatas = {
-    name: "",
-    description: "",
-    category: "",
-    brand: "",
-    gender: "",
-    items_left: "",
-    available_sizes: "",
-    price: "",
-    offer_price: "",
-    imageURL: "",
-  };
-  const [initialInformation, setInitialInformation] = useState(initialDatas);
+
+  const initialInformation = useSelector(
+    (state) => state.updateProduct.initialDatas
+  );
 
   useEffect(() => {
-    axios.get(`${itemsURL}/${itemId}`).then((res) => {
-      setInitialInformation(res.data);
-      const sizes = res.data.available_sizes.join(",");
-      setInitialInformation((prev) => ({
-        ...prev,
-        available_sizes: sizes,
-      }));
+    dispatch(fetchProduct({ itemsURL, itemId })).then((res) => {
+      const sizes = res.payload.available_sizes.join(",");
+      dispatch(setInitialInformation(sizes));
     });
   }, [itemId]);
 
-  const [imageUrl, setImageUrl] = useState(null);
+  const imageUrl = useSelector((state) => state.updateProduct.imageUrl);
 
   const handleSubmit = async (values) => {
     const imageUrlToUse = imageUrl ? imageUrl : values.imageURL;
@@ -44,14 +40,20 @@ function UpdateProduct() {
       category: values.category.toUpperCase(),
       imageURL: imageUrlToUse,
     };
-    try {
-      await axios.put(`${itemsURL}/${itemId}`, itemData);
-      toast.success("Item updated successfully");
-      setImageUrl(null);
-      navigate(-1);
-    } catch (error) {
-      toast.error(error.message);
-    }
+    dispatch(updateProduct({ itemsURL, itemId, itemData })).then((res) => {
+      if (res.error) {
+        console.log("this is in error", res.error);
+        toast.error(res.error.message);
+      } else {
+        toast.success("Item updated successfully", {
+          className: "mt-12",
+          onClose: () => {
+            navigate(-1);
+            dispatch(updateImageUrl(null));
+          },
+        });
+      }
+    });
   };
 
   const handleDrop = (e) => {
@@ -59,7 +61,7 @@ function UpdateProduct() {
     const file = e.dataTransfer.files[0];
     const reader = new FileReader();
     reader.onloadend = () => {
-      setImageUrl(reader.result);
+      dispatch(updateImageUrl(reader.result));
     };
     reader.readAsDataURL(file);
   };
