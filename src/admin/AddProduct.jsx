@@ -5,21 +5,13 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { itemsURL } from "../utils/API_URL";
+import { useDispatch, useSelector } from "react-redux";
+import { setImageUrl } from "../features/addProduct/addProductSlice";
+import { addProduct } from "../features/addProduct/addProductAPI";
 function AddProduct() {
   const navigate = useNavigate();
-  const initialInformation = {
-    name: "",
-    description: "",
-    category: "",
-    brand: "",
-    gender: "",
-    items_left: "",
-    available_sizes: "",
-    price: "",
-    offer_price: "",
-    imageURL: "",
-  };
-  const [imageUrl, setImageUrl] = useState(null);
+  const dispatch = useDispatch();
+  const imageUrl = useSelector((state) => state.addProduct.imageUrl);
   const handleSubmit = async (values) => {
     const imageUrlToUse = imageUrl ? imageUrl : values.imageURL;
     const itemData = {
@@ -28,20 +20,22 @@ function AddProduct() {
       category: values.category.toUpperCase(),
       imageURL: imageUrlToUse,
     };
-    try {
-      await axios.post(itemsURL, itemData);
-      toast.success("Item Updated", { onClose: () => navigate(-1) });
-      setImageUrl(null);
-    } catch (error) {
-      toast.error(error.message);
-    }
+    dispatch(addProduct({ itemsURL, itemData }))
+      .then(() => {
+        toast.success("Item Updated", { onClose: () => navigate(-1) });
+        dispatch(setImageUrl(null));
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
   };
+
   const handleDrop = (e) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
     const reader = new FileReader();
     reader.onloadend = () => {
-      setImageUrl(reader.result);
+      dispatch(setImageUrl(reader.result));
     };
     reader.readAsDataURL(file);
   };
@@ -49,7 +43,18 @@ function AddProduct() {
     <div className="p-3">
       <ToastContainer />
       <Formik
-        initialValues={initialInformation}
+        initialValues={{
+          name: "",
+          description: "",
+          category: "",
+          brand: "",
+          gender: "",
+          items_left: "",
+          available_sizes: "",
+          price: "",
+          offer_price: "",
+          imageURL: "",
+        }}
         validationSchema={addProductValidation(imageUrl)}
         onSubmit={handleSubmit}
       >
