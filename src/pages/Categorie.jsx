@@ -1,33 +1,37 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCategorieItems } from "../features/Categorie/categorieAPI";
+import {
+  setCategorieGender,
+  setLoad,
+} from "../features/Categorie/categorieSlice";
 function Categorie() {
   useEffect(() => {
     window.scrollTo(0, 0);
   });
   const { categorieGender } = useParams();
-  const [items, setItems] = useState([]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (categorieGender) {
+      dispatch(setCategorieGender(categorieGender));
+    }
+  }, [dispatch, categorieGender]);
+
+  const items = useSelector((state) => state.categorie.items.data);
+  const load = useSelector((state) => state.categorie.load);
   const navigate = useNavigate();
   useEffect(() => {
-    axios
-      .get(`http://localhost:4000/items?gender=${categorieGender}`)
-      .then((res) => {
-        setItems(res.data);
-      })
-      .catch((err) => {
-        toast.error(err.message);
-      });
-  }, [categorieGender]);
-  const [load, setLoad] = useState(true);
+    dispatch(fetchCategorieItems(categorieGender));
+  }, [categorieGender, dispatch]);
+  
   const handleInitialLoad = () => {
-    setLoad(!load);
+    dispatch(setLoad());
   };
   useEffect(() => {
     navigate(`CASUAL`);
-  }, [load, categorieGender]);
+  }, [load, navigate]);
 
   return (
     <div className="min-h-screen px-4 sm:px-6 lg:px-8 py-8 ">

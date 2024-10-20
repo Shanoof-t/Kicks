@@ -1,10 +1,16 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 function ItemDisplay({ value, type, gender }) {
   const items = value;
   if (!type && !gender) {
     type = "ALL";
   }
+  console.log(value);
+  // console.log(type);
+  // console.log(gender);
+  
+  // const values = useSelector((state) => state.displayItem.);
   return (
     <div className="min-h-screen px-4 sm:px-6 lg:px-8 py-8 pt-16">
       <h1 className="text-3xl font-bold mb-4">
@@ -13,7 +19,7 @@ function ItemDisplay({ value, type, gender }) {
       <h5 className="text-lg mb-8">{items.length} items</h5>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-        {items.map((item,index) => (
+        {items.map((item, index) => (
           <div
             key={`${item.id}${index}`}
             className="border rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
