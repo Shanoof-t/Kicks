@@ -5,7 +5,6 @@ import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
 import Profile from "./pages/Profile";
-import OrderDetails from "./pages/OrderDetails";
 import Categorie from "./pages/Categorie";
 import CategorieDetails from "./pages/CategorieDetails";
 import ItemDisplay from "./components/ItemDisplay";
@@ -23,7 +22,7 @@ import React, { lazy, Suspense, useEffect } from "react";
 import Loading from "./components/Loading";
 import Register from "./components/auth/Register/Register";
 import Login from "./components/auth/Login/Login";
-const AllItems = lazy(() => import("./pages/AllItems"));
+const OrderDetails = lazy(() => import("./pages/OrderDetails"));
 const Home = React.lazy(() => import("./pages/Home"));
 const HeaderDash = React.lazy(() => import("./admin/components/HeaderDash"));
 const Checkout = React.lazy(() => import("./pages/checkout/Checkout"));
@@ -49,7 +48,6 @@ function App() {
         {/* <div className="main"> */}
         <Routes>
           {/* User Routes */}
-
           <Route
             path="/"
             element={
@@ -92,7 +90,14 @@ function App() {
             }
           />
           <Route path="profile" element={<Profile />} />
-          <Route path="orderdetails" element={<OrderDetails />} />
+          <Route
+            path="orderdetails"
+            element={
+              <Suspense fallback={<Loading />}>
+                <OrderDetails />
+              </Suspense>
+            }
+          />
           <Route path="*" element={<NotFound />} />
 
           {/* Admin Routes */}

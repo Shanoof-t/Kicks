@@ -10,6 +10,7 @@ import displayItem from "../features/displayItem/displayItemSlice";
 import categorie from "../features/Categorie/categorieSlice";
 import categorieDetails from "../features/categorie_details/categorieDetailsSlice";
 import allProducts from "../features/common/allProducts/allProductsSlice";
+import orderDetails from "../features/order_details/orderDetailsSlice";
 const store = configureStore({
   reducer: {
     login,
@@ -23,6 +24,7 @@ const store = configureStore({
     categorie,
     categorieDetails,
     allProducts,
+    orderDetails,
   },
 });
 

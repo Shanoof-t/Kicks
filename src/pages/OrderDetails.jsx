@@ -1,25 +1,29 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { orderDetailsFetch } from "../features/order_details/orderDetailsAPI";
+import Loading from "../components/Loading";
 function OrderDetails() {
-  const [orderdetails, setOrderDetails] = useState([]);
+  const dispatch = useDispatch();
+  const orderdetails = useSelector((state) => state.orderDetails.orderData);
   const userId = localStorage.getItem("userId");
   useEffect(() => {
-    axios.get(`http://localhost:4000/user/${userId}`).then((res) => {
-      setOrderDetails(res.data.order);
-    });
+    dispatch(orderDetailsFetch(userId));
   }, [userId]);
+
+  if (orderdetails.loading) return <Loading />;
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8 text-center">
         <h1 className="text-3xl font-bold text-gray-800">Orders</h1>
       </div>
       <hr className="mb-8 border-gray-300" />
-      {orderdetails.length === 0 ? (
+      {orderdetails.data.length === 0 ? (
         <div className="text-center">
           <h1 className="font-bold text-xl">No orders</h1>
         </div>
       ) : (
-        orderdetails.map((order) => {
+        orderdetails.data.map((order) => {
           return (
             <div key={order.orderId} className=" rounded-lg mb-8 p-6">
               <div>
