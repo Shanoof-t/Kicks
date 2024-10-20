@@ -1,16 +1,14 @@
 import { faBagShopping, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useContext, useEffect, useState } from "react";
-// import { UserContext } from "../context/UserProvider";
+import { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
-// import { ProductContext } from "../context/ProductProvider";
 import album from "../assets/icons/albums.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllOrder } from "../features/common/allOrders/allOrdersAPI";
 import { allUsersFetch } from "../features/common/allUsers/allUsersAPI";
+import { setOrderDetails } from "../features/Dashboard_Home/dashboardHomeSlice";
 
 function DashboardHome() {
-  // const { orders, users } = useContext(UserContext);
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.allOrders.data);
   const users = useSelector((state) => state.allUsers.data);
@@ -19,14 +17,12 @@ function DashboardHome() {
     dispatch(fetchAllOrder());
     dispatch(allUsersFetch());
   }, []);
-  
-  const allitems = useSelector((state) => state.allProducts.items.data);
-  const [orderList, setOrderList] = useState(orders);
 
-  const initialOrderData = {
-    totalOrders: 0,
-  };
-  const [orderDetails, setOrderDetails] = useState(initialOrderData);
+  const allitems = useSelector((state) => state.allProducts.items.data);
+  const orderDetails = useSelector((state) => state.dashboardHome.orderDetails);
+  useEffect(() => {
+    dispatch(setOrderDetails({ totalOrders: orders.length }));
+  }, [orders, users]);
 
   const initialChartData = {
     series: [
@@ -96,13 +92,6 @@ function DashboardHome() {
     }, 1000);
     return () => clearInterval(interval);
   }, [orders]);
-
-  useEffect(() => {
-    if (orders) {
-      setOrderList(orders);
-    }
-    setOrderDetails({ totalOrders: orders.length });
-  }, [orders, users]);
 
   return (
     <div className="px-4 py-6 lg:px-8 lg:py-8 min-h-screen bg-gray-100">
@@ -199,7 +188,7 @@ function DashboardHome() {
             </tr>
           </thead>
           <tbody className="text-center">
-            {orderList.map((order, index) => (
+            {orders.map((order, index) => (
               <tr
                 key={order.orderId + index}
                 className="hover:bg-gray-50 transition duration-200"
