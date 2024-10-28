@@ -13,7 +13,12 @@ module.exports = {
         "sizeColor":"#707E6E",
         "secondaryBlue":'#4A69E2'
       },
-      
+      "fontSize":{
+        "12xl":"12rem"
+      },
+      borderWidth:{
+        "5":".4rem"
+      }
     },
   },
   plugins: [],

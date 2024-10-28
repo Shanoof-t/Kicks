@@ -53,7 +53,7 @@ function ItemDisplay() {
             <img
               src={item.imageURL}
               alt={`${item.name} image`}
-              className="w-full h-60 object-cover"
+              className="w-full h-60 object-cover border-5 border-white rounded-3xl"
             />
             <div className="p-4">
               <h2 className="text-xl font-semibold mb-2">{item.name}</h2>

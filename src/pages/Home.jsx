@@ -9,7 +9,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useSelector } from "react-redux";
-
+import doitright from "../assets/images/Do it right.png";
+import nikeairmax from "../assets/images/new.png";
 function Home() {
   const navigate = useNavigate();
   const settings = useSelector((state) => state.home.settings);
@@ -17,18 +18,12 @@ function Home() {
 
   return (
     <div className="min-h-screen px-4 sm:px-6 lg:px-8 ">
-      <div className="text-center mb-8">
-        <h1 className="text-4xl mt-10 sm:text-6xl md:text-8xl lg:text-9xl font-bold text-thirdColor">
-          DO IT <span className="text-blueColor">RIGHT</span>
-        </h1>
+      <div className="text-center mb-8 w-full">
+        <img src={doitright} alt="" className="my-12" />
       </div>
       <div className="flex justify-center mb-8 relative">
-        <img
-          src="https://5.imimg.com/data5/SELLER/Default/2023/3/295617428/WL/RL/XG/80392428/maksim-larin-nopsc3nwtzy-unsplash-1000x1000.jpg"
-          alt="Main Banner"
-          className="w-full max-w-9xl rounded-3xl object-cover " // Ensures it maintains aspect ratio
-        />
-        <div className="absolute bottom-5 left-2 md:left-10 md:bottom-10 flex flex-col items-start md:space-y-4">
+        <img src={nikeairmax} alt="" />
+        <div className="absolute w-2/3 bottom-5 left-2 md:left-10 md:bottom-10 flex flex-col items-start md:space-y-4">
           <h1 className="text-white text-xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold">
             NIKE AIR MAX
           </h1>
@@ -37,7 +32,7 @@ function Home() {
               Nike introducing the new air max for everyone's comfort
             </h5>
           </div>
-          <Link to={"kids/16"}>
+          <Link to={"product/16"}>
             <button className="bg-thirdColor p-4 md:p-4 font-bold text-xs text-white rounded-xl mt-1">
               SHOP NOW
             </button>
@@ -46,7 +41,7 @@ function Home() {
       </div>
 
       {/* Categories Section */}
-      <div className="py-12 md:py-16">
+      <div className="py-12 md:py-16 ">
         <div className="flex justify-between items-center mb-8 md:mb-10">
           <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-thirdColor">
             CATEGORIES
