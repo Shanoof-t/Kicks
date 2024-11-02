@@ -31,7 +31,7 @@ function ItemDisplay() {
       dispatch(fetchAllProducts());
     }
   }, [pathname, dispatch, fetchAllProducts, setItems]);
-  
+
   const items = pathname === "/all" ? allproducts : catogrieProducts;
   if (allproductsLoading || catogrieProductsLoading) {
     return <Loading />;
@@ -46,24 +46,21 @@ function ItemDisplay() {
 
       <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {items.map((item, index) => (
-          <div
-            key={`${item.id}${index}`}
-            className="border rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
-          >
-            <img
-              src={item.imageURL}
-              alt={`${item.name} image`}
-              className="w-full h-60 object-cover border-5 border-white rounded-3xl"
-            />
-            <div className="p-4">
-              <h2 className="text-xl font-semibold mb-2">{item.name}</h2>
-              <Link to={`/product/${item.id}`}>
+          <Link to={`/product/${item.id}`} key={`${item.id}${index}`}>
+            <div className="border rounded-lg overflow-hidden duration-300">
+              <img
+                src={item.imageURL}
+                alt={`${item.name} image`}
+                className="w-full h-60 object-cover border-5 border-white rounded-3xl"
+              />
+              <div className="p-4">
+                <h2 className="text-xl font-semibold mb-2">{item.name}</h2>
                 <button className="w-full px-4 py-2 text-white bg-thirdColor font-bold rounded hover:bg-hoverColor transition-colors duration-300">
                   VIEW PRODUCT - ${item.price}
                 </button>
-              </Link>
+              </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

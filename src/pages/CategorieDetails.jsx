@@ -1,10 +1,11 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import ItemDisplay from "../components/ItemDisplay";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategorieItems } from "../features/categorie_details/categorieDetailsAPI";
 import { setCategrieType } from "../features/categorie_details/categorieDetailsSlice";
+import Loading from "../components/Loading";
+const ItemDisplay = React.lazy(() => import("../components/ItemDisplay"));
 
 function CategorieDetails() {
   const { categrieType } = useParams();
@@ -25,6 +26,10 @@ function CategorieDetails() {
     }
   }, [categrieType, categorieGender]);
 
-  return <ItemDisplay />;
+  return (
+    <Suspense fallback={<Loading />}>
+      <ItemDisplay />
+    </Suspense>
+  );
 }
 export default CategorieDetails;

@@ -6,7 +6,6 @@ import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
 import Profile from "./pages/Profile";
 import Categorie from "./pages/Categorie";
-import CategorieDetails from "./pages/CategorieDetails";
 import ItemDisplay from "./components/ItemDisplay";
 import AddProduct from "./admin/AddProduct";
 import DashboardHome from "./admin/DashboardHome";
@@ -25,6 +24,7 @@ const OrderDetails = lazy(() => import("./pages/OrderDetails"));
 const Home = React.lazy(() => import("./pages/Home"));
 const HeaderDash = React.lazy(() => import("./admin/components/HeaderDash"));
 const Checkout = React.lazy(() => import("./pages/checkout/Checkout"));
+const CategorieDetails = React.lazy(() => import("./pages/CategorieDetails"));
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -41,94 +41,101 @@ function App() {
   return (
     <>
       {/* <UserProvider> */}
-        {/* <ProductProvider> */}
-        <div className={hideComponent ? "" : "container mx-auto"}>
-          {/* {!hideHeaderDash && hideComponent && <AdminNavbar />} */}
-          {!hideComponent && <Navbar />}
-          {/* <div className="main"> */}
-          <Routes>
-            {/* User Routes */}
+      {/* <ProductProvider> */}
+      <div className={hideComponent ? "" : "container mx-auto"}>
+        {/* {!hideHeaderDash && hideComponent && <AdminNavbar />} */}
+        {!hideComponent && <Navbar />}
+        {/* <div className="main"> */}
+        <Routes>
+          {/* User Routes */}
+          <Route
+            path="/"
+            element={
+              <Suspense fallback={<Loading />}>
+                <Home />
+              </Suspense>
+            }
+          />
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="home" element={<Home />} />
+          <Route path="categorie/:categorieGender" element={<Categorie />}>
             <Route
-              path="/"
+              path=":categrieType"
               element={
                 <Suspense fallback={<Loading />}>
-                  <Home />
-                </Suspense>
-              }
-            />
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-            <Route path="home" element={<Home />} />
-            <Route path="categorie/:categorieGender" element={<Categorie />}>
-              <Route path=":categrieType" element={<CategorieDetails />}>
-                <Route
-                  index
-                  element={
-                    <Suspense fallback={<Loading />}>
-                      <ItemDisplay />
-                    </Suspense>
-                  }
-                />
-              </Route>
-            </Route>
-            <Route
-              path="all"
-              element={
-                <Suspense fallback={<Loading />}>
-                  <ItemDisplay />
-                </Suspense>
-              }
-            />
-            <Route path="product/:productId" element={<ProductDetails />} />
-            <Route path="cart" element={<Cart />} />
-            <Route
-              path="checkout"
-              element={
-                <Suspense fallback={<Loading />}>
-                  <Checkout />
-                </Suspense>
-              }
-            />
-            <Route path="profile" element={<Profile />} />
-            <Route
-              path="orderdetails"
-              element={
-                <Suspense fallback={<Loading />}>
-                  <OrderDetails />
-                </Suspense>
-              }
-            />
-            <Route path="*" element={<NotFound />} />
-
-            {/* Admin Routes */}
-
-            <Route
-              path="admin"
-              element={
-                <Suspense fallback={<Loading />}>
-                  <HeaderDash />
+                  <CategorieDetails />
                 </Suspense>
               }
             >
-              <Route index element={<DashboardHome />} />
               <Route
-                path="productlist/:productCategory"
-                element={<ProductsDash />}
+                index
+                element={
+                  <Suspense fallback={<Loading />}>
+                    <ItemDisplay />
+                  </Suspense>
+                }
               />
-              <Route path="addproduct" element={<AddProduct />} />
-              <Route path="updateproduct/:itemId" element={<UpdateProduct />} />
-              <Route path="orderlist" element={<OrderList />} />
-              <Route path="order/:orderID" element={<Order />} />
-              <Route path="users" element={<Users />} />
-              <Route path="userprofile/:userID" element={<UserProfile />} />
             </Route>
-          </Routes>
-        </div>
-        {!hideComponent && <Footer />}
-        {/* </div> */}
-        {/* <AdminRoutes />
+          </Route>
+          <Route
+            path="all"
+            element={
+              <Suspense fallback={<Loading />}>
+                <ItemDisplay />
+              </Suspense>
+            }
+          />
+          <Route path="product/:productId" element={<ProductDetails />} />
+          <Route path="cart" element={<Cart />} />
+          <Route
+            path="checkout"
+            element={
+              <Suspense fallback={<Loading />}>
+                <Checkout />
+              </Suspense>
+            }
+          />
+          <Route path="profile" element={<Profile />} />
+          <Route
+            path="orderdetails"
+            element={
+              <Suspense fallback={<Loading />}>
+                <OrderDetails />
+              </Suspense>
+            }
+          />
+          <Route path="*" element={<NotFound />} />
+
+          {/* Admin Routes */}
+
+          <Route
+            path="admin"
+            element={
+              <Suspense fallback={<Loading />}>
+                <HeaderDash />
+              </Suspense>
+            }
+          >
+            <Route index element={<DashboardHome />} />
+            <Route
+              path="productlist/:productCategory"
+              element={<ProductsDash />}
+            />
+            <Route path="addproduct" element={<AddProduct />} />
+            <Route path="updateproduct/:itemId" element={<UpdateProduct />} />
+            <Route path="orderlist" element={<OrderList />} />
+            <Route path="order/:orderID" element={<Order />} />
+            <Route path="users" element={<Users />} />
+            <Route path="userprofile/:userID" element={<UserProfile />} />
+          </Route>
+        </Routes>
+      </div>
+      {!hideComponent && <Footer />}
+      {/* </div> */}
+      {/* <AdminRoutes />
         <UserRoutes /> */}
-        {/* </ProductProvider> */}
+      {/* </ProductProvider> */}
       {/* </UserProvider> */}
     </>
   );
