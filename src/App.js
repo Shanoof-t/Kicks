@@ -1,12 +1,10 @@
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
-import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
 import Profile from "./pages/Profile";
 import Categorie from "./pages/Categorie";
-import ItemDisplay from "./components/ItemDisplay";
 import AddProduct from "./admin/AddProduct";
 import DashboardHome from "./admin/DashboardHome";
 import ProductsDash from "./admin/ProductsDash";
@@ -25,6 +23,8 @@ const Home = React.lazy(() => import("./pages/Home"));
 const HeaderDash = React.lazy(() => import("./admin/components/HeaderDash"));
 const Checkout = React.lazy(() => import("./pages/checkout/Checkout"));
 const CategorieDetails = React.lazy(() => import("./pages/CategorieDetails"));
+const ItemDisplay = React.lazy(() => import("./components/ItemDisplay"));
+const ProductDetails = React.lazy(() => import("./pages/ProductDetails"));
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -86,7 +86,14 @@ function App() {
               </Suspense>
             }
           />
-          <Route path="product/:productId" element={<ProductDetails />} />
+          <Route
+            path="product/:productId"
+            element={
+              <Suspense fallback={<Loading />}>
+                <ProductDetails />
+              </Suspense>
+            }
+          />
           <Route path="cart" element={<Cart />} />
           <Route
             path="checkout"

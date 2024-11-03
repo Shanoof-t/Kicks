@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCategorieItems } from "../features/categorie_details/categorieDetailsAPI";
 import { setCategrieType } from "../features/categorie_details/categorieDetailsSlice";
 import Loading from "../components/Loading";
-const ItemDisplay = React.lazy(() => import("../components/ItemDisplay"));
+import ItemDisplay from "../components/ItemDisplay";
 
 function CategorieDetails() {
   const { categrieType } = useParams();
@@ -26,10 +26,6 @@ function CategorieDetails() {
     }
   }, [categrieType, categorieGender]);
 
-  return (
-    <Suspense fallback={<Loading />}>
-      <ItemDisplay />
-    </Suspense>
-  );
+  return <ItemDisplay />;
 }
 export default CategorieDetails;
