@@ -27,7 +27,7 @@ function Login() {
       localStorage.setItem("lastName", matchedUser.lastName);
       localStorage.setItem("email", matchedUser.email);
       localStorage.setItem("isAllowed", matchedUser.isAllowed);
-      navigate("/", { replace: true });
+      navigate(-1, { replace: true });
     }
   };
   return (
@@ -59,13 +59,12 @@ function Login() {
                   name="password"
                   className="w-full px-4 py-3 bg-transparent border border-black rounded-md text-gray-800 focus:outline-none focus:ring-0"
                 ></Field>
-                {(touched.password && errors.password) ||
-                  (errors.blockError && (
-                    <p className="text-red-600">
-                      {errors.password}
-                      {errors.blockError}
-                    </p>
-                  ))}
+                {touched.password && errors.password && (
+                  <p className="text-red-600">{errors.password}</p>
+                )}
+                {errors.blockError && (
+                  <p className="text-red-600">{errors.blockError}</p>
+                )}
               </div>
               {errors.blockError && (
                 <button

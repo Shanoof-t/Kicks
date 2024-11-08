@@ -20,7 +20,7 @@ function Home() {
   return (
     <div className="min-h-screen px-4 sm:px-6 lg:px-8">
       {/* Header Image */}
-      <div className="text-center mb-8 w-full">
+      <div className="text-center mb-8 w-full ">
         <img src={doitright} alt="Do It Right" className="my-12" />
       </div>
 

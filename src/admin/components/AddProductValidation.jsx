@@ -22,6 +22,6 @@ export const addProductValidation = (imageUrl) => {
         return !!value || !!imageUrl;
       }
     )
-    .url("Must be a valid URL!")
+    // .url("Must be a valid URL!")
   });
 };

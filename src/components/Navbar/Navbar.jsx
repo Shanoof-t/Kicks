@@ -121,7 +121,7 @@ function Navbar() {
   };
 
   return (
-    <header className="container bg-white shadow-md py-3 rounded-b-2xl  z-10 w-full ">
+    <header className="container bg-white shadow-md py-3 rounded-b-2xl z-10 w-full ">
       <div className="container mx-auto flex justify-between items-center px-4">
         <div className="flex items-center space-x-8 ">
           <ul className="hidden md:flex space-x-8 text-sm font-semibold">
