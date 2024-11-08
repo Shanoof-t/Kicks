@@ -306,12 +306,13 @@ function AddProduct() {
                 <div className="mb-4">
                   <h2 className="font-semibold mb-1">Add Image</h2>
                   <div
-                    className="border-dashed border-4 border-gray-400 p-8 text-center mb-4 cursor-pointer"
+                    className="border-2 border-dashed border-gray-400 p-10 text-center mb-4 cursor-pointer hover:border-blue-500 transition-colors duration-300"
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={handleDrop}
                   >
-                    <p>Drop your image here</p>
+                    <p className="text-gray-500">Drop your image here</p>
                   </div>
+
                   <h2 className="text-center mb-2">OR</h2>
                   <h2 className="font-semibold mb-1">Image URL</h2>
 

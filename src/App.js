@@ -33,19 +33,11 @@ function App() {
     location.pathname === "/register" ||
     location.pathname.startsWith("/admin");
 
-  // useEffect(() => {
-  //   if (localStorage.getItem("isAdmin")) {
-  //     navigate("/admin");
-  //   }
-  // }, []);
+ 
   return (
     <>
-      {/* <UserProvider> */}
-      {/* <ProductProvider> */}
       <div className={hideComponent ? "" : "container mx-auto"}>
-        {/* {!hideHeaderDash && hideComponent && <AdminNavbar />} */}
         {!hideComponent && <Navbar />}
-        {/* <div className="main"> */}
         <Routes>
           {/* User Routes */}
           <Route
@@ -139,11 +131,6 @@ function App() {
         </Routes>
       </div>
       {!hideComponent && <Footer />}
-      {/* </div> */}
-      {/* <AdminRoutes />
-        <UserRoutes /> */}
-      {/* </ProductProvider> */}
-      {/* </UserProvider> */}
     </>
   );
 }

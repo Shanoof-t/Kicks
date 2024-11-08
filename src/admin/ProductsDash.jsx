@@ -57,7 +57,7 @@ function ProductsDash() {
       });
   };
   return (
-    <div className=" p-4">
+    <div className="max-w-screen-lg mx-auto px-4 py-6 lg:px-8 lg:py-8 min-h-screen bg-gray-100 ">
       <ToastContainer />
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">
@@ -72,7 +72,7 @@ function ProductsDash() {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
         {products.map((item, index) => (
           <div
             key={`${item.id}${index}`}
